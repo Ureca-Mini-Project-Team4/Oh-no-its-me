@@ -3,37 +3,35 @@
 
 <mapper namespace="com.uplus.eureka.user.model.dao.UserDao">
 
-	<!-- resultMap을 사용하여 컬럼과 필드 매핑 -->
+	<!-- 매핑 -->
 	<resultMap id="userResultMap" type="com.uplus.eureka.user.model.dto.User">
-		<result property="userId" column="user_id"/> <!-- userId와 user_id 매핑 -->
-		<result property="username" column="username"/>
+		<result property="userId" column="user_id"/> <!-- user_id -> userId -->
+		<result property="username" column="user_name"/> <!-- user_name -> username -->
 		<result property="password" column="password"/>
 		<result property="img" column="img"/>
-		<result property="isSelected" column="is_selected"/> <!-- isSelected와 is_selected 매핑 -->
-		<result property="randomNickname" column="random_nickname"/> <!-- randomNickname과 random_nickname 매핑 -->
+		<result property="isSelected" column="is_selected"/> <!-- is_selected -> isSelected -->
+		<result property="randomNickname" column="random_nickname"/>
+		<result property="isVoted" column="is_voted"/>
 	</resultMap>
 
 	<!-- 로그인 -->
-	<select id="login" parameterType="com.uplus.eureka.user.model.dto.User" resultMap="userResultMap">
-		SELECT user_id, username, password, img, is_selected, random_nickname
-		FROM users
-		WHERE username = #{username} AND password = #{password}; <!-- Changed from user_id to username -->
+	<select id="login" parameterType="java.util.Map" resultMap="userResultMap">
+		SELECT user_id, user_name, password, img, is_selected, random_nickname
+		FROM Users
+		WHERE user_name = #{username} AND password = #{password};
 	</select>
-
 
 	<!-- 사용자 ID로 사용자 정보 확인 -->
-	<select id="get" parameterType="int" resultMap="userResultMap">
-		SELECT user_id, username, password, img, is_selected, random_nickname
-		FROM users
+	<select id="getUser" parameterType="java.lang.Integer" resultMap="userResultMap">
+		SELECT user_id, user_name, password, img, is_selected, random_nickname
+		FROM Users
 		WHERE user_id = #{userId};
 	</select>
-	
+
 	<!-- 비밀번호 변경 -->
-	<update id="updatePassword" parameterType="com.uplus.eureka.user.model.dto.User">
-		UPDATE users
-		SET password = #{password}
+	<update id="updatePassword" parameterType="java.util.Map">
+		UPDATE Users
+		SET password = #{newPassword}
 		WHERE user_id = #{userId};
 	</update>
-
-
 </mapper>
