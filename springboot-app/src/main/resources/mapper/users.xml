@@ -28,6 +28,13 @@
 		WHERE user_id = #{userId};
 	</select>
 
+	<!-- 사용자 이름으로 사용자 조회 -->
+	<select id="getUserByUsername" parameterType="String" resultMap="userResultMap">
+		SELECT user_id, user_name, password, img, is_selected, random_nickname
+		FROM Users
+		WHERE user_name = #{username}
+	</select>
+
 	<!-- 비밀번호 변경 -->
 	<update id="updatePassword" parameterType="java.util.Map">
 		UPDATE Users
