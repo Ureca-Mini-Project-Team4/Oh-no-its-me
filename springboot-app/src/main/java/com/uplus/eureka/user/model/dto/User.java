@@ -12,13 +12,13 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Schema(description = "사용자 아이디", example = "1")
-	private String userId; // Primary Key
+	private Integer userId; // Integer로 변경해야 함
 
 	@Schema(description = "사용자 이름", example = "김멀캠")
 	private String username; // Unique
 
 	@Schema(description = "비밀번호", example = "0000")
-	private String password;
+	private String password; // 안전을 위해 포함시키지 않도록 주의
 
 	@Schema(description = "프로필 이미지 경로", example = "/images/profile/1.jpg")
 	private String img;
@@ -28,4 +28,7 @@ public class User implements Serializable {
 
 	@Schema(description = "랜덤 닉네임", example = "물먹는하마")
 	private String randomNickname; // Unique
+
+	@Schema(description = "투표여부", example = "false")
+	private boolean isVoted;
 }
