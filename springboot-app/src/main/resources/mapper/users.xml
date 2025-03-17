@@ -16,21 +16,21 @@
 
 	<!-- 로그인 -->
 	<select id="login" parameterType="java.util.Map" resultMap="userResultMap">
-		SELECT user_id, user_name, password, img, is_selected, random_nickname
+		SELECT user_id, user_name, password, img, is_selected, random_nickname, is_voted
 		FROM Users
 		WHERE user_name = #{username} AND password = #{password};
 	</select>
 
 	<!-- 사용자 ID로 사용자 정보 확인 -->
 	<select id="getUser" parameterType="java.lang.Integer" resultMap="userResultMap">
-		SELECT user_id, user_name, password, img, is_selected, random_nickname
+		SELECT user_id, user_name, password, img, is_selected, random_nickname, is_voted
 		FROM Users
 		WHERE user_id = #{userId};
 	</select>
 
 	<!-- 사용자 이름으로 사용자 조회 -->
 	<select id="getUserByUsername" parameterType="String" resultMap="userResultMap">
-		SELECT user_id, user_name, password, img, is_selected, random_nickname
+		SELECT user_id, user_name, password, img, is_selected, random_nickname, is_voted
 		FROM Users
 		WHERE user_name = #{username}
 	</select>
