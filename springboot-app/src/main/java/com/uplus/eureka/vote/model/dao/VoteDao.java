@@ -8,8 +8,4 @@ import org.apache.ibatis.annotations.Mapper;
 public interface VoteDao {
     VoteResult.Result findTopCandidateByPollId(@Param("pollId") int pollId);
     String findQuestionTextByPollId(@Param("pollId") int pollId);
-    int incrementVoteCount(@Param("candidateId") int candidateId);
-    boolean isUserAlreadyVoted(@Param("userId") int userId);
-    int updateUserVoteStatus(@Param("userId") int userId);
-    void resetIsSelectedDaily();
 }

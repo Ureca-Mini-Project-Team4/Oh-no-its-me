@@ -12,6 +12,6 @@ public class VoteResult {
     @Data
     public static class Result {
         private String username;
-        private int voteCount;
+        private int vote_count;
     }
 }
