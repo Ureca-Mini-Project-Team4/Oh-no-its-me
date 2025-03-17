@@ -1,7 +1,9 @@
 package com.uplus.eureka.vote.model.dto;
 
-public class VoteException extends RuntimeException {
-    public VoteException(String message) {
-        super(message);
+import com.uplus.eureka.EurekaException;
+
+public class VoteException extends EurekaException {
+    public VoteException(String msg) {
+        super(msg);
     }
 }
