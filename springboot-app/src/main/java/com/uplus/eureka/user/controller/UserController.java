@@ -56,7 +56,7 @@ public class UserController {
     @ApiResponse(responseCode = "404", description = "유저를 찾을 수 없음")
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUser(
-            @Parameter(description = "User ID", required = true) @PathVariable Integer userId) {
+            @Parameter(description = "User ID", required = true) @PathVariable("userId") Integer userId) {
         try {
             User user = userService.getUser(userId);
             return ResponseEntity.ok(user);
@@ -71,7 +71,7 @@ public class UserController {
     @ApiResponse(responseCode = "403", description = "권한 없음")
     @PatchMapping("/{userId}")
     public ResponseEntity<?> updatePassword(
-            @PathVariable Integer userId,
+            @PathVariable("userId") Integer userId,
             @RequestBody Map<String, String> info) {
 
         String oldPassword = info.get("old_password");

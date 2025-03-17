@@ -49,7 +49,7 @@ public class UserServiceImp implements UserService {
 		}
 
 		// 비밀번호 비교 로직
-		if (!newPassword.equals(user.getPassword())) {
+		if (newPassword.equals(user.getPassword())) {
 			throw new UserException("현재 비밀번호와 동일합니다.");
 		}
 
