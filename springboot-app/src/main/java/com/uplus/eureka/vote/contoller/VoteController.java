@@ -20,7 +20,7 @@ public class VoteController {
 
     // 특정 투표 결과 조회
     @GetMapping("/{pollId}")
-    public ResponseEntity<?> getVoteResult(@PathVariable int pollId) {
+    public ResponseEntity<?> getVoteResult(@PathVariable("pollId") int pollId) {
         try {
             VoteResult result = voteService.getVoteResult(pollId);
             return ResponseEntity.ok(result); // 200 OK
