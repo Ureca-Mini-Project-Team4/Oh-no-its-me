@@ -28,7 +28,7 @@
     <update id="incrementVoteCount">
         UPDATE mini4.Candidates
         SET vote_count = vote_count + 1
-        WHERE candidate_id = #{candidateId}
+        WHERE candidate_id = #{candidate_id}
     </update>
 
 </mapper>

@@ -31,13 +31,13 @@ public class VoteController {
     }
 
     @PostMapping("/{pollId}")
-    public ResponseEntity<?> incrementVote(@PathVariable int pollId,
-                                           @RequestBody VoteRequest voteRequest) {
+    public ResponseEntity<?> increaseVote(@PathVariable int pollId,
+                                          @RequestBody VoteRequest voteRequest) {
         try {
-            voteService.increaseVoteCount(voteRequest.getCandidateId());
-            return ResponseEntity.ok().build(); // 성공 시 200 OK
+            voteService.increaseVoteCount(pollId, voteRequest);
+            return ResponseEntity.ok().build();
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage()); // 실패 시 400 Bad Request
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

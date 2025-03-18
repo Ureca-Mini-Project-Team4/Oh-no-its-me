@@ -1,6 +1,7 @@
 package com.uplus.eureka.vote.model.dao;
 
 import com.uplus.eureka.vote.model.dto.VoteResult;
+import com.uplus.eureka.vote.model.dto.VoteRequest;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,5 +11,5 @@ public interface VoteDao {
     String findQuestionTextByPollId(@Param("pollId") int pollId);
 
     //투표 수 증가
-    int incrementVoteCount(@Param("candidateId") int candidateId);
+    int incrementVoteCount(VoteRequest voteRequest);
 }
