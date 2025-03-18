@@ -3,6 +3,6 @@ package com.uplus.eureka.vote.model.dto;
 import lombok.Data;
 
 @Data
-public class VoteRequset {
+public class VoteRequest {
     private int candidateId;
 }
