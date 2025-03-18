@@ -44,7 +44,7 @@
 
 ## 📌 ERD 설계
 
-![ERD 다이어그램](#)
+[ERD 다이어그램](https://www.erdcloud.com/d/vrkao8tKBNomvMajm)
 
 ## 📑 API 명세
 

@@ -1,38 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- namespace는 패키지 포함한 mapper(DAO interface) 이름으로 설정 -->
 <mapper namespace="com.uplus.eureka.user.model.dao.UserDao">
 
-	<!-- resultMap을 사용하여 컬럼과 필드 매핑 -->
+	<!-- 매핑 -->
 	<resultMap id="userResultMap" type="com.uplus.eureka.user.model.dto.User">
-		<result property="userId" column="user_id"/> <!-- userId와 user_id 매핑 -->
-		<result property="username" column="username"/> <!-- username과 username 매핑 -->
-		<result property="password" column="password"/> <!-- password와 password 매핑 -->
-		<result property="img" column="img"/> <!-- img와 img 매핑 -->
-		<result property="isSelected" column="isSelected"/> <!-- isSelected와 isSelected 매핑 -->
-		<result property="randomNickname" column="random_nickname"/> <!-- randomNickname과 random_nickname 매핑 -->
+		<result property="userId" column="user_id"/> <!-- user_id -> userId -->
+		<result property="username" column="user_name"/> <!-- user_name -> username -->
+		<result property="password" column="password"/>
+		<result property="img" column="img"/>
+		<result property="isSelected" column="is_selected"/> <!-- is_selected -> isSelected -->
+		<result property="randomNickname" column="random_nickname"/>
+		<result property="isVoted" column="is_voted"/>
 	</resultMap>
 
-	<!-- SELECT 쿼리에서 resultMap 사용 -->
-	<select id="get" parameterType="string" resultMap="userResultMap">
-		SELECT user_id, username, password, img, isSelected, random_nickname
-		FROM users
+	<!-- 로그인 -->
+	<select id="login" parameterType="java.util.Map" resultMap="userResultMap">
+		SELECT user_id, user_name, password, img, is_selected, random_nickname, is_voted
+		FROM Users
+		WHERE user_name = #{username} AND password = #{password};
+	</select>
+
+	<!-- 사용자 ID로 사용자 정보 확인 -->
+	<select id="getUser" parameterType="java.lang.Integer" resultMap="userResultMap">
+		SELECT user_id, user_name, password, img, is_selected, random_nickname, is_voted
+		FROM Users
 		WHERE user_id = #{userId};
 	</select>
 
-	<!-- INSERT 쿼리 -->
-	<insert id="signup" parameterType="com.uplus.eureka.user.model.dto.User">
-		INSERT INTO users (user_id, password, username, img, isSelected, random_nickname)
-		VALUES (#{userId}, #{password}, #{username}, #{img}, #{isSelected}, #{randomNickname});
-	</insert>
-
-	<!-- 로그인 쿼리 -->
-	<select id="login" parameterType="com.uplus.eureka.user.model.dto.User" resultType="com.uplus.eureka.user.model.dto.User">
-		SELECT user_id, username, password, img, isSelected, random_nickname
-		FROM users
-		WHERE user_id = #{userId} AND password = #{password};
+	<!-- 사용자 이름으로 사용자 조회 -->
+	<select id="getUserByUsername" parameterType="String" resultMap="userResultMap">
+		SELECT user_id, user_name, password, img, is_selected, random_nickname, is_voted
+		FROM Users
+		WHERE user_name = #{username}
 	</select>
 
+	<!-- 비밀번호 변경 -->
+	<update id="updatePassword" parameterType="java.util.Map">
+		UPDATE Users
+		SET password = #{newPassword}
+		WHERE user_id = #{userId};
+	</update>
 </mapper>
