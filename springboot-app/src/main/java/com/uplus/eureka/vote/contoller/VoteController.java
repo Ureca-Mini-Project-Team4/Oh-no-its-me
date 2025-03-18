@@ -1,6 +1,7 @@
 package com.uplus.eureka.vote.contoller;
 
 import com.uplus.eureka.vote.model.dto.VoteResult;
+import com.uplus.eureka.vote.model.dto.VoteRequest;
 import com.uplus.eureka.vote.model.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class VoteController {
 
     // 특정 투표 결과 조회
     @GetMapping("/{pollId}")
-    public ResponseEntity<?> getVoteResult(@PathVariable int pollId) {
+    public ResponseEntity<?> getVoteResult(@PathVariable("pollId") int pollId) {
         try {
             VoteResult result = voteService.getVoteResult(pollId);
             return ResponseEntity.ok(result); // 200 OK
@@ -28,5 +29,17 @@ public class VoteController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); // 404 NOT FOUND
         }
     }
+
+    @PostMapping("/{pollId}")
+    public ResponseEntity<?> increaseVote(@PathVariable int pollId,
+                                          @RequestBody VoteRequest voteRequest) {
+        try {
+            voteService.increaseVoteCount(pollId, voteRequest);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
 
