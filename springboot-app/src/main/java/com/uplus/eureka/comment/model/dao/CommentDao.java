@@ -9,9 +9,9 @@ import java.util.List;
 
 @Mapper
 public interface CommentDao {
-    public List<Comment> getAllComments() throws SQLException;
-    public int totalCount() throws SQLException;
-    public Comment getCommentById(Long commentId) throws SQLException;
+    List<Comment> getAllComments() throws SQLException;
+    int totalCount() throws SQLException;
+    Comment getCommentById(Long commentId) throws SQLException;
 
 
 }

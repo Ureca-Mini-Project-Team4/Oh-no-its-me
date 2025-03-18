@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.uplus.eureka.comment.model.dao.CommentDao">
+
+    <!-- CommentDTO와 DB 컬럼 매핑 -->
+    <resultMap id="commentResultMap" type="com.uplus.eureka.comment.model.dto.Comment">
+        <result property="commentId" column="comment_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="randomNickname" column="random_nickname"/>
+        <result property="commentText" column="comment_text"/>
+    </resultMap>
+
+    <!-- 특정 comment_id에 대한 댓글 조회 -->
+    <select id="getCommentById" resultType="com.uplus.eureka.comment.model.dto.Comment">
+        SELECT c.comment_id, c.user_id, u.random_nickname, c.comment_text
+        FROM comments c
+                 JOIN users u ON c.user_id = u.user_id
+        WHERE c.comment_id = #{commentId}
+    </select>
+</mapper>

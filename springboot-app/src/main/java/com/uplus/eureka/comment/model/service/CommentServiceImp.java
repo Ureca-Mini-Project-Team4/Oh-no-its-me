@@ -2,7 +2,10 @@ package com.uplus.eureka.comment.model.service;
 
 import com.uplus.eureka.comment.model.dao.CommentDao;
 import com.uplus.eureka.comment.model.dto.Comment;
+import com.uplus.eureka.comment.model.dto.CommentException;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLException;
 
 @Service
 public class CommentServiceImp implements CommentService {
@@ -18,7 +21,15 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public Comment getCommentById(Long commentId) {
-        return null;
+        try{
+            Comment comment = dao.getCommentById(commentId);
+            if(comment == null){
+                throw new CommentException("요청한 댓글은 등록되지 않았습니다.");
+            }
+            return comment;
+        }catch (SQLException e){
+            throw new CommentException("댓글 정보 조회 중 오류 발생");
+        }
     }
 
 }
