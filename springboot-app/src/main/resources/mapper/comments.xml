@@ -19,4 +19,11 @@
                  JOIN users u ON c.user_id = u.user_id
         WHERE c.comment_id = #{commentId}
     </select>
+
+    <!-- 모든 댓글 조회 -->
+    <select id="getAllComments" resultMap="commentResultMap">
+        SELECT c.comment_id, c.user_id, u.random_nickname, c.comment_text
+        FROM comments c
+                 JOIN users u ON c.user_id = u.user_id
+    </select>
 </mapper>
