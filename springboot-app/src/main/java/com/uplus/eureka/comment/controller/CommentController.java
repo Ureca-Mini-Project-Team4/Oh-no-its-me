@@ -27,7 +27,7 @@ public class CommentController {
 
     @Operation(summary = "Get all comments", description = "Retrieve all comments")
     @ApiResponse(responseCode = "200", description = "모든 댓글 조회 성공")
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<?> getAllComments() {
         List<Comment> comments = commentService.getAllComments();
         if(comments.isEmpty()) {
@@ -46,7 +46,18 @@ public class CommentController {
         Comment comment = commentService.getCommentById(commentId);
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
-    
+
+    @Operation(summary = "POST new Comment", description = "POST new Comment")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "댓글 등록 성공"),
+            @ApiResponse(responseCode = "404", description = "댓글 등록 오류")
+    })
+    public ResponseEntity<String> insertComment(@RequestBody Comment comment) {
+        commentService.insertComment(comment);
+        return new ResponseEntity<String>("SUCCESS", HttpStatus.CREATED);
+    }
+
+
     @DeleteMapping("/{commentId}")
     public ResponseEntity<Void> deleteCommentById(@PathVariable("commentId") Long commentId) {
         long status = commentService.deleteCommentById(commentId); // Call service to delete the comment
