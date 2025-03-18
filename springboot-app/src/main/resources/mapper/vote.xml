@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.uplus.eureka.vote.model.dao.VoteDao">
+
+    <resultMap id="voteResultMap" type="com.uplus.eureka.vote.model.dto.VoteResult$Result">
+        <result property="username" column="username"/>    <!-- user_name(DB) → username(Java) -->
+        <result property="voteCount" column="vote_count"/>  <!-- vote_count(DB) → voteCount(Java) -->
+    </resultMap>
+
+    <select id="findTopCandidateByPollId" resultType="com.uplus.eureka.vote.model.dto.VoteResult$Result">
+        SELECT U.user_name AS username, C.vote_count
+        FROM mini4.Candidates C
+                 JOIN mini4.Users U ON C.user_id = U.user_id
+        WHERE C.poll_id = #{pollId}
+        ORDER BY C.vote_count DESC
+            LIMIT 1
+    </select>
+
+    <select id="findQuestionTextByPollId" resultType="String">
+        SELECT Q.question_text
+        FROM mini4.Polls P
+                 JOIN mini4.Questions Q ON P.question_id = Q.question_id
+        WHERE P.poll_id = #{pollId}
+    </select>
+
+</mapper>
