@@ -20,7 +20,7 @@ spring.datasource.hikari.auto-commit=true
 
 #log level Setting
 logging.level.root=info
-logging.level.com.upluas.eureka=debug
+logging.level.com.uplus.eureka=debug
 logging.level.com.zaxxer.hikari.pool=info
 
 #MyBatis Setting

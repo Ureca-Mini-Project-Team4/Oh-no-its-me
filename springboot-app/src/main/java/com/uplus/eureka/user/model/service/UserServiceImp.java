@@ -1,5 +1,8 @@
 package com.uplus.eureka.user.model.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.uplus.eureka.user.model.dao.UserDao;
@@ -48,13 +51,14 @@ public class UserServiceImp implements UserService {
 			throw new UserException("등록되지 않은 아이디입니다.");
 		}
 
-		// 비밀번호 비교 로직
+		// 비밀번호 비교 로직	
 		if (newPassword.equals(user.getPassword())) {
 			throw new UserException("현재 비밀번호와 동일합니다.");
 		}
 
-		dao.updatePassword(userId, newPassword); // 데이터베이스에 새 비밀번호 저장
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("userId", userId);
+		paramMap.put("newPassword", newPassword);
+		dao.updatePassword(paramMap);
 	}
-
-
 }
