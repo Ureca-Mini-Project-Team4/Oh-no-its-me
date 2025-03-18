@@ -17,7 +17,8 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
-    public Comment get(String commentId) {
+    public Comment getCommentById(Long commentId) {
         return null;
     }
+
 }

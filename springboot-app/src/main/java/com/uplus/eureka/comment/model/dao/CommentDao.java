@@ -11,7 +11,7 @@ import java.util.List;
 public interface CommentDao {
     public List<Comment> getAllComments() throws SQLException;
     public int totalCount() throws SQLException;
-    public Comment getCommentById(String commentId) throws SQLException;
+    public Comment getCommentById(Long commentId) throws SQLException;
 
 
 }

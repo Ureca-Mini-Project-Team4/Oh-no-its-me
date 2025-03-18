@@ -8,5 +8,6 @@ public interface CommentService {
 //    User get(String userId);
 //    void signup(User user);
 
-    Comment get(String commentId);
+    Comment getCommentById(Long commentId);
+
 }
