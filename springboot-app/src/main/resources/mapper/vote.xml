@@ -25,4 +25,10 @@
         WHERE P.poll_id = #{pollId}
     </select>
 
+    <update id="incrementVoteCount">
+        UPDATE Candidates
+        SET vote_count = vote_count + 1
+        WHERE candidate_id = #{candidateId}
+    </update>
+
 </mapper>
