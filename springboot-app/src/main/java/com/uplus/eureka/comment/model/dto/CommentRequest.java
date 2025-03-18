@@ -1,18 +1,15 @@
 package com.uplus.eureka.comment.model.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
-@Getter
-@Setter
-@NoArgsConstructor
-public class CommentRequest {
-    private Integer userId;     // user_id
-    private String commentText;     // comment_text
+import java.io.Serializable;
 
-    public CommentRequest(Integer userId, String commentText) {
-        this.userId = userId;
-        this.commentText = commentText;
-    }
+@Data
+public class CommentRequest implements Serializable {
+    @JsonProperty("user_id")
+    private Integer userId;
+
+    @JsonProperty("comment_text")
+    private String commentText;
 }

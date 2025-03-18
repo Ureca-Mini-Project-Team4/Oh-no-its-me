@@ -3,6 +3,7 @@ package com.uplus.eureka.comment.model.service;
 import com.uplus.eureka.comment.model.dao.CommentDao;
 import com.uplus.eureka.comment.model.dto.Comment;
 import com.uplus.eureka.comment.model.dto.CommentException;
+import com.uplus.eureka.comment.model.dto.CommentRequest;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -68,6 +69,16 @@ public class CommentServiceImp implements CommentService {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new CommentException("댓글 목록 조회 중 오류 발생");
+        }
+    }
+
+    @Override
+    public void insertComment(CommentRequest comment) {
+        try{
+            dao.insertComment(comment);
+        }
+        catch(SQLException e){
+            throw new CommentException("댓글 등록 중 오류 발생");
         }
     }
 

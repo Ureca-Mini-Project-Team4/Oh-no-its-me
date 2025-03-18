@@ -12,6 +12,11 @@
         <result property="commentText" column="comment_text"/>
     </resultMap>
 
+    <resultMap id="commentRequest" type="com.uplus.eureka.comment.model.dto.CommentRequest">
+        <result property="userId" column="user_id"/>
+        <result property="commentText" column="comment_text"/>
+    </resultMap>
+
     <!-- 특정 comment_id에 대한 댓글 조회 -->
     <select id="getCommentById" resultType="com.uplus.eureka.comment.model.dto.Comment">
         SELECT c.comment_id, c.user_id, u.random_nickname, c.comment_text
@@ -31,4 +36,10 @@
         FROM comments c
                  JOIN users u ON c.user_id = u.user_id
     </select>
+
+    <insert id="insertComment" parameterType="com.uplus.eureka.comment.model.dto.CommentRequest">
+        INSERT INTO comments (user_id, comment_text)
+        VALUES (#{userId}, #{commentText})
+    </insert>
+
 </mapper>

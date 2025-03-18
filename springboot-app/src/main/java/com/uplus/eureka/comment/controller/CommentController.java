@@ -1,6 +1,7 @@
 package com.uplus.eureka.comment.controller;
 
 import com.uplus.eureka.comment.model.dto.Comment;
+import com.uplus.eureka.comment.model.dto.CommentRequest;
 import com.uplus.eureka.comment.model.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -52,7 +53,12 @@ public class CommentController {
             @ApiResponse(responseCode = "200", description = "댓글 등록 성공"),
             @ApiResponse(responseCode = "404", description = "댓글 등록 오류")
     })
-    public ResponseEntity<String> insertComment(@RequestBody Comment comment) {
+    @PostMapping
+    public ResponseEntity<String> insertComment(@RequestBody CommentRequest comment) {
+        System.out.println(comment);
+        if(comment.getUserId() == null){
+            return new ResponseEntity<String>("FAILED", HttpStatus.BAD_REQUEST);
+        }
         commentService.insertComment(comment);
         return new ResponseEntity<String>("SUCCESS", HttpStatus.CREATED);
     }
