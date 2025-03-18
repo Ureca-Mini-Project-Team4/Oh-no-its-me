@@ -49,7 +49,7 @@
 
 ## 📑 API 명세
 
-[API 명세서 확인하기](#https://lowly-brian-a99.notion.site/1af64f2ada64805da616db17bceb4efe?v=1af64f2ada64813ba8ac000c12b30f1f)
+[API 명세서 확인하기](https://lowly-brian-a99.notion.site/1af64f2ada64805da616db17bceb4efe?v=1af64f2ada64813ba8ac000c12b30f1f)
 
 ## 📂 프로젝트 폴더 구조
 
