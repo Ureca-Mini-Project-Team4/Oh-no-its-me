@@ -20,8 +20,8 @@ public class SwaggerConfiguration {
 	@Bean
 	public OpenAPI openEurekaAPI() {
 		logger.debug("openEurekaAPI.............");
-		Info info = new Info().title("SpringTest API 명세서").description(
-						"<h3>SpringTest API Reference for Developers</h3>Swagger를 이용한 SpringTest API<br><img src=\"/eureka/assets/img/eureka_logo.png\" width=\"50\">")
+		Info info = new Info().title("너로 정했다 API 명세서").description(
+						"<h3>Oh-no-its-me API Reference for Developers</h3>Swagger를 이용한 너로 정했다! 프로젝트 API 문서입니다.<br><img src=\"/eureka/assets/img/logo.png\" width=\"100\">")
 				.version("v1");
 
 		return new OpenAPI().components(new Components()).info(info);
