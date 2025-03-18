@@ -56,7 +56,7 @@ public class UserController {
     @ApiResponse(responseCode = "404", description = "유저를 찾을 수 없음")
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUser(
-            @Parameter(description = "User ID", required = true) @PathVariable Integer userId) {
+            @Parameter(description = "User ID", required = true) @PathVariable("userId") Integer userId) {
         try {
             User user = userService.getUser(userId);
             return ResponseEntity.ok(user);
@@ -71,7 +71,7 @@ public class UserController {
     @ApiResponse(responseCode = "403", description = "권한 없음")
     @PatchMapping("/{userId}")
     public ResponseEntity<?> updatePassword(
-            @PathVariable Integer userId,
+            @PathVariable("userId") Integer userId,
             @RequestBody Map<String, String> info) {
 
         String oldPassword = info.get("old_password");
@@ -82,17 +82,17 @@ public class UserController {
         String currentPassword = user.getPassword(); // 현재 비밀번호 가져오기
 
         // 비밀번호 유효성 검사
-        if (oldPassword.equals(currentPassword)) {  // Use matches to compare
+        if (!oldPassword.equals(currentPassword)) {  // Use matches to compare
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("비밀번호 변경 실패");
         }
-
-        if (oldPassword.equals(newPassword)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 동일합니다.");
+        else {
+	        if (oldPassword.equals(newPassword)) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 동일합니다.");
+	        }
+	        else {
+		        userService.updatePassword(userId, newPassword); // 데이터베이스에 새 비밀번호 업데이트하여 저장
+		        return ResponseEntity.ok("비밀번호 변경 성공");
+	        }
         }
-
-        userService.updatePassword(userId, newPassword); // 데이터베이스에 새 비밀번호 업데이트하여 저장
-        return ResponseEntity.ok("비밀번호 변경 성공");
     }
-
-
 }

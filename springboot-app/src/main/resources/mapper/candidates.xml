@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.uplus.eureka.candidate.model.dao.CandidateDao">
+
+    <!-- CandidateDTO와 DB 컬럼 매핑 -->
+	<resultMap id="candidateResultMap" type="com.uplus.eureka.candidate.model.dto.Candidate">
+	    <result property="candidateId" column="candidate_id"/>
+	    <result property="userId" column="user_id"/>
+	    <result property="pollId" column="poll_id"/>
+	    <result property="voteCount" column="vote_count"/>
+	</resultMap>
+
+    <!-- 특정 poll_id에 대해 랜덤으로 4명의 후보 선택 -->
+	<select id="getCandidates" parameterType="java.lang.Integer" resultMap="candidateResultMap">
+	    SELECT candidate_id, user_id, poll_id, vote_count
+	    FROM candidates
+	    WHERE poll_id = #{pollId}
+	    LIMIT 4;
+	</select>
+
+</mapper>
