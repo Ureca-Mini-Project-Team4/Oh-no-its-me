@@ -25,4 +25,10 @@
 	  DELETE FROM comments WHERE comment_id = #{commentId, jdbcType=BIGINT}
 	</delete>
 
+    <!-- 모든 댓글 조회 -->
+    <select id="getAllComments" resultMap="commentResultMap">
+        SELECT c.comment_id, c.user_id, u.random_nickname, c.comment_text
+        FROM comments c
+                 JOIN users u ON c.user_id = u.user_id
+    </select>
 </mapper>
