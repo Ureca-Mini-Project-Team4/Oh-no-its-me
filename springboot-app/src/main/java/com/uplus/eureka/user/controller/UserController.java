@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import com.uplus.eureka.user.model.dto.User;
 import com.uplus.eureka.user.model.service.UserService;
 import com.uplus.eureka.user.model.dto.UserException;
+import java.util.Map;
 
 @Tag(name = "User Management API", description = "유저 관리 API")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("api/user")
 public class UserController {
 
     private final UserService userService;
@@ -31,50 +32,67 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
-            if (loginRequest.getUserId() == null || loginRequest.getPassword() == null) {
+            // 입력된 사용자 ID와 비밀번호의 유효성 검사
+            if (loginRequest.getUsername() == null ||
+                    loginRequest.getPassword() == null ||
+                    loginRequest.getUsername().isEmpty() ||
+                    loginRequest.getPassword().isEmpty()) {
                 return ResponseEntity.badRequest().body("유저 ID와 비밀번호를 입력하세요.");
             }
-            User loggedInUser = userService.login(loginRequest.getUserId(), loginRequest.getPassword());
-            return ResponseEntity.ok(loggedInUser);
+
+            // 사용자 로그인 시도
+            User loggedInUser = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
+
+            loggedInUser.setPassword(null); // 비밀번호를 null로 설정하여 정보 노출 방지
+
+            return ResponseEntity.ok(loggedInUser); // User 객체 반환
         } catch (UserException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
 
-    @Operation(summary = "Get User Information", description = "Retrieve user information by user ID.")
+    @Operation(summary = "Get User Information", description = "유저 정보 조회")
     @ApiResponse(responseCode = "200", description = "유저 정보 조회 성공")
     @ApiResponse(responseCode = "404", description = "유저를 찾을 수 없음")
-    @GetMapping("get/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<?> getUser(
-            @Parameter(description = "User ID", required = true) @PathVariable String userId) {
+            @Parameter(description = "User ID", required = true) @PathVariable Integer userId) {
         try {
-            User user = userService.get(userId);
+            User user = userService.getUser(userId);
             return ResponseEntity.ok(user);
         } catch (UserException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
-    @Operation(summary = "User Signup", description = "Register a new user.")
-    @ApiResponse(responseCode = "201", description = "회원가입 성공")
-    @ApiResponse(responseCode = "400", description = "잘못된 요청, 사용자 정보가 유효하지 않음")
-    @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody User user) {
-        try {
-            if (user.getPassword() == null || user.getPassword().isEmpty()) {
-                return ResponseEntity.badRequest().body("비밀번호는 필수입니다.");
-            }
-            if (user.getUsername() == null || user.getUsername().isEmpty()) {
-                return ResponseEntity.badRequest().body("사용자 이름은 필수입니다.");
-            }
+    @Operation(summary = "Update password", description = "비밀번호 변경")
+    @ApiResponse(responseCode = "200", description = "비밀번호 변경 성공")
+    @ApiResponse(responseCode = "400", description = "잘못된 요청")
+    @ApiResponse(responseCode = "403", description = "권한 없음")
+    @PatchMapping("/{userId}")
+    public ResponseEntity<?> updatePassword(
+            @PathVariable Integer userId,
+            @RequestBody Map<String, String> info) {
 
-            // 서비스에서 중복 검증 및 암호화 등 처리
-            userService.signup(user);
+        String oldPassword = info.get("old_password");
+        String newPassword = info.get("new_password");
 
-            return ResponseEntity.status(HttpStatus.CREATED).body("회원가입 성공!");
-        } catch (UserException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        // 사용자 정보 조회
+        User user = userService.getUser(userId);
+        String currentPassword = user.getPassword(); // 현재 비밀번호 가져오기
+
+        // 비밀번호 유효성 검사
+        if (oldPassword.equals(currentPassword)) {  // Use matches to compare
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("비밀번호 변경 실패");
         }
+
+        if (oldPassword.equals(newPassword)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 동일합니다.");
+        }
+
+        userService.updatePassword(userId, newPassword); // 데이터베이스에 새 비밀번호 업데이트하여 저장
+        return ResponseEntity.ok("비밀번호 변경 성공");
     }
+
 
 }

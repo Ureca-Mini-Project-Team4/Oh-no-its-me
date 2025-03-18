@@ -21,6 +21,7 @@
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
+.metadata/
 
 # Windows Installer files
 *.cab
