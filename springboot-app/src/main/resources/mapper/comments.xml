@@ -19,4 +19,10 @@
                  JOIN users u ON c.user_id = u.user_id
         WHERE c.comment_id = #{commentId}
     </select>
+    
+	<!-- 특정 comment_id에 대한 댓글 삭제 -->
+	<delete id="deleteCommentById">
+	  DELETE FROM comments WHERE comment_id = #{commentId, jdbcType=BIGINT}
+	</delete>
+
 </mapper>

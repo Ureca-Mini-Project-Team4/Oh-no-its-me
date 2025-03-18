@@ -31,5 +31,25 @@ public class CommentServiceImp implements CommentService {
             throw new CommentException("댓글 정보 조회 중 오류 발생");
         }
     }
+    
+    @Override
+    public long deleteCommentById(Long commentId) {
+        try {
+            Comment comment = dao.getCommentById(commentId);
+            
+            if (comment == null) {
+                throw new CommentException("요청한 댓글은 등록되지 않았습니다.");
+            }
+            long result = dao.deleteCommentById(commentId);
+            
+            if (result == 0) {
+                throw new CommentException("댓글 삭제 중 오류 발생");
+            }
+            return result;
+        } catch (SQLException e) {
+            throw new CommentException("댓글 정보 조회 중 오류 발생");
+        }
+    }
+
 
 }

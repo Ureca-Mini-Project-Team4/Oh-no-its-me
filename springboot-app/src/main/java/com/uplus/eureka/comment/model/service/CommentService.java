@@ -9,5 +9,5 @@ public interface CommentService {
 //    void signup(User user);
 
     Comment getCommentById(Long commentId);
-
+    long deleteCommentById(Long commentId);
 }

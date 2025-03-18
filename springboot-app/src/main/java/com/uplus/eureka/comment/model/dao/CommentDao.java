@@ -12,6 +12,5 @@ public interface CommentDao {
     List<Comment> getAllComments() throws SQLException;
     int totalCount() throws SQLException;
     Comment getCommentById(Long commentId) throws SQLException;
-
-
+	long deleteCommentById(Long commentId);
 }
