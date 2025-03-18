@@ -28,7 +28,10 @@ public class SwaggerConfiguration {
 	}
 
 	@Bean
-	public GroupedOpenApi memberApi() {
-		return GroupedOpenApi.builder().group("eureka-member").pathsToMatch("/member/**").build();
+	public GroupedOpenApi userApi() {
+		return GroupedOpenApi.builder()
+				.group("user")
+				.pathsToMatch("/api/user/**")
+				.build();
 	}
 }
