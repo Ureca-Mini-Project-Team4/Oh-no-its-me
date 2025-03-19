@@ -1,8 +1,6 @@
 package com.uplus.eureka.vote.model.service;
 
 import com.uplus.eureka.user.model.dao.UserDao;
-import com.uplus.eureka.user.model.dto.User;
-import com.uplus.eureka.user.model.dto.UserException;
 import com.uplus.eureka.vote.model.dao.VoteDao;
 import com.uplus.eureka.vote.model.dto.VoteResult;
 import com.uplus.eureka.vote.model.dto.VoteRequest;
