@@ -2,6 +2,7 @@ package com.uplus.eureka.poll.controller;
 
 import com.uplus.eureka.poll.model.dto.Question;
 import com.uplus.eureka.poll.model.service.PollService;
+import com.uplus.eureka.poll.model.dto.PollServiceException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,11 +21,14 @@ public class PollController {
 
     @GetMapping("/poll")
     public ResponseEntity<List<Question>> getRandomQuestions() {
-        List<Question> questions = pollService.getQuestions();  // 랜덤 4개 질문을 가져옴
-        if (questions.isEmpty()) {
-            return ResponseEntity.noContent().build();  // 빈 리스트라면 204 No Content
+        try {
+            List<Question> questions = pollService.getQuestions();
+            if (questions.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(questions);
+        } catch (Exception e) {
+            throw new PollServiceException("Failed to retrieve poll questions", e);
         }
-        return ResponseEntity.ok(questions);  // 정상적으로 200 OK로 반환
     }
 }
-

@@ -6,4 +6,5 @@ import com.uplus.eureka.vote.model.dto.VoteRequest;
 public interface VoteService {
     VoteResult getVoteResult(int pollId);
     void increaseVoteCount(int pollId, VoteRequest voteRequest);
+    boolean completeVote(int userId);
 }
