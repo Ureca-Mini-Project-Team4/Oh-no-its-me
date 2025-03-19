@@ -1,6 +1,5 @@
 package com.uplus.eureka.vote.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
