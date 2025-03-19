@@ -18,17 +18,12 @@
     </resultMap>
 
     <!-- 특정 comment_id에 대한 댓글 조회 -->
-    <select id="getCommentById" resultType="com.uplus.eureka.comment.model.dto.Comment">
+    <select id="getCommentById" resultMap="commentResultMap" parameterType="Integer">
         SELECT c.comment_id, c.user_id, u.random_nickname, c.comment_text
         FROM comments c
                  JOIN users u ON c.user_id = u.user_id
         WHERE c.comment_id = #{commentId}
     </select>
-    
-	<!-- 특정 comment_id에 대한 댓글 삭제 -->
-	<delete id="deleteCommentById">
-	  DELETE FROM comments WHERE comment_id = #{commentId, jdbcType=BIGINT}
-	</delete>
 
     <!-- 모든 댓글 조회 -->
     <select id="getAllComments" resultMap="commentResultMap">
@@ -41,5 +36,10 @@
         INSERT INTO comments (user_id, comment_text)
         VALUES (#{userId}, #{commentText})
     </insert>
+
+    <!-- 특정 comment_id에 대한 댓글 삭제 -->
+    <delete id="deleteCommentById" parameterType="Integer">
+        DELETE FROM comments WHERE comment_id = #{commentId, jdbcType=BIGINT}
+    </delete>
 
 </mapper>

@@ -43,7 +43,7 @@ public class CommentController {
             @ApiResponse(responseCode = "404", description = "댓글을 찾을 수 없음")
     })
     @GetMapping("/{commentId}")
-    public ResponseEntity<Comment> getCommentById(@PathVariable("commentId") Long commentId) {
+    public ResponseEntity<Comment> getCommentById(@PathVariable("commentId") Integer commentId) {
         Comment comment = commentService.getCommentById(commentId);
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
@@ -65,12 +65,8 @@ public class CommentController {
 
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> deleteCommentById(@PathVariable("commentId") Long commentId) {
-        long status = commentService.deleteCommentById(commentId); // Call service to delete the comment
-        if (status == 1) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public ResponseEntity<String> deleteCommentById(@PathVariable("commentId") Integer commentId) {
+        commentService.deleteCommentById(commentId); // Call service to delete the comment
+        return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     }
 }

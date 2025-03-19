@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment {
-    private Long commentId;  // comment_id
+    private Integer commentId;  // comment_id
     private Integer userId;  // user_id
     private String randomNickname; // random_nickname
     private String commentText; // comment_text

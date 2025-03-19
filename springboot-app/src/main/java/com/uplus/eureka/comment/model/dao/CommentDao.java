@@ -12,7 +12,7 @@ import java.util.List;
 public interface CommentDao {
     List<Comment> getAllComments() throws SQLException;
     int totalCount() throws SQLException;
-    Comment getCommentById(Long commentId) throws SQLException;
+    Comment getCommentById(Integer commentId) throws SQLException;
     void insertComment(CommentRequest comment) throws SQLException;
-	long deleteCommentById(Long commentId);
+	void deleteCommentById(Integer commentId);
 }

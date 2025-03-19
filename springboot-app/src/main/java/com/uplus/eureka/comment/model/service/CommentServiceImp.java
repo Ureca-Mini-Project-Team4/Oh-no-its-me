@@ -22,37 +22,19 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
-    public Comment getCommentById(Long commentId) {
-        try{
-            Comment comment = dao.getCommentById(commentId);
-            if(comment == null){
-                throw new CommentException("요청한 댓글은 등록되지 않았습니다.");
-            }
-            return comment;
-        }catch (SQLException e){
-            throw new CommentException("댓글 정보 조회 중 오류 발생");
-        }
-    }
-    
-    @Override
-    public long deleteCommentById(Long commentId) {
+    public Comment getCommentById(Integer commentId) {
         try {
+            System.out.println("commentId = " + commentId);
             Comment comment = dao.getCommentById(commentId);
-            
+            System.out.println("조회된 댓글: " + comment);
             if (comment == null) {
                 throw new CommentException("요청한 댓글은 등록되지 않았습니다.");
             }
-            long result = dao.deleteCommentById(commentId);
-            
-            if (result == 0) {
-                throw new CommentException("댓글 삭제 중 오류 발생");
-            }
-            return result;
+            return comment;
         } catch (SQLException e) {
             throw new CommentException("댓글 정보 조회 중 오류 발생");
         }
     }
-
 
     @Override
     public List<Comment> getAllComments() {
@@ -79,6 +61,15 @@ public class CommentServiceImp implements CommentService {
         }
         catch(SQLException e){
             throw new CommentException("댓글 등록 중 오류 발생");
+        }
+    }
+
+    @Override
+    public void deleteCommentById(Integer commentId) {
+        try {
+           dao.deleteCommentById(commentId);
+        } catch (Exception e) {
+            throw new CommentException("댓글 정보 조회 중 오류 발생");
         }
     }
 
