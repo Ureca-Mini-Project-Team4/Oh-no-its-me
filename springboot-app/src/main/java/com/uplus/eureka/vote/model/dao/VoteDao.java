@@ -1,6 +1,5 @@
 package com.uplus.eureka.vote.model.dao;
 
-import com.uplus.eureka.user.model.dto.User;
 import com.uplus.eureka.vote.model.dto.VoteResult;
 import com.uplus.eureka.vote.model.dto.VoteRequest;
 import org.apache.ibatis.annotations.Param;
