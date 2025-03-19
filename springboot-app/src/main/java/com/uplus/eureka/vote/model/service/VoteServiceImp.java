@@ -1,5 +1,8 @@
 package com.uplus.eureka.vote.model.service;
 
+import com.uplus.eureka.user.model.dao.UserDao;
+import com.uplus.eureka.user.model.dto.User;
+import com.uplus.eureka.user.model.dto.UserException;
 import com.uplus.eureka.vote.model.dao.VoteDao;
 import com.uplus.eureka.vote.model.dto.VoteResult;
 import com.uplus.eureka.vote.model.dto.VoteRequest;
@@ -13,10 +16,12 @@ import java.util.Collections;
 public class VoteServiceImp implements VoteService {
 
     private final VoteDao voteDao;
+    private final UserDao userDao;
 
     @Autowired
-    public VoteServiceImp(VoteDao voteDao) {
+    public VoteServiceImp(VoteDao voteDao, UserDao userDao) {
         this.voteDao = voteDao;
+        this.userDao = userDao;
     }
 
    @Override
@@ -43,5 +48,17 @@ public class VoteServiceImp implements VoteService {
         if (updatedRows == 0) {
             throw new RuntimeException("해당 후보자를 찾을 수 없습니다.");
         }
+    }
+
+//    @Override
+//    public void completeVote(Integer userId) throws UserException {
+//        User user = userDao.getUser(userId);
+//        if (user == null) {
+//            throw new UserException("등록되지 않은 아이디입니다.");
+//        }
+//    }
+    @Override
+    public boolean completeVote(int userId) {
+        return voteDao.completeVote(userId) > 0;  // 업데이트된 행이 1개 이상이면 true 반환
     }
 }
