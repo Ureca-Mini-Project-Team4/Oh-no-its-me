@@ -23,24 +23,25 @@
 ### 🏆 랭킹 시스템
 
 - 제한 시간동안 투표 진행
-- 투표 마감 후 1~3위 공개
+- 투표 마감 후 1위 공개
 
 ### 💬 익명 커뮤니티
 
-- 로그인 후에도 **익명 댓글 가능**
-- 댓글 작성 시 **랜덤 닉네임 자동 부여**하여 자유로운 수다 가능
+- **익명 댓글창에서 자유로운 수다 가능**
+  - 로그인 시 랜덤 닉네임 자동 부여
 
 ## 🛠️ 기술 스택
 
 ### **Frontend**
 
-- React (Next.js)
+- React
+- JavaScript
 
 ### **Backend**
 
 - Spring Boot
 - MySQL
-- MyBatis + JPA (ORM)
+- MyBatis
 
 ## 📌 ERD 설계
 
@@ -48,7 +49,7 @@
 
 ## 📑 API 명세
 
-[API 명세서 확인하기](#)
+[API 명세서 확인하기](https://lowly-brian-a99.notion.site/1af64f2ada64805da616db17bceb4efe?v=1af64f2ada64813ba8ac000c12b30f1f)
 
 ## 📂 프로젝트 폴더 구조
 

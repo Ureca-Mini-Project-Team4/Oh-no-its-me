@@ -2,8 +2,10 @@ package com.uplus.eureka.vote.model.service;
 
 import com.uplus.eureka.vote.model.dao.VoteDao;
 import com.uplus.eureka.vote.model.dto.VoteResult;
+import com.uplus.eureka.vote.model.dto.VoteRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 
@@ -32,5 +34,14 @@ public class VoteServiceImp implements VoteService {
         resultDto.setResults(Collections.singletonList(topCandidate));
 
         return resultDto;
+    }
+
+    @Override
+    @Transactional
+    public void increaseVoteCount(int pollId, VoteRequest voteRequest) {
+        int updatedRows = voteDao.incrementVoteCount(voteRequest);
+        if (updatedRows == 0) {
+            throw new RuntimeException("해당 후보자를 찾을 수 없습니다.");
+        }
     }
 }
