@@ -2,6 +2,7 @@ package com.uplus.eureka.comment.model.dao;
 
 import com.uplus.eureka.comment.model.dto.Comment;
 import com.uplus.eureka.comment.model.dto.CommentRequest;
+import com.uplus.eureka.comment.model.dto.CommentUpdateRequest;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.jdbc.SQL;
 
@@ -15,4 +16,5 @@ public interface CommentDao {
     Comment getCommentById(Integer commentId) throws SQLException;
     void insertComment(CommentRequest comment) throws SQLException;
 	void deleteCommentById(Integer commentId);
+    void updateComment(CommentUpdateRequest comment) throws SQLException;
 }

@@ -32,6 +32,14 @@
                  JOIN users u ON c.user_id = u.user_id
     </select>
 
+    <!-- 댓글 수정 -->
+    <update id="updateComment" parameterType="com.uplus.eureka.comment.model.dto.CommentUpdateRequest">
+        UPDATE comments
+        SET comment_text = #{commentText}, user_id = #{userId}
+        WHERE comment_id = #{commentId}
+    </update>
+
+
     <insert id="insertComment" parameterType="com.uplus.eureka.comment.model.dto.CommentRequest">
         INSERT INTO comments (user_id, comment_text)
         VALUES (#{userId}, #{commentText})

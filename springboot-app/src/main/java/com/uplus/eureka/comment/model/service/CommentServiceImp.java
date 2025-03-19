@@ -4,6 +4,7 @@ import com.uplus.eureka.comment.model.dao.CommentDao;
 import com.uplus.eureka.comment.model.dto.Comment;
 import com.uplus.eureka.comment.model.dto.CommentException;
 import com.uplus.eureka.comment.model.dto.CommentRequest;
+import com.uplus.eureka.comment.model.dto.CommentUpdateRequest;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -55,6 +56,30 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
+    public void updateComment(Integer commentId, CommentRequest commentRequest) {
+        try {
+            // commentId와 commentRequest를 이용해 CommentUpdateRequest 객체 생성
+            CommentUpdateRequest commentUpdateRequest = new CommentUpdateRequest();
+            commentUpdateRequest.setCommentId(commentId);  // commentId를 @PathVariable로 전달받은 값으로 설정
+            commentUpdateRequest.setUserId(commentRequest.getUserId());  // commentRequest에서 userId를 가져와 설정
+            commentUpdateRequest.setCommentText(commentRequest.getCommentText());  // commentRequest에서 commentText를 가져와 설정
+
+            // 로그를 찍어서 값이 제대로 들어갔는지 확인
+            System.out.println("commentUpdateRequest: " + commentUpdateRequest);
+
+            // 댓글이 존재하는지 확인
+            Comment find = dao.getCommentById(commentId);
+            if (find == null) throw new CommentException("등록되지 않은 댓글 정보를 수정할 수 없습니다.");
+
+            // 수정된 댓글로 저장
+            dao.updateComment(commentUpdateRequest);
+        } catch (SQLException e) {
+            throw new CommentException("댓글 정보 수정 중 오류 발생");
+        }
+    }
+
+
+    @Override
     public void insertComment(CommentRequest comment) {
         try{
             dao.insertComment(comment);
@@ -72,6 +97,7 @@ public class CommentServiceImp implements CommentService {
             throw new CommentException("댓글 정보 조회 중 오류 발생");
         }
     }
+
 
 
 }
