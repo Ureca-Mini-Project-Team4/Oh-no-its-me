@@ -50,13 +50,6 @@ public class VoteServiceImp implements VoteService {
         }
     }
 
-//    @Override
-//    public void completeVote(Integer userId) throws UserException {
-//        User user = userDao.getUser(userId);
-//        if (user == null) {
-//            throw new UserException("등록되지 않은 아이디입니다.");
-//        }
-//    }
     @Override
     public boolean completeVote(int userId) {
         return voteDao.completeVote(userId) > 0;  // 업데이트된 행이 1개 이상이면 true 반환
