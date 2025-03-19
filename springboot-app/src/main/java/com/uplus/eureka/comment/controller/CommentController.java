@@ -1,6 +1,7 @@
 package com.uplus.eureka.comment.controller;
 
 import com.uplus.eureka.comment.model.dto.Comment;
+import com.uplus.eureka.comment.model.dto.CommentDeleteRequest;
 import com.uplus.eureka.comment.model.dto.CommentRequest;
 import com.uplus.eureka.comment.model.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -74,11 +75,12 @@ public class CommentController {
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
-
-
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<String> deleteCommentById(@PathVariable("commentId") Integer commentId) {
-        commentService.deleteCommentById(commentId); // Call service to delete the comment
+    public ResponseEntity<String> deleteCommentById(
+            @PathVariable("commentId") Integer commentId,
+            @RequestBody CommentDeleteRequest commentDeleteRequest) {
+
+        commentService.deleteCommentById(commentId, commentDeleteRequest); // Call service to delete the comment
         return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     }
 
