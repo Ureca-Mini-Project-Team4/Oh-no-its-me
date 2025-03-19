@@ -4,15 +4,16 @@
 
 <mapper namespace="com.uplus.eureka.vote.model.dao.VoteDao">
 
+
     <resultMap id="voteResultMap" type="com.uplus.eureka.vote.model.dto.VoteResult$Result">
-        <result property="username" column="username"/>    <!-- user_name(DB) → username(Java) -->
+        <result property="username" column="user_name"/>    <!-- user_name(DB) → username(Java) -->
         <result property="voteCount" column="vote_count"/>  <!-- vote_count(DB) → voteCount(Java) -->
     </resultMap>
 
-    <select id="findTopCandidateByPollId" resultType="com.uplus.eureka.vote.model.dto.VoteResult$Result">
-        SELECT U.user_name AS username, C.vote_count
-        FROM mini4.Candidates C
-                 JOIN mini4.Users U ON C.user_id = U.user_id
+    <select id="findTopCandidateByPollId" resultMap="voteResultMap">
+        SELECT U.user_name, C.vote_count
+        FROM Candidates C
+                 JOIN Users U ON C.user_id = U.user_id
         WHERE C.poll_id = #{pollId}
         ORDER BY C.vote_count DESC
             LIMIT 1
@@ -20,8 +21,8 @@
 
     <select id="findQuestionTextByPollId" resultType="String">
         SELECT Q.question_text
-        FROM mini4.Polls P
-                 JOIN mini4.Questions Q ON P.question_id = Q.question_id
+        FROM Polls P
+                 JOIN Questions Q ON P.question_id = Q.question_id
         WHERE P.poll_id = #{pollId}
     </select>
 
@@ -29,6 +30,13 @@
         UPDATE mini4.Candidates
         SET vote_count = vote_count + 1
         WHERE candidate_id = #{candidate_id}
+    </update>
+
+    <!--투표 완료 등록-->
+    <update id="completeVote" parameterType="java.lang.Integer">
+        UPDATE Users
+        SET is_voted = true
+        WHERE user_id = #{userId}
     </update>
 
 </mapper>
