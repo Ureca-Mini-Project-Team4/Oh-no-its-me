@@ -1,6 +1,7 @@
 package com.uplus.eureka.comment.model.service;
 
 import com.uplus.eureka.comment.model.dto.Comment;
+import com.uplus.eureka.comment.model.dto.CommentDeleteRequest;
 import com.uplus.eureka.comment.model.dto.CommentRequest;
 import com.uplus.eureka.comment.model.dto.CommentUpdateRequest;
 import com.uplus.eureka.user.model.dto.User;
@@ -17,5 +18,5 @@ public interface CommentService {
     void updateComment(Integer commentId, CommentRequest commentRequest);
 
     void insertComment(CommentRequest comment);
-    void deleteCommentById(Integer commentId);
+    void deleteCommentById(Integer commentId, CommentDeleteRequest commentDeleteRequest);
 }
