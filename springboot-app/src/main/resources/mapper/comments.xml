@@ -46,8 +46,8 @@
     </insert>
 
     <!-- 특정 comment_id에 대한 댓글 삭제 -->
-    <delete id="deleteCommentById" parameterType="Integer">
-        DELETE FROM comments WHERE comment_id = #{commentId, jdbcType=BIGINT}
+    <delete id="deleteCommentById" parameterType="com.uplus.eureka.comment.model.dto.CommentDeleteRequest">
+        DELETE FROM comments WHERE comment_id = #{commentId}
     </delete>
 
 </mapper>

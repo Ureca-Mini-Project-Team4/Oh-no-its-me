@@ -28,13 +28,8 @@ public class VoteController {
     @ApiResponse(responseCode = "200", description = "투표 결과 조회 성공")
     @ApiResponse(responseCode = "400", description = "잘못된 요청, pollId가 잘못됨")
     @GetMapping("/{pollId}")
-    public ResponseEntity<?> getVoteResult(@PathVariable("pollId") int pollId) {
-        try {
-            VoteResult result = voteService.getVoteResult(pollId);
-            return ResponseEntity.ok(result); // 200 OK
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); // 404 NOT FOUND
-        }
+    public ResponseEntity<VoteResult> getVoteResult(@PathVariable("pollId") int pollId) {
+        return ResponseEntity.ok(voteService.getVoteResult(pollId));
     }
 
     //투표 수 증가
@@ -44,12 +39,8 @@ public class VoteController {
     @PostMapping("/{pollId}")
     public ResponseEntity<?> increaseVote(@PathVariable int pollId,
                                           @RequestBody VoteRequest voteRequest) {
-        try {
-            voteService.increaseVoteCount(pollId, voteRequest);
-            return ResponseEntity.ok().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        voteService.increaseVoteCount(pollId, voteRequest);
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "투표 완료 등록", description = "유저의 투표 완료 등록")
@@ -57,13 +48,8 @@ public class VoteController {
     @ApiResponse(responseCode = "400", description = "잘못된 요청, 유저가 존재하지 않거나 이미 투표 완료됨")
     @PostMapping("/{userId}/complete")
     public ResponseEntity<?> completeVote(@PathVariable int userId) {
-        boolean success = voteService.completeVote(userId);
-
-        if (success) {
-            return ResponseEntity.ok().body("{\"message\": \"투표 완료 성공\"}");
-        } else {
-            return ResponseEntity.badRequest().body("{\"message\": \"유저가 존재하지 않거나 이미 투표 완료됨\"}");
-        }
+        voteService.completeVote(userId);
+        return ResponseEntity.ok().body("{\"message\": \"투표 완료 성공\"}");
     }
 
 }
