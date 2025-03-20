@@ -15,5 +15,12 @@
         ORDER BY RAND()
         LIMIT 4
     </select>
+    
+    <!-- Poll 데이터 삽입 -->
+	<insert id="putQuestions" parameterType="com.uplus.eureka.poll.model.dto.Question">
+	    INSERT INTO polls(question_id, start_time, end_time)
+	    VALUES (#{questionId}, #{startTime}, #{endTime})
+	</insert>
+
 
 </mapper>
