@@ -2,9 +2,14 @@ package com.uplus.eureka.comment.model.service;
 
 import com.uplus.eureka.comment.model.dao.CommentDao;
 import com.uplus.eureka.comment.model.dto.Comment;
+import com.uplus.eureka.comment.model.dto.CommentDeleteRequest;
 import com.uplus.eureka.comment.model.exception.CommentException;
 import com.uplus.eureka.comment.model.dto.CommentRequest;
 import com.uplus.eureka.comment.model.dto.CommentUpdateRequest;
+import com.uplus.eureka.user.model.dao.UserDao;
+import com.uplus.eureka.user.model.dto.User;
+import org.aspectj.apache.bcel.classfile.Code;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -14,8 +19,10 @@ import java.util.List;
 public class CommentServiceImp implements CommentService {
 
     private final CommentDao dao;
+    private final UserDao userDao;
 
-    public CommentServiceImp(CommentDao dao) {
+    public CommentServiceImp(CommentDao dao, UserDao userDao) {
+        this.userDao = userDao;
         if(dao ==null){
             throw new IllegalArgumentException("dao is null");
         }
@@ -24,86 +31,86 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public Comment getCommentById(Integer commentId) {
-        try {
-            System.out.println("commentId = " + commentId);
-            Comment comment = dao.getCommentById(commentId);
-            System.out.println("조회된 댓글: " + comment);
-            if (comment == null) {
-                throw new CommentException("요청한 댓글은 등록되지 않았습니다.");
-            }
-            return comment;
-        } catch (SQLException e) {
-            throw new CommentException("댓글 정보 조회 중 오류 발생");
+        Comment comment = dao.getCommentById(commentId);
+
+        // 404 NOT_FOUND
+        if (comment == null) {
+            throw new CommentException("요청한 댓글은 등록되지 않았습니다.", HttpStatus.NOT_FOUND);
         }
+        // 200 SUCCESS
+        return comment;
     }
 
     @Override
     public List<Comment> getAllComments() {
-        try {
-            // DAO에서 댓글 목록을 한 번만 호출
-            List<Comment> comments = dao.getAllComments();
+        // DAO에서 댓글 목록을 한 번만 호출
+        List<Comment> comments = dao.getAllComments();
 
-            // 결과가 비어있을 경우 처리 (선택 사항)
-            if (comments.isEmpty()) {
-                System.out.println("댓글이 없습니다.");
-            }
-            return comments; // 댓글 목록 반환
+        // 204 No Conetent
+        // 200 SUCCESS
+        return comments; // 댓글 목록 반환
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new CommentException("댓글 목록 조회 중 오류 발생");
-        }
     }
 
     @Override
     public void updateComment(Integer commentId, CommentRequest commentRequest) {
-        try {
-            // 댓글이 존재하는지 확인
-            Comment find = dao.getCommentById(commentId);
-            if (find == null) throw new CommentException("등록되지 않은 댓글 정보를 수정할 수 없습니다.");
 
-            // 작성자와 수정 요청자가 다른 경우
-            if (!find.getUserId().equals(commentRequest.getUserId())) {
-                throw new CommentException("댓글을 수정할 권한이 없습니다.");  // 에러 처리
-            }
-
-            // commentId와 commentRequest를 이용해 CommentUpdateRequest 객체 생성
-            CommentUpdateRequest commentUpdateRequest = new CommentUpdateRequest();
-            commentUpdateRequest.setCommentId(commentId);  // commentId를 @PathVariable로 전달받은 값으로 설정
-            commentUpdateRequest.setUserId(commentRequest.getUserId());  // commentRequest에서 userId를 가져와 설정
-            commentUpdateRequest.setCommentText(commentRequest.getCommentText());  // commentRequest에서 commentText를 가져와 설정
-
-            // 로그를 찍어서 값이 제대로 들어갔는지 확인
-            System.out.println("commentUpdateRequest: " + commentUpdateRequest);
-
-            // 수정된 댓글로 저장
-            dao.updateComment(commentUpdateRequest);
-        } catch (SQLException e) {
-            throw new CommentException("댓글 정보 수정 중 오류 발생");
+        // 401 Unauthorized
+        User findUser = userDao.getUser(commentRequest.getUserId());
+        if(findUser == null){
+            throw new CommentException("등록되지 않은 사용자입니다.", HttpStatus.UNAUTHORIZED);
         }
+
+        // 404 Not Found
+        Comment find = dao.getCommentById(commentId);
+        if (find == null) throw new CommentException("등록되지 않은 댓글 정보를 수정할 수 없습니다.", HttpStatus.NOT_FOUND);
+
+        // 403 Forbidden
+        if (!find.getUserId().equals(commentRequest.getUserId())) {
+            throw new CommentException("댓글을 수정할 권한이 없습니다.", HttpStatus.FORBIDDEN);  // 에러 처리
+        }
+
+        // commentId와 commentRequest를 이용해 CommentUpdateRequest 객체 생성
+        CommentUpdateRequest commentUpdateRequest = new CommentUpdateRequest();
+        commentUpdateRequest.setCommentId(commentId);  // commentId를 @PathVariable로 전달받은 값으로 설정
+        commentUpdateRequest.setUserId(commentRequest.getUserId());  // commentRequest에서 userId를 가져와 설정
+        commentUpdateRequest.setCommentText(commentRequest.getCommentText());  // commentRequest에서 commentText를 가져와 설정
+
+        // 200 SUCCESS : 수정된 댓글로 저장
+        dao.updateComment(commentUpdateRequest);
     }
-
-
 
     @Override
     public void insertComment(CommentRequest comment) {
-        try{
-            dao.insertComment(comment);
+
+        // 401 Unauthorized
+        User findUser = userDao.getUser(comment.getUserId());
+        if(findUser == null){
+            throw new CommentException("등록되지 않은 사용자입니다.", HttpStatus.UNAUTHORIZED);
         }
-        catch(SQLException e){
-            throw new CommentException("댓글 등록 중 오류 발생");
-        }
+
+        // 201 CREATED
+        dao.insertComment(comment);
     }
 
     @Override
-    public void deleteCommentById(Integer commentId) {
-        try {
-           dao.deleteCommentById(commentId);
-        } catch (Exception e) {
-            throw new CommentException("댓글 정보 조회 중 오류 발생");
+    public void deleteCommentById(Integer commentId, CommentDeleteRequest commentDeleteRequest) {
+
+
+        Comment find = dao.getCommentById(commentId);
+        // 404 Not found
+        if (find == null) {
+            throw new CommentException("등록되지 않은 댓글 정보를 삭제할 수 없습니다.", HttpStatus.NOT_FOUND);
         }
+
+        // 403 Forbidden
+        if (!find.getUserId().equals(commentDeleteRequest.getUserId())) {
+            throw new CommentException("댓글을 삭제할 권한이 없습니다.", HttpStatus.FORBIDDEN);
+        }
+
+        // 200 SUCCESS
+        dao.deleteCommentById(commentId, commentDeleteRequest);
+
     }
-
-
 
 }
