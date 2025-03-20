@@ -15,7 +15,7 @@ public class Comment {
     @Schema(description = "댓글 작성자 ID", example = "1")
     private Integer commentId;
 
-    @JsonProperty("comment_id")
+    @JsonProperty("user_id")
     @Schema(description = "사용자 ID", example = "1")
     private Integer userId;
 
