@@ -96,20 +96,19 @@ public class CommentServiceImp implements CommentService {
     @Override
     public void deleteCommentById(Integer commentId, CommentDeleteRequest commentDeleteRequest) {
 
-        // 댓글이 존재하는지 확인
+
         Comment find = dao.getCommentById(commentId);
+        // 404 Not found
         if (find == null) {
-            // 댓글이 없다면 404 에러 발생
             throw new CommentException("등록되지 않은 댓글 정보를 삭제할 수 없습니다.", HttpStatus.NOT_FOUND);
         }
 
-        // 작성자와 삭제 요청자가 다른 경우
+        // 403 Forbidden
         if (!find.getUserId().equals(commentDeleteRequest.getUserId())) {
-            // 권한이 없다면 403 에러 발생
             throw new CommentException("댓글을 삭제할 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
 
-        // 댓글 삭제
+        // 200 SUCCESS
         dao.deleteCommentById(commentId, commentDeleteRequest);
 
     }

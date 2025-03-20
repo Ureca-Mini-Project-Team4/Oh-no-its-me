@@ -70,7 +70,9 @@ public class CommentController {
     @Operation(summary = "댓글 수정", description = "본인이 작성한 댓글 수정")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "댓글 수정 성공"),
-            @ApiResponse(responseCode = "401", description = "등록되지 않은 사용자 에러")
+            @ApiResponse(responseCode = "401", description = "등록되지 않은 사용자 에러 - 인증실패"),
+            @ApiResponse(responseCode = "403", description = "권한 없음"),
+            @ApiResponse(responseCode = "404", description = "등록되지 않은 댓글")
     })
     @PatchMapping("/{commentId}")
     public ResponseEntity<String> updateComment(
@@ -83,6 +85,12 @@ public class CommentController {
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
+    @Operation(summary = "댓글 삭제", description = "본인이 작성한 댓글 삭제")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "댓글 삭제 성공"),
+            @ApiResponse(responseCode = "403", description = "권한 없음"),
+            @ApiResponse(responseCode = "404", description = "등록되지 않은 댓글")
+    })
     @DeleteMapping("/{commentId}")
     public ResponseEntity<String> deleteCommentById(
             @PathVariable("commentId") Integer commentId,
