@@ -55,11 +55,18 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public void updateComment(Integer commentId, CommentRequest commentRequest) {
-        // 댓글이 존재하는지 확인
+
+        // 401 Unauthorized
+        User findUser = userDao.getUser(commentRequest.getUserId());
+        if(findUser == null){
+            throw new CommentException("등록되지 않은 사용자입니다.", HttpStatus.UNAUTHORIZED);
+        }
+
+        // 404 Not Found
         Comment find = dao.getCommentById(commentId);
         if (find == null) throw new CommentException("등록되지 않은 댓글 정보를 수정할 수 없습니다.", HttpStatus.NOT_FOUND);
 
-        // 작성자와 수정 요청자가 다른 경우
+        // 403 Forbidden
         if (!find.getUserId().equals(commentRequest.getUserId())) {
             throw new CommentException("댓글을 수정할 권한이 없습니다.", HttpStatus.FORBIDDEN);  // 에러 처리
         }
@@ -70,20 +77,14 @@ public class CommentServiceImp implements CommentService {
         commentUpdateRequest.setUserId(commentRequest.getUserId());  // commentRequest에서 userId를 가져와 설정
         commentUpdateRequest.setCommentText(commentRequest.getCommentText());  // commentRequest에서 commentText를 가져와 설정
 
-        // 로그를 찍어서 값이 제대로 들어갔는지 확인
-        System.out.println("commentUpdateRequest: " + commentUpdateRequest);
-
-        // 수정된 댓글로 저장
+        // 200 SUCCESS : 수정된 댓글로 저장
         dao.updateComment(commentUpdateRequest);
     }
 
     @Override
     public void insertComment(CommentRequest comment) {
 
-//        User user = comment.getUserId();
         User findUser = userDao.getUser(comment.getUserId());
-
-
         if(findUser == null){
             throw new CommentException("등록되지 않은 사용자입니다.", HttpStatus.UNAUTHORIZED);
         }
