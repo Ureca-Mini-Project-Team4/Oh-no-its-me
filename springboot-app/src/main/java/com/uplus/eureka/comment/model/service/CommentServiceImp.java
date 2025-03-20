@@ -31,12 +31,13 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public Comment getCommentById(Integer commentId) {
-        System.out.println("commentId = " + commentId);
         Comment comment = dao.getCommentById(commentId);
-        System.out.println("조회된 댓글: " + comment);
+
+        // 404 NOT_FOUND
         if (comment == null) {
             throw new CommentException("요청한 댓글은 등록되지 않았습니다.", HttpStatus.NOT_FOUND);
         }
+        // 200 SUCCESS
         return comment;
     }
 
@@ -45,10 +46,8 @@ public class CommentServiceImp implements CommentService {
         // DAO에서 댓글 목록을 한 번만 호출
         List<Comment> comments = dao.getAllComments();
 
-        // 결과가 비어있을 경우 처리 (선택 사항)
-        if (comments.isEmpty())
-            throw new CommentException("등록되지 않은 댓글을 조회할 수 없습니다.", HttpStatus.NOT_FOUND);
-
+        // 204 No Conetent
+        // 200 SUCCESS
         return comments; // 댓글 목록 반환
 
     }
@@ -84,10 +83,13 @@ public class CommentServiceImp implements CommentService {
     @Override
     public void insertComment(CommentRequest comment) {
 
+        // 401 Unauthorized
         User findUser = userDao.getUser(comment.getUserId());
         if(findUser == null){
             throw new CommentException("등록되지 않은 사용자입니다.", HttpStatus.UNAUTHORIZED);
         }
+
+        // 201 CREATED
         dao.insertComment(comment);
     }
 

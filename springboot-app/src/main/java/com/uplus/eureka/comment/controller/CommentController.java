@@ -28,7 +28,10 @@ public class CommentController {
     }
 
     @Operation(summary = "전체 댓글 조회", description = "전체 댓글 조회하기")
-    @ApiResponse(responseCode = "200", description = "모든 댓글 조회 성공")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "댓글 조회 성공"),
+            @ApiResponse(responseCode = "204", description = "댓글이 아직 없음")
+    })
     @GetMapping
     public ResponseEntity<?> getAllComments() {
         List<Comment> comments = commentService.getAllComments();
@@ -58,7 +61,7 @@ public class CommentController {
     public ResponseEntity<String> insertComment(@RequestBody CommentRequest comment) {
         System.out.println(comment);
         if(comment.getUserId() == null){
-            return new ResponseEntity<String>("FAILED", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("FAILED", HttpStatus.NOT_FOUND);
         }
         commentService.insertComment(comment);
         return new ResponseEntity<String>("SUCCESS", HttpStatus.CREATED);
