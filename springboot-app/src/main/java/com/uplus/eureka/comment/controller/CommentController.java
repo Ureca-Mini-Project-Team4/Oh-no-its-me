@@ -27,7 +27,7 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @Operation(summary = "Get all comments", description = "Retrieve all comments")
+    @Operation(summary = "전체 댓글 조회", description = "전체 댓글 조회하기")
     @ApiResponse(responseCode = "200", description = "모든 댓글 조회 성공")
     @GetMapping
     public ResponseEntity<?> getAllComments() {
@@ -38,7 +38,7 @@ public class CommentController {
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
-    @Operation(summary = "Get comment by ID", description = "Retrieve comment information by commentID")
+    @Operation(summary = "특정 댓글 조회", description = "commentID로 특정 댓글 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "댓글 조회 성공"),
             @ApiResponse(responseCode = "404", description = "댓글을 찾을 수 없음")
@@ -49,10 +49,10 @@ public class CommentController {
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
-    @Operation(summary = "POST new Comment", description = "POST new Comment")
+    @Operation(summary = "댓글 생성", description = "새로운 댓글 작성")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "댓글 등록 성공"),
-            @ApiResponse(responseCode = "404", description = "댓글 등록 오류")
+            @ApiResponse(responseCode = "201", description = "댓글 등록 성공"),
+            @ApiResponse(responseCode = "401", description = "등록되지 않은 사용자 에러")
     })
     @PostMapping
     public ResponseEntity<String> insertComment(@RequestBody CommentRequest comment) {

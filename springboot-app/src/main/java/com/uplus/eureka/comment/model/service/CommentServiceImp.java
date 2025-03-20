@@ -6,6 +6,8 @@ import com.uplus.eureka.comment.model.dto.CommentDeleteRequest;
 import com.uplus.eureka.comment.model.exception.CommentException;
 import com.uplus.eureka.comment.model.dto.CommentRequest;
 import com.uplus.eureka.comment.model.dto.CommentUpdateRequest;
+import com.uplus.eureka.user.model.dao.UserDao;
+import com.uplus.eureka.user.model.dto.User;
 import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,8 +19,10 @@ import java.util.List;
 public class CommentServiceImp implements CommentService {
 
     private final CommentDao dao;
+    private final UserDao userDao;
 
-    public CommentServiceImp(CommentDao dao) {
+    public CommentServiceImp(CommentDao dao, UserDao userDao) {
+        this.userDao = userDao;
         if(dao ==null){
             throw new IllegalArgumentException("dao is null");
         }
@@ -75,6 +79,14 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public void insertComment(CommentRequest comment) {
+
+//        User user = comment.getUserId();
+        User findUser = userDao.getUser(comment.getUserId());
+
+
+        if(findUser == null){
+            throw new CommentException("등록되지 않은 사용자입니다.", HttpStatus.UNAUTHORIZED);
+        }
         dao.insertComment(comment);
     }
 
