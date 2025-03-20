@@ -64,6 +64,11 @@ public class CommentController {
         return new ResponseEntity<String>("SUCCESS", HttpStatus.CREATED);
     }
 
+    @Operation(summary = "댓글 수정", description = "본인이 작성한 댓글 수정")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "댓글 수정 성공"),
+            @ApiResponse(responseCode = "401", description = "등록되지 않은 사용자 에러")
+    })
     @PatchMapping("/{commentId}")
     public ResponseEntity<String> updateComment(
             @PathVariable("commentId") Integer commentId,
