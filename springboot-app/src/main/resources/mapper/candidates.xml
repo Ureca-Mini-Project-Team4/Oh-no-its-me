@@ -1,23 +1,38 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.uplus.eureka.candidate.model.dao.CandidateDao">
 
-    <!-- CandidateDTO와 DB 컬럼 매핑 -->
-	<resultMap id="candidateResultMap" type="com.uplus.eureka.candidate.model.dto.Candidate">
-	    <result property="candidateId" column="candidate_id"/>
-	    <result property="userId" column="user_id"/>
-	    <result property="pollId" column="poll_id"/>
-	    <result property="voteCount" column="vote_count"/>
-	</resultMap>
+    <!-- poll_id가 높은 순으로 4개의 poll_id를 가져오는 쿼리 -->
+    <select id="getTopPollIds" resultType="int">
+        SELECT poll_id
+        FROM Polls
+        ORDER BY poll_id DESC
+        LIMIT #{limit}
+    </select>
 
-    <!-- 특정 poll_id에 대해 랜덤으로 4명의 후보 선택 -->
-	<select id="getCandidates" parameterType="java.lang.Integer" resultMap="candidateResultMap">
-	    SELECT candidate_id, user_id, poll_id, vote_count
-	    FROM candidates
-	    WHERE poll_id = #{pollId}
-	    LIMIT 4;
-	</select>
+    <!-- poll_id에 대해 is_selected가 false인 user_id 4명을 랜덤으로 가져오는 쿼리 -->
+    <select id="getRandomUsersForPoll" resultType="int">
+        SELECT user_id
+        FROM Users
+        WHERE is_selected = false
+        ORDER BY RAND()
+        LIMIT #{limit}
+    </select>
+
+    <!-- candidates 테이블에 user_id와 poll_id를 삽입하는 쿼리 -->
+    <insert id="insertCandidate">
+        INSERT INTO Candidates (user_id, poll_id, vote_count)
+        VALUES (#{userId}, #{pollId}, 0)
+    </insert>
+
+    <!-- is_selected 값을 true로 업데이트하는 쿼리 -->
+    <update id="updateUserSelectedStatus">
+        UPDATE Users
+        SET is_selected = true
+        WHERE user_id = #{userId}
+    </update>
 
 </mapper>
+

@@ -27,13 +27,12 @@ public class CandidateController {
     @GetMapping("api/candidate/{pollId}")
     public ResponseEntity<?> getCandidates(@PathVariable("pollId") int pollId) {
         try {
-            List<Candidate> candidates = candidateService.getCandidates(pollId);
-            if (candidates.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
-            return ResponseEntity.ok(candidates);
+            // 후보자 생성 로직을 CandidateService에서 처리하도록 호출
+            candidateService.createCandidates();
+            return ResponseEntity.status(HttpStatus.CREATED).build(); // 생성 성공
         } catch (Exception e) {
-            throw new CandidateNotFoundException("Candidates not found for pollId " + pollId, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage()); // 에러 발생 시
         }
     }
 }
+
