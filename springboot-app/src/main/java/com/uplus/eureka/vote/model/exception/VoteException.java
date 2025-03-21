@@ -4,13 +4,10 @@ import com.uplus.eureka.EurekaException;
 import org.springframework.http.HttpStatus;
 
 public class VoteException extends EurekaException {
-//    public VoteException(String msg) {
-//        super(msg);
-//    }
     private final HttpStatus status;
 
-    public VoteException(String message, HttpStatus status) {
-        super(message);
+    public VoteException(String msg, HttpStatus status) {
+        super(msg);
         this.status = status;
     }
 
