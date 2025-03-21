@@ -91,7 +91,7 @@
 
 ## 프로젝트 실행 방법
 
-> 본 프로젝트는 Springboot를 사용하므로 `springboot-app/src/main/resources/ application.yml` 파일을 수정해주세요.
+> 본 프로젝트는 Springboot를 사용하므로 `springboot-app/src/main/resources/application.properties` 파일을 수정해주세요.
 
 ```yml
 spring.datasource.hikari.jdbc-url=jdbc:mysql://localhost:3306/mini4?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8 # Database
