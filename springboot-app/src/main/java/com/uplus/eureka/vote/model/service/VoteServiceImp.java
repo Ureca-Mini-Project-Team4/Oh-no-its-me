@@ -16,12 +16,10 @@ import java.util.Collections;
 public class VoteServiceImp implements VoteService {
 
     private final VoteDao voteDao;
-    private final UserDao userDao;
 
     @Autowired
     public VoteServiceImp(VoteDao voteDao, UserDao userDao) {
         this.voteDao = voteDao;
-        this.userDao = userDao;
     }
 
    @Override
@@ -52,8 +50,9 @@ public class VoteServiceImp implements VoteService {
 
     @Override
     public boolean completeVote(int userId) {
-        if (voteDao.completeVote(userId) == 0) {
-            throw  new VoteException("유저가 존재하지 않거나 이미 투표 완료됨", HttpStatus.BAD_REQUEST);
+        int updated = voteDao.completeVote(userId);
+        if (updated == 0) {
+            throw new VoteException("존재하지 않는 유저입니다.", HttpStatus.BAD_REQUEST);
         }
         return true;
     }
