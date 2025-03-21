@@ -7,17 +7,14 @@ public class Candidate {
     private int pollId;
     private int voteCount;
 
-    // 기본 생성자
     public Candidate() {}
 
-    // 파라미터가 있는 생성자
     public Candidate(int userId, int pollId, int voteCount) {
         this.userId = userId;
         this.pollId = pollId;
         this.voteCount = voteCount;
     }
 
-    // Getter & Setter
     public int getCandidateId() {
         return candidateId;
     }

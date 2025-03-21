@@ -20,3 +20,4 @@ public interface CandidateDao {
     // user_id에 해당하는 is_selected 값을 true로 업데이트하는 쿼리
     void updateUserSelectedStatus(int userId);
 }
+
