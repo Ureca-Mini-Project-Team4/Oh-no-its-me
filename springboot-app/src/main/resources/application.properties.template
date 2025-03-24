@@ -1,15 +1,15 @@
-spring.application.name=SpringBootTest
+spring.application.name=backend
 server.servlet.context-path=/eureka
 server.port=8080
 
-# DataBase Settings : hikariCP : https://github.com/brettwooldridge/HikariCP
+# aws rds - mysql DB Setting
+spring.datasource.hikari.jdbc-url=jdbc:mysql://[rds-endpoint]:[port]/[db]?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+spring.datasource.hikari.username=[username]
+spring.datasource.hikari.password=[password]
 spring.datasource.hikari.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.datasource.hikari.jdbc-url=jdbc:mysql://localhost:3306/mini4?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
-spring.datasource.hikari.username=username
-spring.datasource.hikari.password=password
-spring.datasource.hikari.pool-name=hikari-pool
 
-# hikariCP property setting
+# HikariCP DB Setting
+spring.datasource.hikari.pool-name=hikari-pool
 spring.datasource.hikari.maximum-pool-size=50
 spring.datasource.hikari.minimum-idle=50
 spring.datasource.hikari.connection-timeout=5000
