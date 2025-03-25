@@ -21,14 +21,17 @@ jobs:
 
       # 3. gradlew 실행 권한 부여
       - name: Grant execute permission for gradlew
+        working-directory: ./springboot-app  # springboot-app 디렉토리에서 실행
         run: chmod +x gradlew
 
       # 4. Gradle 빌드 (JAR 파일 생성)
       - name: Build with Gradle
+        working-directory: ./springboot-app  # springboot-app 디렉토리에서 실행
         run: ./gradlew clean bootJar
 
       # 5. Docker 이미지 빌드
       - name: Docker build
+        working-directory: ./springboot-app  # springboot-app 디렉토리에서 실행
         run: |
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
           docker build -t sluv-springboot-main-cicd .
@@ -60,4 +63,4 @@ jobs:
           environment_name: Sluvdev-env
           version_label: "github-action--${{ steps.format-time.outputs.replaced }}"
           region: ap-northeast-2
-          deployment_package: Dockerrun.aws.json
+          deployment_package: springboot-app/Dockerrun.aws.json  # springboot-app 경로에 있는 Dockerrun.aws.json 파일 사용
