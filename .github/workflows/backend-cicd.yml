@@ -64,3 +64,4 @@ jobs:
           version_label: "springboot-app-version-2"
           region: us-east-2
           deployment_package: springboot-app/Dockerrun.aws.json  # springboot-app 경로에 있는 Dockerrun.aws.json 파일 사용
+          use_existing_version_if_available: true
