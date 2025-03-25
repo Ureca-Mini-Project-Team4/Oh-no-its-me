@@ -99,9 +99,16 @@ spring.datasource.hikari.username=username # username
 spring.datasource.hikari.password=password # password
 ```
 
-> 본 프로젝트는 gradle 기반이므로 다음 명령어를 사용해 백엔드 서버 빌드 및 실행할 수 있습니다.
+> 본 프로젝트는 gradle 기반이므로 다음 명령어를 사용해 빌드 및 실행할 수 있습니다.
 
 ```sh
 cd springboot-app/
 ./gradlew bootRun
+```
+
+
+> 본 프로젝트는 Docker를 활용하여 빌드 및 실행할 수 있습니다.
+```sh
+docker build -t backend .
+docker run -d -p 8080:8080 backend
 ```
