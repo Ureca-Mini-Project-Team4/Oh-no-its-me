@@ -33,11 +33,10 @@ jobs:
       - name: Docker build
         working-directory: ./springboot-app  # springboot-app 디렉토리에서 실행
         run: |
-          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-          docker build -t sluv-springboot-main-cicd .
-          docker tag sluv-springboot-main-cicd sluv2323/sluv-springboot-main-cicd:latest
-          docker push sluv2323/sluv-springboot-main-cicd:latest
-
+          docker login -u youngxzu -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker build -t youngxzu/springboot-main-cicd .
+          docker tag youngxzu/springboot-main-cicd youngxzu/springboot-main-cicd:latest
+          docker push youngxzu/springboot-main-cicd:latest
       # 6. 현재 시간으로 버전 태그 만들기
       - name: Get timestamp
         uses: gerred/actions/current-time@master
