@@ -110,5 +110,5 @@ cd springboot-app/
 > 본 프로젝트는 Docker를 활용하여 빌드 및 실행할 수 있습니다.
 ```sh
 docker build -t backend .
-docker run -d -p 8080:8080 backend
+docker run -d -p 8080:8080 --memory="1g" --memory-swap="2g" backend
 ```
