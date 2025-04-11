@@ -10,7 +10,9 @@
 
 ### ⏳ 프로젝트 개발 기간
 
-2025.03.13 ~ 2025.03.21 (7일)
+2025.03.13 ~ 2025.03.21 (7일) - Backend 개발
+2025.03.24 ~ 2025.03.31 (5일) - Figma 디자인
+2025.05.07 ~ 2025.05.20 (13일) - Frontend 개발
 
 ### 👥 팀원 소개
 
@@ -32,14 +34,12 @@
 
 ## 🛠️ 기술 스택
 
-| 카테고리     | 스택                                                                                                                                                                                                                                                                                                                                  |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Frontend** | <img src="https://img.shields.io/badge/React-61DAFB.svg?&style=flat-square&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/Javascript-F7DF1E.svg?&style=flat-square&logo=Javascript&logoColor=white"/>                                                                                                           |
-| **Backend**  | <img src="https://img.shields.io/badge/Spring_Boot-6DB33F.svg?&style=flat-square&logo=Spring&logoColor=white"/> <img src="https://img.shields.io/badge/MySQL-4479A1.svg?&style=flat-square&logo=MySQL&logoColor=white"/> <img src="https://img.shields.io/badge/MyBatis-2E4E4E.svg?&style=flat-square&logo=MyBatis&logoColor=white"/> |
+| 카테고리     | 스택                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Frontend** | <img src="https://img.shields.io/badge/React-61DAFB.svg?&style=flat-square&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/Vite-646CFF.svg?&style=flat-square&logo=Vite&logoColor=white"/> <img src="https://img.shields.io/badge/TailwindCSS-06B6D4.svg?&style=flat-square&logo=TailwindCSS&logoColor=white"/> <img src="https://img.shields.io/badge/React_Router-CA4245.svg?&style=flat-square&logo=React-Router&logoColor=white"/> <img src="https://img.shields.io/badge/Axios-5A29E4.svg?&style=flat-square&logo=Axios&logoColor=white"/> <img src="https://img.shields.io/badge/Javascript-F7DF1E.svg?&style=flat-square&logo=Javascript&logoColor=white"/> |
+| **Backend**  | <img src="https://img.shields.io/badge/Spring_Boot-6DB33F.svg?&style=flat-square&logo=Spring&logoColor=white"/> <img src="https://img.shields.io/badge/MySQL-4479A1.svg?&style=flat-square&logo=MySQL&logoColor=white"/> <img src="https://img.shields.io/badge/MyBatis-2E4E4E.svg?&style=flat-square&logo=MyBatis&logoColor=white"/>                                                                                                       |
+| **DevOps / Infra** | <img src="https://img.shields.io/badge/AWS-232F3E.svg?&style=flat-square&logo=Amazon-AWS&logoColor=white"/> <img src="https://img.shields.io/badge/RDS-527FFF.svg?&style=flat-square&logo=Amazon-RDS&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED.svg?&style=flat-square&logo=Docker&logoColor=white"/> <img src="https://img.shields.io/badge/Render-46E3B7.svg?&style=flat-square&logo=Render&logoColor=white"/> |
 
-## 📊 Flowchart
-
-![ERD 다이어그램](public/readme/flow.png)
 
 ## 📌 ERD Diagram
 
@@ -104,11 +104,4 @@ spring.datasource.hikari.password=password # password
 ```sh
 cd springboot-app/
 ./gradlew bootRun
-```
-
-
-> 본 프로젝트는 Docker를 활용하여 빌드 및 실행할 수 있습니다.
-```sh
-docker build -t backend .
-docker run -d -p 8080:8080 --memory="1g" --memory-swap="2g" backend
 ```
