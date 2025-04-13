@@ -1,0 +1,42 @@
+@import 'tailwindcss';
+@tailwind utilities;
+@import './fonts.css';
+
+@layer base {
+  html {
+    font-family: 'Pretendard-Regular', sans-serif;
+  }
+}
+
+@layer utilities {
+  .font-pre {
+    font-family: 'Pretendard-Light', sans-serif;
+  }
+  .font-pr {
+    font-family: 'Pretendard-Regular', sans-serif;
+  }
+  .font-pm {
+    font-family: 'Pretendard-Medium', sans-serif;
+  }
+  .font-ps {
+    font-family: 'Pretendard-SemiBold', sans-serif;
+  }
+  .font-pb {
+    font-family: 'Pretendard-Bold', sans-serif;
+  }
+}
+
+:root {
+  --primary-base: #f5506c;
+  --primary-hover: #e04562;
+  --primary-light: #ff7b8d;
+
+  --secondary-base: #6366f1;
+  --secondary-hover: #4f46e5;
+  --secondary-light: #a5b4fc;
+
+  --lemon: #ffee3d;
+  --soda: #6bd8f9;
+  --peach: #f4bdf8;
+  --orange: #ff933d;
+}
