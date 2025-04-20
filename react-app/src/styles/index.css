@@ -42,6 +42,10 @@
   --color-soda: #6bd8f9;
   --color-peach: #f4bdf8;
   --color-orange: #ff933d;
+
+  --color-success: #63e383;
+  --color-warning: #ef6962;
+  --color-info: #61c3f0;
 }
 
 .bg-lemon-gradient {
