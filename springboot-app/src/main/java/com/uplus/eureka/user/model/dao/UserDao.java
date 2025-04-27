@@ -1,3 +1,5 @@
+
+
 package com.uplus.eureka.user.model.dao;
 
 import java.util.Map;
@@ -12,4 +14,7 @@ public interface UserDao {
 	User getUser(Integer userId);
 	void updatePassword(Map<String, Object> paramMap);
 	User getUserByUsername(String username);
+	void saveRefreshToken(Map<String, Object> map);
+	String getRefreshToken(String userId);
+	void deleteRefreshToken(Map<String, Object> map);
 }

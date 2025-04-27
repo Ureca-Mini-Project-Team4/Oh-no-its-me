@@ -31,4 +31,7 @@ public class User implements Serializable {
 
 	@Schema(description = "투표여부", example = "false")
 	private boolean isVoted;
+
+	@Schema(description = "JWT 토큰", example = "eyJhbGciOiJIUzI1Ni...")
+	private String token; //
 }

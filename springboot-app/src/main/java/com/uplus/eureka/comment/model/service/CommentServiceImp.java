@@ -11,11 +11,13 @@ import com.uplus.eureka.user.model.dto.User;
 import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.List;
 
 @Service
+@Transactional
 public class CommentServiceImp implements CommentService {
 
     private final CommentDao dao;

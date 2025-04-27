@@ -5,8 +5,10 @@ import com.uplus.eureka.poll.model.dto.Question;
 import com.uplus.eureka.poll.model.dao.PollDao;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class PollServiceImp implements PollService {
 
     private final PollDao pollDao;
