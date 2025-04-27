@@ -32,7 +32,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")         //모든 요청에 대해
-				.allowedOrigins("http://localhost:3000", "http://localhost:3001")
+				.allowedOrigins("http://localhost:3000", "http://localhost:3001", "https://oh-no-its-me.vercel.app")
 //              허용해줄 method 설정   pre-flight에서 options로 요청하지만 head로 오는 경우도 있어서 모두 허용한다.
 				.allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
 						HttpMethod.DELETE.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(),
