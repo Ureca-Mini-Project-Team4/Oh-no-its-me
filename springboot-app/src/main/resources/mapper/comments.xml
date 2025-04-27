@@ -20,34 +20,34 @@
     <!-- 특정 comment_id에 대한 댓글 조회 -->
     <select id="getCommentById" resultMap="commentResultMap" parameterType="Integer">
         SELECT c.comment_id, c.user_id, u.random_nickname, c.comment_text
-        FROM comments c
-                 JOIN users u ON c.user_id = u.user_id
+        FROM Comments c
+                 JOIN Users u ON c.user_id = u.user_id
         WHERE c.comment_id = #{commentId}
     </select>
 
     <!-- 모든 댓글 조회 -->
     <select id="getAllComments" resultMap="commentResultMap">
         SELECT c.comment_id, c.user_id, u.random_nickname, c.comment_text
-        FROM comments c
-                 JOIN users u ON c.user_id = u.user_id
+        FROM Comments c
+                 JOIN Users u ON c.user_id = u.user_id
     </select>
 
     <!-- 댓글 수정 -->
     <update id="updateComment" parameterType="com.uplus.eureka.comment.model.dto.CommentUpdateRequest">
-        UPDATE comments
+        UPDATE Comments
         SET comment_text = #{commentText}, user_id = #{userId}
         WHERE comment_id = #{commentId}
     </update>
 
 
     <insert id="insertComment" parameterType="com.uplus.eureka.comment.model.dto.CommentRequest">
-        INSERT INTO comments (user_id, comment_text)
+        INSERT INTO Comments (user_id, comment_text)
         VALUES (#{userId}, #{commentText})
     </insert>
 
     <!-- 특정 comment_id에 대한 댓글 삭제 -->
     <delete id="deleteCommentById" parameterType="com.uplus.eureka.comment.model.dto.CommentDeleteRequest">
-        DELETE FROM comments WHERE comment_id = #{commentId}
+        DELETE FROM Comments WHERE comment_id = #{commentId}
     </delete>
 
 </mapper>

@@ -3,42 +3,39 @@
 
 <mapper namespace="com.uplus.eureka.user.model.dao.UserDao">
 
-	<!-- 매핑 -->
 	<resultMap id="userResultMap" type="com.uplus.eureka.user.model.dto.User">
-		<result property="userId" column="user_id"/> <!-- user_id -> userId -->
-		<result property="username" column="user_name"/> <!-- user_name -> username -->
+		<result property="userId" column="user_id"/>
+		<result property="username" column="user_name"/>
 		<result property="password" column="password"/>
 		<result property="img" column="img"/>
-		<result property="isSelected" column="is_selected"/> <!-- is_selected -> isSelected -->
+		<result property="isSelected" column="is_selected"/>
 		<result property="randomNickname" column="random_nickname"/>
 		<result property="isVoted" column="is_voted"/>
+		<result property="token" column="token"/>
 	</resultMap>
 
-	<!-- 로그인 -->
-	<select id="login" parameterType="java.util.Map" resultMap="userResultMap">
-		SELECT user_id, user_name, password, img, is_selected, random_nickname, is_voted
-		FROM Users
-		WHERE user_name = #{username} AND password = #{password};
-	</select>
-
-	<!-- 사용자 ID로 사용자 정보 확인 -->
-	<select id="getUser" parameterType="java.lang.Integer" resultMap="userResultMap">
-		SELECT user_id, user_name, password, img, is_selected, random_nickname, is_voted
-		FROM Users
-		WHERE user_id = #{userId};
-	</select>
-
-	<!-- 사용자 이름으로 사용자 조회 -->
 	<select id="getUserByUsername" parameterType="String" resultMap="userResultMap">
-		SELECT user_id, user_name, password, img, is_selected, random_nickname, is_voted
-		FROM Users
-		WHERE user_name = #{username}
+		SELECT * FROM Users WHERE user_name = #{username}
 	</select>
 
-	<!-- 비밀번호 변경 -->
-	<update id="updatePassword" parameterType="java.util.Map">
-		UPDATE Users
-		SET password = #{newPassword}
-		WHERE user_id = #{userId};
+	<select id="getUser" parameterType="Integer" resultMap="userResultMap">
+		SELECT * FROM Users WHERE user_id = #{userId}
+	</select>
+
+	<update id="updatePassword" parameterType="map">
+		UPDATE Users SET password = #{password} WHERE user_id = #{userId}
 	</update>
+
+	<update id="saveRefreshToken" parameterType="map">
+		UPDATE Users SET token = #{token} WHERE user_id = #{userId}
+	</update>
+
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		SELECT token FROM Users WHERE user_id = #{userId}
+	</select>
+
+	<update id="deleteRefreshToken" parameterType="map">
+		UPDATE Users SET token = #{token, jdbcType=VARCHAR} WHERE user_id = #{userId}
+	</update>
+
 </mapper>

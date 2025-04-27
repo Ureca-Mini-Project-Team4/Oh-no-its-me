@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 
 @Service
+@Transactional
 public class VoteServiceImp implements VoteService {
 
     private final VoteDao voteDao;
@@ -40,7 +41,6 @@ public class VoteServiceImp implements VoteService {
     }
 
     @Override
-    @Transactional
     public void increaseVoteCount(int pollId, VoteRequest voteRequest) {
         int updatedRows = voteDao.incrementVoteCount(voteRequest);
         if (updatedRows == 0) {

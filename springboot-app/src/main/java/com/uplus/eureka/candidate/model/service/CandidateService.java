@@ -2,10 +2,12 @@ package com.uplus.eureka.candidate.model.service;
 
 import com.uplus.eureka.candidate.model.dao.CandidateDao;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class CandidateService {
 
     private final CandidateDao candidateDao;

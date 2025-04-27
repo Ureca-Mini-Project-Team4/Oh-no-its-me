@@ -30,7 +30,7 @@
 
     <!-- 투표 수 증가 -->
     <update id="incrementVoteCount">
-        UPDATE mini4.Candidates
+        UPDATE Candidates
         SET vote_count = vote_count + 1
         WHERE candidate_id = #{candidate_id}
     </update>
