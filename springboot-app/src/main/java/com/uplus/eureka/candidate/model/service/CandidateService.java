@@ -43,4 +43,12 @@ public class CandidateService {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
+    
+    public void resetIsSelected() {
+    	try {
+    	candidateDao.updateUserSelectedFalse();
+    } catch(Exception e) {
+        throw new RuntimeException(e.getMessage(), e);
+    	}
+    }
 }

@@ -33,6 +33,12 @@
         SET is_selected = true
         WHERE user_id = #{userId}
     </update>
+    
+    <!-- 투표가 종료된 후 is_selected 값을 false로 업데이트하는 쿼리 -->
+    <update id = "updateUserSelectedFalse">
+    	UPDATE Users
+    	SET is_selected = false
+    </update>
 
 </mapper>
 
