@@ -1,31 +1,64 @@
-import { memo } from 'react';
+'use client';
+
+import { memo, useCallback, useMemo, useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
 
 interface WinnerCardProps {
   text: string;
   icon: string;
   name: string;
-  state: boolean;
+  num: number;
+}
+
+interface WinnerCardFrontProps {
+  text: string;
+  icon: string;
+  color: string;
+  onClick: () => void;
+}
+
+interface WinnderCardBackProps {
+  name: string;
+  color: string;
   onClick: () => void;
 }
 
 const BASE_URL = '/assets/images/';
 const BASE_CSS = 'p-3 w-full h-full rounded-[20px] flex flex-col';
-const BASE_STYLE = 'linear-gradient(to bottom, #FFED39, #FFFAC5)';
 
-const WinnerCard = ({ text, icon, name, state, onClick }: WinnerCardProps) => {
+const WinnerCard = ({ text, icon, name, num }: WinnerCardProps) => {
+  const [state, setState] = useState(false);
+  const handleChangeState = useCallback(() => {
+    setState(!state);
+  }, [state]);
+
+  const color = useMemo(() => {
+    switch (num % 4) {
+      case 1:
+        return 'bg-lemon-gradient';
+      case 2:
+        return 'bg-soda-gradient';
+      case 3:
+        return 'bg-peach-gradient';
+      case 0:
+        return 'bg-orange-gradient';
+      default:
+        return '';
+    }
+  }, [num]);
+
   return (
-    <div className="relative w-[230px] h-[290px]">
+    <div className="w-[131px] h-[168px] sm:w-[230px] sm:h-[290px]">
       <ReactCardFlip
         isFlipped={state}
         containerStyle={{
           width: '100%',
           height: '100%',
-          position: 'absolute',
+          position: 'relative',
         }}
       >
-        <WinnerCardFront text={text} icon={icon} onClick={onClick} />
-        <WinnerCardBack name={name} onClick={onClick} />
+        <WinnerCardFront text={text} icon={icon} color={color} onClick={handleChangeState} />
+        <WinnerCardBack name={name} color={color} onClick={handleChangeState} />
       </ReactCardFlip>
     </div>
   );
@@ -33,41 +66,31 @@ const WinnerCard = ({ text, icon, name, state, onClick }: WinnerCardProps) => {
 
 export default memo(WinnerCard);
 
-const WinnerCardFront = ({
-  text,
-  icon,
-  onClick,
-}: {
-  text: string;
-  icon: string;
-  onClick: () => void;
-}) => {
+const WinnerCardFront = ({ text, icon, color, onClick }: WinnerCardFrontProps) => {
   const new_src = `${BASE_URL}question/${icon}`;
 
   return (
     <div
       onClick={onClick}
-      style={{ background: BASE_STYLE }}
-      className={`${BASE_CSS} items-end justify-evenly cursor-pointer`}
+      className={`${BASE_CSS} ${color} items-end justify-evenly cursor-pointer`}
     >
-      <p className="text-[16px] font-medium leading-snug">{text}</p>
-      <img src={new_src} className="w-[100px] h-[100px]" />
+      <p className="text-[10px] sm:text-[16px] font-medium leading-snug">{text}</p>
+      <img src={new_src} className="w-[60px] h-[60px] sm:w-[100px] sm:h-[100px]" />
     </div>
   );
 };
 
-const WinnerCardBack = ({ name, onClick }: { name: string; onClick: () => void }) => {
+const WinnerCardBack = ({ name, color, onClick }: WinnderCardBackProps) => {
   const new_src = `${BASE_URL}people/${name}.png`;
 
   return (
     <div
       onClick={onClick}
-      style={{ background: BASE_STYLE }}
-      className={`${BASE_CSS} items-center justify-evenly cursor-pointer`}
+      className={`${BASE_CSS} ${color} items-center justify-evenly cursor-pointer`}
     >
-      <img src={`${BASE_URL}medal.png`} className="w-[68px] h-[83px]" />
-      <img src={new_src} className="w-[100px] h-[100px]" />
-      <p className="text-[18px]">{name}</p>
+      <img src={`${BASE_URL}medal.png`} className="w-[30px] h-[40px] sm:w-[60px] sm:h-[80px]" />
+      <img src={new_src} className="w-[60px] h-[60px] sm:w-[100px] sm:h-[100px]" />
+      <p className="text-[13px] sm:text-[18px]">{name}</p>
     </div>
   );
 };
