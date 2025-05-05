@@ -3,7 +3,8 @@ import { memo } from 'react';
 const Circle = ({ page, num }: { page: number; num: number }) => {
   return (
     <div
-      className={`${num === page ? 'bg-[#F5506C]' : 'bg-[#D9D9D9]'} w-[10px] h-[10px] sm:w-[18px] sm:h-[18px] rounded-xl`}
+      style={{ backgroundColor: num === page ? 'var(--color-primary-base)' : '#D9D9D9' }}
+      className="w-[10px] h-[10px] sm:w-[18px] sm:h-[18px] rounded-xl"
     />
   );
 };
