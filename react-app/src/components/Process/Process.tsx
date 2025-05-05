@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 const Circle = ({ page, num }: { page: number; num: number }) => {
   return (
     <div
@@ -18,4 +20,4 @@ const Process = ({ page }: { page: number }) => {
   );
 };
 
-export default Process;
+export default memo(Process);
