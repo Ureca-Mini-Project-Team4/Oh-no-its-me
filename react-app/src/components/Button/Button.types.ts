@@ -3,6 +3,8 @@ export interface ButtonProps {
   onClick: () => void;
   disabled?: boolean;
   type: 'default' | 'outline';
-  width: string;
-  height: string;
+  size?: 'lg' | 'sm';
+  width?: string;
+  height?: string;
+  borderRadius?: string;
 }
