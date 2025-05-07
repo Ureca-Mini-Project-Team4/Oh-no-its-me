@@ -11,6 +11,8 @@ export interface LoginResponse {
     userId: number;
     username: string;
     randomNickname: string;
+    accessToken: string;
+    refreshToken: string;
   };
 }
 
