@@ -7,8 +7,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, setIsOpen, onConfirm }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="bg-gray-50  rounded-2xl shadow-xl p-5 sm:p-7 w-[90%] max-w-md">
-        <p className="text-gray-700 font-pr mb-10 sm:mb-15 text-[14px] sm:text-[16px]">
+      {/* <div className="bg-gray-50  rounded-2xl shadow-xl p-5 sm:p-7 w-[90%] max-w-md"> */}
+      <div className="bg-white  rounded-2xl shadow-xl p-5 sm:p-7 w-[90%] max-w-md">
+        <p className="text-gray-700 font-pr mb-10 sm:mb-15 text-[16px] sm:text-[18px]">
           투표를 완료하시겠습니까?
         </p>
         <div className="flex gap-4">
