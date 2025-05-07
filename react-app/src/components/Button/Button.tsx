@@ -4,10 +4,22 @@ import { ButtonProps } from './Button.types';
 const Button: React.FC<ButtonProps> = ({ label, onClick, disabled = false, type, size }) => {
   const baseStyle = `font-bold text-center font-pr`;
 
-  const typeStyle =
-    type === 'outline'
+  // const typeStyle =
+  //   type === 'outline'
+  //     ? 'bg-white text-[var(--color-primary-base)] border border-[var(--color-primary-base)] hover:bg-[var(--color-primary-light)]/15'
+  //     : 'bg-[var(--color-primary-base)] text-white hover:bg-[var(--color-primary-hover)]';
+
+  const typeStyle = (() => {
+    if (disabled) {
+      return type === 'outline'
+        ? 'bg-gray-100 text-gray-400 border border-gray-300 cursor-not-allowed'
+        : 'bg-gray-300 text-white cursor-not-allowed';
+    }
+
+    return type === 'outline'
       ? 'bg-white text-[var(--color-primary-base)] border border-[var(--color-primary-base)] hover:bg-[var(--color-primary-light)]/15'
       : 'bg-[var(--color-primary-base)] text-white hover:bg-[var(--color-primary-hover)]';
+  })();
 
   const sizeStyle = (() => {
     switch (size) {
