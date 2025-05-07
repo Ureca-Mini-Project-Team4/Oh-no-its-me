@@ -1,11 +1,20 @@
 import { useState } from 'react';
-import { CandidateProps } from './CandidateProps';
+import { CandidateProps } from './Candidate.types';
 
 const Candidate = ({ name }: CandidateProps) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const handleButtonClick = () => {
     setIsSelected(!isSelected);
+  };
+
+  const isMobile = window.innerWidth <= 768;
+
+  const candidateStyle = {
+    width: isMobile ? '115.3px' : '217px',
+    height: isMobile ? '148px' : '270px',
+    fontSize: isMobile ? '14px' : '20px',
+    checkSize: isMobile ? `${148 * 0.1}px` : '24px',
   };
 
   return (
@@ -34,8 +43,8 @@ const Candidate = ({ name }: CandidateProps) => {
             className="absolute top-3 right-3"
             src="/assets/icons/check.svg"
             style={{
-              width: 'var(--check-size)',
-              height: 'var(--check-size)',
+              width: candidateStyle.checkSize,
+              height: candidateStyle.checkSize,
             }}
           />
         )}
@@ -44,14 +53,14 @@ const Candidate = ({ name }: CandidateProps) => {
           src={`/assets/images/people/${name}.png`}
           alt={name}
           style={{
-            width: 'var(--candidate-width)',
-            height: 'var(--candidate-height)',
+            width: candidateStyle.width,
+            height: candidateStyle.height,
           }}
           className="object-cover"
         />
         <span
           className="font-ps"
-          style={{ fontSize: 'var(--candidate-font-size)' }}
+          style={{ fontSize: candidateStyle.fontSize }}
         >
           {name}
         </span>
