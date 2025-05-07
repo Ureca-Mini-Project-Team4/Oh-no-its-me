@@ -1,13 +1,13 @@
 'use client';
 
-import { memo, useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
 
 interface WinnerCardProps {
-  text: string;
-  icon: string;
-  name: string;
-  num: number;
+  text: string; // Questions.questionText
+  icon: string; // Questions.icon
+  name: string; // Users.userName
+  num: number; // Candidates.candidateId
 }
 
 interface WinnerCardFrontProps {
@@ -64,7 +64,7 @@ const WinnerCard = ({ text, icon, name, num }: WinnerCardProps) => {
   );
 };
 
-export default memo(WinnerCard);
+export default WinnerCard;
 
 const WinnerCardFront = ({ text, icon, color, onClick }: WinnerCardFrontProps) => {
   const new_src = `${BASE_URL}question/${icon}`;
