@@ -6,17 +6,22 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  message: string;
   user: {
     userId: number;
-    username: string;
-    randomNickname: string;
-    accessToken: string;
-    refreshToken: string;
+    voted: boolean;
   };
+  accessToken: string | null;
+  refreshToken: string | null;
 }
 
 export async function login(params: LoginRequest): Promise<LoginResponse> {
   const response = await axiosInstance.post('/user/login', params);
-  return response.data;
+  const accessToken = response.headers['authorization']?.replace('Bearer ', '');
+  const refreshToken = response.headers['refresh-token'];
+
+  return {
+    user: response.data.user,
+    accessToken,
+    refreshToken,
+  };
 }
