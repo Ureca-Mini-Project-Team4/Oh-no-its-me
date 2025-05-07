@@ -1,6 +1,11 @@
 import Profile from '../Profile/Profile';
 
-const Comment = ({ nickname, comment }: { nickname: string | null; comment: string | null }) => {
+interface CommentProps {
+  nickname: string | null;
+  comment: string | null;
+}
+
+const Comment = ({ nickname, comment }: CommentProps) => {
   return (
     <div className="w-[300px] pt-[5px] pb-[5px] h-auto sm:w-[450px] flex flex-initial rounded-[30px] border-solid border-[1px] border-gray-100 items-center">
       <div className="flex gap-[10px] pl-3 pr-3">
