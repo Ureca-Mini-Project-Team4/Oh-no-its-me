@@ -1,19 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
-  accessToken: string | null;
-  refreshToken: string | null;
   user: {
     userId: number;
-    username: string;
-    randomNickname: string;
+    voted: boolean;
   } | null;
+  accessToken: string | null;
+  refreshToken: string | null;
 }
 
 const initialState: AuthState = {
+  user: null,
   accessToken: null,
   refreshToken: null,
-  user: null,
 };
 
 const authSlice = createSlice({
@@ -21,12 +20,16 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     // 인증 정보를 저장
-    setAuth(_state, action: PayloadAction<AuthState>) {
-      return action.payload;
+    setAuth(state, action: PayloadAction<AuthState>) {
+      state.user = action.payload.user;
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
     },
     // 초기 상태로 리셋
-    clearAuth() {
-      return initialState;
+    clearAuth(state) {
+      state.user = null;
+      state.accessToken = null;
+      state.refreshToken = null;
     },
   },
 });
