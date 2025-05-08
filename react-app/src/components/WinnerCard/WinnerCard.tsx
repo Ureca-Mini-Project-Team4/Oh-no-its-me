@@ -48,7 +48,7 @@ const WinnerCard = ({ text, icon, name, num }: WinnerCardProps) => {
   }, [num]);
 
   return (
-    <div className="w-[131px] h-[168px] sm:w-[230px] sm:h-[290px]">
+    <div className="w-[160px] h-[200px] sm:w-[240px] sm:h-[300px]">
       <ReactCardFlip
         isFlipped={state}
         containerStyle={{
@@ -67,15 +67,15 @@ const WinnerCard = ({ text, icon, name, num }: WinnerCardProps) => {
 export default WinnerCard;
 
 const WinnerCardFront = ({ text, icon, color, onClick }: WinnerCardFrontProps) => {
-  const new_src = `${BASE_URL}question/${icon}`;
+  const new_src = `${BASE_URL}question/${icon}.png`;
 
   return (
     <div
       onClick={onClick}
       className={`${BASE_CSS} ${color} items-end justify-evenly cursor-pointer`}
     >
-      <p className="text-[10px] sm:text-[16px] font-medium leading-snug">{text}</p>
-      <img src={new_src} className="w-[60px] h-[60px] sm:w-[100px] sm:h-[100px]" />
+      <p className="text-[12px] sm:text-[18px] break-keep">{text}</p>
+      <img src={new_src} className="w-[80px] h-[80px] sm:w-[120px] sm:h-[120px]" />
     </div>
   );
 };
@@ -88,9 +88,9 @@ const WinnerCardBack = ({ name, color, onClick }: WinnderCardBackProps) => {
       onClick={onClick}
       className={`${BASE_CSS} ${color} items-center justify-evenly cursor-pointer`}
     >
-      <img src={`${BASE_URL}medal.png`} className="w-[30px] h-[40px] sm:w-[60px] sm:h-[80px]" />
-      <img src={new_src} className="w-[60px] h-[60px] sm:w-[100px] sm:h-[100px]" />
-      <p className="text-[13px] sm:text-[18px]">{name}</p>
+      <img src={`${BASE_URL}medal.png`} className="w-[40px] h-[50px] sm:w-[60px] sm:h-[75px]" />
+      <img src={new_src} className="w-[80px] h-[80px] sm:w-[120px] sm:h-[120px]" />
+      <p className="text-[14px] sm:text-[21px]">{name}</p>
     </div>
   );
 };
