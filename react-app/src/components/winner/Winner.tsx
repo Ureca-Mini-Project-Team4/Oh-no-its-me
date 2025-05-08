@@ -14,19 +14,11 @@ const Winner = ({ name, question }: WinnerProps) => {
       </div>
 
       {/* 박스 */}
-      <div
-        style={{
-          boxShadow: '0px 4px 4px 3px rgba(0, 0, 0, 0.25)',
-        }}
-        className="w-full h-full bg-white rounded-xl flex flex-col justify-center items-center pt-[33px] pb-4 sm:pt-[35px] sm:px-4 sm:pb-6 mt-[44px] sm:mt-[80px]"
-      >
+      <div className="shadow-xl w-full h-full bg-white rounded-xl flex flex-col justify-center items-center pt-[33px] pb-4 sm:pt-[35px] sm:px-4 sm:pb-6 mt-[44px] sm:mt-[80px]">
         <p className="text-center text-[10px] sm:text-[18px] whitespace-pre-wrap break-keep leading-tight font-pm">
           {question}
         </p>
-        <div
-          style={{ color: 'var(--color-primary-base)' }}
-          className="mt-1 text-[15px] sm:text-[30px] font-pm"
-        >
+        <div className="mt-1 text-[15px] sm:text-[30px] font-pm text-[var(--color-primary-base)]">
           {name}
         </div>
       </div>
