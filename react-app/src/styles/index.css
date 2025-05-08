@@ -1,6 +1,24 @@
 @import 'tailwindcss';
-@tailwind utilities;
 @import './fonts.css';
+
+:root {
+  /* Web (기본) */
+  --candidate-width: 217px;
+  --candidate-height: 270px;
+  --candidate-font-size: 20px;
+  --check-size: 24;
+}
+
+@media (max-width: 768px) {
+  :root {
+    /* Mobile용 값으로 덮어씀 */
+    --candidate-width: 115.3px;
+    --candidate-height: 148px;
+    --candidate-font-size: 14px;
+    --check-size: calc(var(--candidate-height) * 0.1);
+  }
+}
+
 
 @layer base {
   html {
@@ -10,42 +28,52 @@
 
 @layer utilities {
   .font-pre {
-    font-family: 'Pretendard-Light', sans-serif;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 400;
   }
   .font-pr {
-    font-family: 'Pretendard-Regular', sans-serif;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 500;
   }
   .font-pm {
-    font-family: 'Pretendard-Medium', sans-serif;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 600;
   }
   .font-ps {
-    font-family: 'Pretendard-SemiBold', sans-serif;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 700;
   }
   .font-pb {
-    font-family: 'Pretendard-Bold', sans-serif;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 800;
   }
   .font-gumi {
     font-family: 'GumiRomanceTTF', sans-serif;
-  }
+  
 }
 
-@theme {
-  --color-primary-base: #f5506c;
-  --color-primary-hover: #e04562;
-  --color-primary-light: #ff7b8d;
+@layer base {
+  :root {
 
-  --color-secondary-base: #6366f1;
-  --color-secondary-hover: #4f46e5;
-  --color-secondary-light: #a5b4fc;
+    --color-primary-base: #f5506c;
+    --color-primary-hover: #e04562;
+    --color-primary-light: #ff7b8d;
+    
+    --color-secondary-base: #6366f1;
+    --color-secondary-hover: #4f46e5;
+    --color-secondary-light: #a5b4fc;
+    
+    --color-lemon: #ffee3d;
+    --color-soda: #6bd8f9;
+    --color-peach: #f4bdf8;
+    --color-orange: #ff933d;
+    
+    --color-success: #63e383;
+    --color-warning: #ef6962;
+    --color-info: #61c3f0;
 
-  --color-lemon: #ffee3d;
-  --color-soda: #6bd8f9;
-  --color-peach: #f4bdf8;
-  --color-orange: #ff933d;
-
-  --color-success: #63e383;
-  --color-warning: #ef6962;
-  --color-info: #61c3f0;
+    --color-gray-200 : #e5e7eb;
+  }
 }
 
 .bg-lemon-gradient {
@@ -62,4 +90,5 @@
 
 .bg-orange-gradient {
   background: linear-gradient(180deg, var(--color-orange), white);
+}
 }
