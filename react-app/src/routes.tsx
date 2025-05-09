@@ -6,7 +6,7 @@ import Vote from './pages/Vote';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    // path: '/',
     element: <Layout />,
     children: [
       {
