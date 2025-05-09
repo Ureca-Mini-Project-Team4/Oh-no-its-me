@@ -8,62 +8,29 @@ const Candidate = ({ name }: CandidateProps) => {
     setIsSelected(!isSelected);
   };
 
-  const isMobile = window.innerWidth <= 768;
-
-  const candidateStyle = {
-    width: isMobile ? '115.3px' : '217px',
-    height: isMobile ? '148px' : '270px',
-    fontSize: isMobile ? '14px' : '20px',
-    checkSize: isMobile ? `${148 * 0.1}px` : '24px',
-  };
-
   return (
     <div>
       <button
         onClick={handleButtonClick}
-              className="relative pt-1 pb-3 rounded-2xl bg-white flex flex-col items-center border-2 
-                        transition-colors ease-in-out hover:cursor-pointer"
-        style={{
-          borderColor: isSelected
-            ? 'var(--color-primary-base)'
-            : 'var(--color-gray-200)',
-              }}
-              
-              onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = 'var(--color-primary-base)'
-              }}
-              onMouseLeave={(e) => {
-                  if (!isSelected) {
-                      e.currentTarget.style.borderColor ='var(--color-gray-200)'
-                  }
-              }}
+        className={`relative pt-1 pb-3 rounded-2xl bg-white flex flex-col items-center border-2 
+    transition-colors ease-in-out hover:cursor-pointer 
+    ${isSelected ? 'border-[var(--color-primary-base)] hover:border-[var(--color-primary-base)]' : 'border-[var(--color-gray-200)] hover:border-[var(--color-primary-base)]'}`}
       >
         {isSelected && (
           <img
-            className="absolute top-3 right-3"
+            className={'absolute top-3 right-3 w-[14.8px] h-[14.8px] sm:w-[24px] sm:h-[24px]'}
             src="/assets/icons/check.svg"
-            style={{
-              width: candidateStyle.checkSize,
-              height: candidateStyle.checkSize,
-            }}
+            alt="선택됨"
           />
         )}
 
         <img
           src={`/assets/images/people/${name}.png`}
           alt={name}
-          style={{
-            width: candidateStyle.width,
-            height: candidateStyle.height,
-          }}
-          className="object-cover"
+          className={'object-cover w-[115.3px] h-[148px] sm:w-[217px] sm:h-[270px]'}
         />
-        <span
-          className="font-ps"
-          style={{ fontSize: candidateStyle.fontSize }}
-        >
-          {name}
-        </span>
+
+        <span className={'font-ps text-[14px] sm:text-[24px]'}>{name}</span>
       </button>
     </div>
   );
