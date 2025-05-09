@@ -1,18 +1,17 @@
 package com.uplus.eureka.candidate.model.dto;
 
 public class Candidate {
-
     private int candidateId;
     private int userId;
     private int pollId;
-    private int voteCount;
+    private String questionText;
+    private String userName;
 
     public Candidate() {}
 
-    public Candidate(int userId, int pollId, int voteCount) {
+    public Candidate(int userId, int pollId) {
         this.userId = userId;
         this.pollId = pollId;
-        this.voteCount = voteCount;
     }
 
     public int getCandidateId() {
@@ -39,21 +38,75 @@ public class Candidate {
         this.pollId = pollId;
     }
 
-    public int getVoteCount() {
-        return voteCount;
+    public String getQuestionText() {
+        return questionText;
     }
 
-    public void setVoteCount(int voteCount) {
-        this.voteCount = voteCount;
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     @Override
     public String toString() {
-        return "Candidate{" +
-               "candidateId=" + candidateId +
-               ", userId=" + userId +
-               ", pollId=" + pollId +
-               ", voteCount=" + voteCount +
-               '}';
+        return "{" +
+                "\"candidateId\": " + candidateId + ", " +
+                "\"userId\": " + userId + ", " +
+                "\"userName\": \"" + userName + "\", " +
+                "\"pollId\": " + pollId + ", " +
+                "\"questionText\": \"" + questionText + "\"" +
+                "}";
+    }
+
+    
+    public static class PollInfo {
+        private int pollId;
+        private String questionText;
+
+        public int getPollId() {
+            return pollId;
+        }
+
+        public void setPollId(int pollId) {
+            this.pollId = pollId;
+        }
+
+        public String getQuestionText() {
+            return questionText;
+        }
+
+        public void setQuestionText(String questionText) {
+            this.questionText = questionText;
+        }
+    }
+
+    public static class UserInfo {
+        private int userId;
+        private String userName;
+
+        public int getUserId() {
+            return userId;
+        }
+
+        public void setUserId(int userId) {
+            this.userId = userId;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
     }
 }
+
+
