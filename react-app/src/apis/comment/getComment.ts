@@ -7,7 +7,7 @@ export interface CommentRequest {
 export interface CommentResponse {
   comment_id: number;
   user_id: number;
-  randome_nickname: string;
+  random_nickname: string;
   comment_text: string;
 }
 
