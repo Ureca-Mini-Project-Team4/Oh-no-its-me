@@ -14,10 +14,8 @@ export async function updateComment(params: UpdateCommentRequest): Promise<Updat
   const { comment_id, user_id, comment_text } = params;
 
   const response = await axiosInstance.patch(`/comment/${comment_id}`, {
-    data: {
-      user_id,
-      comment_text,
-    },
+    user_id,
+    comment_text,
   });
 
   return response.data;
