@@ -5,27 +5,32 @@
 <mapper namespace="com.uplus.eureka.candidate.model.dao.CandidateDao">
 
     <!-- poll_id가 높은 순으로 4개의 poll_id를 가져오는 쿼리 -->
-    <select id="getTopPollIds" resultType="int">
-        SELECT poll_id
-        FROM Polls
-        ORDER BY poll_id DESC
-        LIMIT #{limit}
-    </select>
+	<select id="getTopPollIds" resultType="com.uplus.eureka.candidate.model.dto.Candidate$PollInfo">
+  		SELECT poll_id AS pollId, question_text AS questionText
+    	FROM Polls
+    	LEFT JOIN Questions ON Polls.question_id = Questions.question_id
+    	ORDER BY poll_id DESC
+    	LIMIT #{limit}
+	</select>
 
     <!-- poll_id에 대해 is_selected가 false인 user_id 4명을 랜덤으로 가져오는 쿼리 -->
-    <select id="getRandomUsersForPoll" resultType="int">
-        SELECT user_id
-        FROM Users
-        WHERE is_selected = false
-        ORDER BY RAND()
-        LIMIT #{limit}
-    </select>
+	<select id="getRandomUsersForPoll" resultType="com.uplus.eureka.candidate.model.dto.Candidate$UserInfo">
+	    SELECT user_id AS userId, user_name AS userName
+	    FROM Users
+	    WHERE is_selected = false
+	    ORDER BY RAND()
+	    LIMIT #{limit}
+	</select>
 
-    <!-- candidates 테이블에 user_id와 poll_id를 삽입하는 쿼리 -->
-    <insert id="insertCandidate">
-        INSERT INTO Candidates (user_id, poll_id, vote_count)
-        VALUES (#{userId}, #{pollId}, 0)
-    </insert>
+    <!-- candidates 테이블에 user_id와 poll_id를 삽입하는 쿼리 -->    
+	<insert id="insertCandidate"
+        useGeneratedKeys="true"
+        keyProperty="candidateId">
+    	INSERT INTO Candidates (user_id, poll_id)
+    	VALUES (#{candidate.userId}, #{candidate.pollId})
+	</insert>
+
+
 
     <!-- is_selected 값을 true로 업데이트하는 쿼리 -->
     <update id="updateUserSelectedStatus">
