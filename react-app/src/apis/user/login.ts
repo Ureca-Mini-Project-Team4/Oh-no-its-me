@@ -14,7 +14,7 @@ export interface LoginResponse {
 
 export async function login(params: LoginRequest): Promise<LoginResponse> {
   const response = await axiosInstance.post('/user/login', params);
-  const accessToken = response.headers['Authorization']?.replace('Bearer ', '') ?? null;
+  const accessToken = response.headers['authorization']?.replace('Bearer ', '') ?? null;
   const refreshToken = response.headers['refresh-token'] ?? null;
 
   return {
