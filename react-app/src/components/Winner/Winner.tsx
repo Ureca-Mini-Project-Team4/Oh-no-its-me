@@ -1,4 +1,3 @@
-import React from 'react';
 import { WinnerProps } from './Winner.types';
 
 const Winner = ({ name, question }: WinnerProps) => {
