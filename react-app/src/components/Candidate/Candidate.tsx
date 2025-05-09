@@ -3,6 +3,7 @@ import { CandidateProps } from './Candidate.types';
 
 const Candidate = ({ name }: CandidateProps) => {
   const [isSelected, setIsSelected] = useState(false);
+
   const handleButtonClick = () => {
     setIsSelected(!isSelected);
   };
