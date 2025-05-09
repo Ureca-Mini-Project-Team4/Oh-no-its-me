@@ -1,18 +1,22 @@
 import axios from 'axios';
+import { clearAuth } from '@/store/slices/authSlice';
 import { store } from '@/store';
-import { setAuth, clearAuth } from '@/store/slices/authSlice';
 
-// axios 인스턴스 생성 (baseURL, 헤더 등)
+// 인스턴스 생성
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
-  headers: { 'Content-Type': 'application/json' },
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 // 요청 시 accessToken이 있으면 Authorization 헤더에 자동 추가
 axiosInstance.interceptors.request.use((config) => {
-  const token = store.getState().auth.accessToken;
-  if (token) config.headers['Authorization'] = `Bearer ${token}`;
+  const accessToken = localStorage.getItem('accessToken');
+  if (accessToken) {
+    config.headers['Authorization'] = `Bearer ${accessToken}`;
+  }
   return config;
 });
 
@@ -21,27 +25,40 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const refreshToken = store.getState().auth.refreshToken;
+        const refreshToken = localStorage.getItem('refreshToken');
+
+        if (!refreshToken) throw new Error('No refresh token');
+
         const res = await axios.post(
-          '/api/token/refresh',
+          `${import.meta.env.VITE_API_BASE_URL}/api/token/refresh`,
           {},
           {
-            headers: { 'Refresh-Token': refreshToken },
+            headers: {
+              'Refresh-Token': refreshToken,
+              'Content-Type': 'application/json',
+            },
           },
         );
-        const { accessToken } = res.data;
-        store.dispatch(setAuth({ ...store.getState().auth, accessToken }));
-        originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+
+        const newAccessToken = res.data.accessToken;
+        localStorage.setItem('accessToken', newAccessToken);
+
+        // 새 토큰으로 재시도
+        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
       } catch (refreshError) {
+        // 리프레시 실패 → 로그아웃 처리
         store.dispatch(clearAuth());
+        localStorage.clear();
         window.location.href = '/login';
         return Promise.reject(refreshError);
       }
     }
+
     return Promise.reject(error);
   },
 );
