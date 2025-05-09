@@ -1,6 +1,5 @@
 package com.uplus.eureka.candidate.model.dao;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.uplus.eureka.candidate.model.dto.Candidate;
@@ -9,7 +8,6 @@ import com.uplus.eureka.candidate.model.dto.Candidate.UserInfo;
 
 import java.util.List;
 
-@Mapper
 public interface CandidateDao {
 
     // poll_id가 높은 순으로 4개를 가져오는 쿼리

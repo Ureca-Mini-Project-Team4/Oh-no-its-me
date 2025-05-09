@@ -30,8 +30,6 @@
     	VALUES (#{candidate.userId}, #{candidate.pollId})
 	</insert>
 
-
-
     <!-- is_selected 값을 true로 업데이트하는 쿼리 -->
     <update id="updateUserSelectedStatus">
         UPDATE Users
