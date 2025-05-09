@@ -1,51 +1,33 @@
-import React from 'react';
-import { useToast, ToastType } from '@/hook/useToast'; // 경로 수정
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/store';
+import { hide } from '@/store/slices/toastSlice';
 
-export default function Toast(): React.ReactElement | null {
-  const { toast, hideToast } = useToast();
+export default function Toast() {
+  const toast = useSelector((state: RootState) => state.toast);
+  const dispatch = useDispatch();
 
-  // 토스트가 보이지 않을 때는 렌더링하지 않음
   if (!toast.isShow) return null;
 
-  // 타입에 따른 스타일 클래스 설정
-  let borderColor = '';
+  const iconMap = {
+    success: '/assets/icons/success.svg',
+    warning: '/assets/icons/warning.svg',
+    information: '/assets/icons/info.svg',
+  };
 
-  switch (toast.type) {
-    case 'success':
-      borderColor = 'border-l-4 border-success';
-      break;
-    case 'warning':
-      borderColor = 'border-l-4 border-warning';
-      break;
-    case 'information':
-      borderColor = 'border-l-4 border-info';
-      break;
-    default:
-      borderColor = 'border-l-4 border-gray-400';
-  }
-
-  // 아이콘 경로 결정
-  const getIconPath = (type: ToastType): string => {
-    switch (type) {
-      case 'success':
-        return '/assets/icons/check.svg';
-      case 'warning':
-        return '/assets/icons/warning.svg';
-      case 'information':
-        return '/assets/icons/info.svg';
-      default:
-        return '/assets/icons/info.svg';
-    }
+  const bgMap = {
+    success: 'bg-[var(--color-success)]',
+    warning: 'bg-[var(--color-warning)]',
+    information: 'bg-[var(--color-info)]',
   };
 
   return (
-    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
+    <div className="fixed top-20 sm:top-24 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-xs sm:max-w-sm md:max-w-md">
       <div
-        className={`flex items-center shadow-lg px-6 py-4 bg-white rounded ${borderColor}`}
-        onClick={hideToast}
+        className={`flex items-center gap-3 shadow-md sm:shadow-xl px-5 py-3 rounded-lg sm:rounded-2xl text-white ${bgMap[toast.type]}`}
+        onClick={() => dispatch(hide())}
       >
-        <img src={getIconPath(toast.type)} alt={toast.type} width="24" height="24" />
-        <span className="ml-3 font-pm text-gray-800">{toast.message}</span>
+        <img src={iconMap[toast.type]} alt="icon" className="w-3 h-3 sm:w-4 sm:h-4" />
+        <span className="text-sm sm:text-base font-medium">{toast.message}</span>
       </div>
     </div>
   );
