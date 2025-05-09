@@ -56,14 +56,15 @@ public class Candidate {
 
     @Override
     public String toString() {
-        return "Candidate{" +
-                "candidateId=" + candidateId +
-                ", userId=" + userId +
-                ", userName='" + userName +
-                ", pollId=" + pollId +
-                ", questionText='" + questionText +
-                '}';
+        return "{" +
+                "\"candidateId\": " + candidateId + ", " +
+                "\"userId\": " + userId + ", " +
+                "\"userName\": \"" + userName + "\", " +
+                "\"pollId\": " + pollId + ", " +
+                "\"questionText\": \"" + questionText + "\"" +
+                "}";
     }
+
     
     public static class PollInfo {
         private int pollId;

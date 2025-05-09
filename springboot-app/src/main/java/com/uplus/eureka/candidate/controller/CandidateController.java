@@ -1,5 +1,6 @@
 package com.uplus.eureka.candidate.controller;
 
+import com.uplus.eureka.candidate.model.dto.Candidate;
 import com.uplus.eureka.candidate.model.service.CandidateService;
 
 import java.util.List;
@@ -18,12 +19,12 @@ public class CandidateController {
         this.candidateService = candidateService;
     }
 
-    @PostMapping("api/candidate")
+    @PostMapping("/api/candidate")
     public ResponseEntity<?> createCandidates() {
         try {
             candidateService.resetIsSelected();
-            List<String> result = candidateService.createCandidates();
-            return ResponseEntity.ok(result);
+            List<Candidate> candidates = candidateService.createCandidates();
+            return ResponseEntity.ok(candidates);
 
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -32,5 +33,4 @@ public class CandidateController {
                     .body("후보자 생성 중 예상치 못한 오류가 발생했습니다.");
         }
     }
-
 }
