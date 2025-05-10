@@ -3,6 +3,7 @@ import Layout from '@/components/Layout/Layout';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Vote from './pages/Vote';
+import ChangePW from './pages/ChangePW';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: 'vote',
         element: <Vote />,
+      },
+      {
+        path: 'change-password',
+        element: <ChangePW />,
       },
     ],
   },
