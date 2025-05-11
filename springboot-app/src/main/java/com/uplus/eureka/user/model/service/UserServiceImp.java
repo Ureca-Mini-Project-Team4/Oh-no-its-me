@@ -60,7 +60,7 @@ public class UserServiceImp implements UserService {
 
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("userId", userId);
-		paramMap.put("newPassword", newPassword);
+		paramMap.put("password", newPassword);
 		dao.updatePassword(paramMap);
 	}
 

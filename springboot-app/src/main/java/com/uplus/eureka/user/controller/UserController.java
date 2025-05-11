@@ -16,6 +16,7 @@ import com.uplus.eureka.user.model.dto.User;
 import com.uplus.eureka.user.model.service.UserService;
 import com.uplus.eureka.user.model.dto.UserException;
 
+import java.io.Console;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -147,7 +148,7 @@ public class UserController {
         // 사용자 정보 조회
         User user = userService.getUser(userId);
         String currentPassword = user.getPassword();
-
+        
         // 비밀번호 유효성 검사
         if (!oldPassword.equals(currentPassword)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("현재 비밀번호가 일치하지 않습니다.");
