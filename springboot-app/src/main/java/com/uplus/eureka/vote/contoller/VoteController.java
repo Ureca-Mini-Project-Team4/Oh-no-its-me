@@ -42,7 +42,7 @@ public class VoteController {
     @ApiResponse(responseCode = "200", description = "투표 수 증가 성공")
     @ApiResponse(responseCode = "400", description = "잘못된 후보자 요청")
     @PostMapping("/{pollId}")
-    public ResponseEntity<?> increaseVote(@PathVariable int pollId,
+    public ResponseEntity<?> increaseVote(@PathVariable("pollId") int pollId,
                                           @RequestBody VoteRequest voteRequest) {
         try {
             voteService.increaseVoteCount(pollId, voteRequest);
@@ -56,7 +56,7 @@ public class VoteController {
     @ApiResponse(responseCode = "200", description = "투표 완료 등록 성공")
     @ApiResponse(responseCode = "400", description = "잘못된 요청, 유효하지 않은 userId")
     @PostMapping("/{userId}/complete")
-    public ResponseEntity<?> completeVote(@PathVariable int userId) {
+    public ResponseEntity<?> completeVote(@PathVariable("userId") int userId) {
         try {
             voteService.completeVote(userId);
             return ResponseEntity.ok().body("{\"message\": \"투표 완료 성공\"}");
