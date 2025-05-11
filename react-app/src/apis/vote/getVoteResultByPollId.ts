@@ -1,10 +1,10 @@
 import axiosInstance from '../axiosInstance';
 
-export interface findVoteRequest {
+export interface getVoteResultByPollIdRequest {
   pollId: number;
 }
 
-export interface findVoteResponse {
+export interface getVoteResultByPollIdResponse {
   pollId: number;
   questionText: string;
   results: {
@@ -13,7 +13,9 @@ export interface findVoteResponse {
   };
 }
 
-export async function findVote({ pollId }: findVoteRequest): Promise<findVoteResponse> {
+export async function getVoteResultByPollId({
+  pollId,
+}: getVoteResultByPollIdRequest): Promise<getVoteResultByPollIdResponse> {
   const response = await axiosInstance.get(`/vote/${pollId}`);
 
   return response.data;
