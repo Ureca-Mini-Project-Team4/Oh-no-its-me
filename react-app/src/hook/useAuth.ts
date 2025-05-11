@@ -1,16 +1,40 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { login } from '@/apis/user/login';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { setAuth, clearAuth } from '@/store/slices/authSlice';
+import { useNavigate } from 'react-router-dom';
+import { UserInfoResponse } from '@/apis/user/getUserInfo';
 
-// 현재 인증 상태를 반환하는 커스텀 훅
-export const useAuth = () => {
-  const auth = useSelector((state: RootState) => state.auth);
+export function useAuth() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.auth.user);
 
-  // login → setAuth 디스패치, logout → clearAuth 디스패치
-  return {
-    auth,
-    login: (data: any) => dispatch(setAuth(data)),
-    logout: () => dispatch(clearAuth()),
+  const handleLogin = async (username: string, password: string) => {
+    try {
+      const { user, accessToken, refreshToken } = await login({ username, password });
+
+      if (user && accessToken && refreshToken) {
+        dispatch(setAuth({ user: user as UserInfoResponse }));
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('userId', String(user.userId));
+        navigate('/main');
+      } else {
+        throw new Error('로그인 정보가 올바르지 않습니다.');
+      }
+    } catch (error) {
+      console.error('로그인 실패:', error);
+      throw error;
+    }
   };
-};
+
+  const logout = () => {
+    dispatch(clearAuth());
+    localStorage.clear();
+  };
+
+  const isLoggedIn = Boolean(user);
+
+  return { user, isLoggedIn, login: handleLogin, logout };
+}
