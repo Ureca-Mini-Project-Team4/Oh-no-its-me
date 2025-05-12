@@ -39,7 +39,7 @@ const Comment = () => {
                 <WinnerCard
                   key={result.pollId}
                   text={result.questionText}
-                  name={result.results.username}
+                  name={result.results[0].username}
                   num={idx}
                   icon={result.icon}
                 />

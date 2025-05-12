@@ -11,7 +11,7 @@ export interface getVoteResultByPollIdResponse {
   results: {
     username: string;
     voteCount: number;
-  };
+  }[];
 }
 
 export async function getVoteResultByPollId({
