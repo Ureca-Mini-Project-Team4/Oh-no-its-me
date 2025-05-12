@@ -4,10 +4,14 @@ import { RootState } from '@/store';
 import { setAuth, clearAuth } from '@/store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { UserInfoResponse } from '@/apis/user/getUserInfo';
+import { useToast } from './useToast';
+import { AxiosError } from 'axios';
 
 export function useAuth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { showToast } = useToast();
+
   const user = useSelector((state: RootState) => state.auth.user);
 
   const handleLogin = async (username: string, password: string) => {
@@ -24,6 +28,11 @@ export function useAuth() {
         throw new Error('로그인 정보가 올바르지 않습니다.');
       }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        showToast(error.response?.data, 'warning');
+      } else {
+        showToast(String(error), 'warning');
+      }
       console.error('로그인 실패:', error);
       throw error;
     }

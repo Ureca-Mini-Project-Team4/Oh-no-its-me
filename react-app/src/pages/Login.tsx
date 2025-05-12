@@ -10,8 +10,9 @@ const Login = () => {
     try {
       await login(username, password);
     } catch (e) {
-      alert('로그인 실패');
       console.error(e);
+      setUsername('');
+      setPassword('');
     }
   };
 
