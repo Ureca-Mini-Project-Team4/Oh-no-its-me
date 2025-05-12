@@ -49,6 +49,22 @@ public class PollController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    
+    @GetMapping("/poll/latest")
+    public ResponseEntity<?> getPollIdLatest() {
+        try {
+            List<Integer> pollIds = pollService.getLatestPollIds();
+
+            if (pollIds == null || pollIds.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("최근 투표가 존재하지 않습니다.");
+            }
+
+            return ResponseEntity.ok(pollIds);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("최근 투표 조회 중 오류가 발생했습니다.");
+        }
+    }
+
 }
 
 
