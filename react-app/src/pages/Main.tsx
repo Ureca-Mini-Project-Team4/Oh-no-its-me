@@ -37,28 +37,26 @@ const Main = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [restTime > 0]);
+  }, [endTime]);
 
   const navigation = useNavigate();
   const handleMoveToVote = useCallback(() => {
     navigation('/vote');
-  }, []);
+  }, [navigation]);
 
   return (
-    <div className="flex flex-col justify-evenly items-center w-screen h-screen">
-      <p className="text-[36px] font-pb">투표 결과 발표까지 남은 시간</p>
-      <p className="text-[96px] font-pb">
+    <div className="flex flex-col justify-center items-center w-screen h-screen sm:space-y-20 space-y-8 px-4 text-center">
+      <p className="text-[18px] sm:text-[20px] md:text-[28px] font-pb leading-tight">
+        투표 결과 발표까지 남은 시간
+      </p>
+      <p className="text-[32px] sm:text-[48px] md:text-[64px] font-pb">
         {restTime > 0 ? changeDateTime(restTime) : '투표가 종료되었습니다.'}
       </p>
-      <p className="text-[128px] font-pb">
-        <span className="bg-[var(--color-primary-base)]">너로</span> 정했다!
+      <p className="text-[32px] sm:text-[48px] md:text-[72px] font-pb leading-none">
+        <span className="bg-[var(--color-primary-base)] px-2">너로</span> 정했다!
       </p>
-      <div className="text-[32px] font-pb w-[520px]">
-        <Button
-          onClick={handleMoveToVote}
-          label="투표하기"
-          disabled={restTime > 0 ? false : true}
-        />
+      <div className="w-full max-w-[320px] text-[16px] sm:text-[20px] md:text-[24px] font-pb">
+        <Button onClick={handleMoveToVote} label="투표하기" disabled={restTime <= 0} />
       </div>
     </div>
   );
