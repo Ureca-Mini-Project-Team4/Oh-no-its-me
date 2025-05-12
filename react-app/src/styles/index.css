@@ -88,19 +88,4 @@
   .bg-orange-gradient {
     background: linear-gradient(180deg, var(--color-orange), white);
   }
-
-  @layer utilities {
-    .bg-responsive {
-      background-image: url('/assets/images/bg.svg');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-
-    @media (max-width: 768px) {
-      .bg-responsive {
-        background-image: url('/assets/images/bg-m.png');
-      }
-    }
-  }
 }
