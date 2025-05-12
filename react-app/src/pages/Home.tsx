@@ -12,15 +12,11 @@ const Home = () => {
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-white">
-      {/* 배경 이미지 */}
       <picture className="absolute bottom-0 left-0 w-full z-0 pointer-events-none">
         <source media="(max-width: 768px)" srcSet="/assets/images/bg-m.png" />
         <img src="/assets/images/bg.svg" alt="background" className="w-full h-auto" />
       </picture>
-
-      {/* 콘텐츠 */}
       {isMobile ? (
-        // ✅ 모바일 전용
         <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
           <div className="flex flex-col items-center justify-center space-y-2">
             <h1 className="font-pb text-2xl text-black mx-4">우리끼리 하는 투표 게임</h1>
@@ -33,7 +29,6 @@ const Home = () => {
           </div>
         </div>
       ) : (
-        // ✅ 데스크탑 전용
         <div className="relative z-10 w-auto h-full flex flex-row items-center justify-center lg:gap-x-30 gap-x-12 px-10">
           <div className="grid grid-cols-2 grid-rows-2 gap-8 transform">
             <img
@@ -57,7 +52,6 @@ const Home = () => {
               className="w-52 h-auto sm:w-56 translate-y-[12px]"
             />
           </div>
-
           <div className="w-[432px] space-y-5 text-left">
             <h1 className="font-pb text-4xl text-black">우리끼리 하는 투표 게임</h1>
             <h1 className="font-pb text-4xl text-[var(--color-primary-base)]">너로 정했다!</h1>
