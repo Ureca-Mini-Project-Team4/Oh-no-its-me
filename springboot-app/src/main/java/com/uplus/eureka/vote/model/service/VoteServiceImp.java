@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -30,11 +31,14 @@ public class VoteServiceImp implements VoteService {
             throw new VoteException("해당 투표가 존재하지 않습니다.", HttpStatus.NOT_FOUND);
         }
 
-        String questionText = voteDao.findQuestionTextByPollId(pollId);
+        VoteResult.Question topQuestion = voteDao.findQuestionByPollId(pollId);
+        String questionText = topQuestion.questionText;
+        String icon = topQuestion.icon;
 
         VoteResult resultDto = new VoteResult();
         resultDto.setPollId(pollId);
         resultDto.setQuestionText(questionText);
+        resultDto.setIcon(icon);
         resultDto.setResults(Collections.singletonList(topCandidate));
 
         return resultDto;
