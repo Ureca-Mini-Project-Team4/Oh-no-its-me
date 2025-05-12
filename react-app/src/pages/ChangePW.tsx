@@ -26,9 +26,18 @@ const ChangePW = () => {
       navigation('/main');
     } catch (error) {
       if (error instanceof AxiosError) {
-        showToast(error.response?.data, 'warning');
+        if (error.status === 404) {
+          showToast(error.message, 'warning');
+        } else {
+          const message =
+            typeof error.response?.data === 'string'
+              ? error.response.data
+              : JSON.stringify(error.response?.data);
+
+          showToast(message, 'warning');
+        }
       } else {
-        showToast(JSON.stringify(error), 'warning');
+        showToast(String(error), 'warning');
       }
       console.error(error);
     }
