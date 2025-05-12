@@ -7,6 +7,7 @@ export interface getVoteResultByPollIdRequest {
 export interface getVoteResultByPollIdResponse {
   pollId: number;
   questionText: string;
+  icon: string;
   results: {
     username: string;
     voteCount: number;
@@ -17,6 +18,5 @@ export async function getVoteResultByPollId({
   pollId,
 }: getVoteResultByPollIdRequest): Promise<getVoteResultByPollIdResponse> {
   const response = await axiosInstance.get(`/vote/${pollId}`);
-
   return response.data;
 }
