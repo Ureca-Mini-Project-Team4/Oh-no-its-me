@@ -31,7 +31,7 @@ export function useAuth() {
       if (error instanceof AxiosError) {
         showToast(error.response?.data, 'warning');
       } else {
-        showToast(String(error), 'warning');
+        showToast(JSON.stringify(error), 'warning');
       }
       console.error('로그인 실패:', error);
       throw error;
