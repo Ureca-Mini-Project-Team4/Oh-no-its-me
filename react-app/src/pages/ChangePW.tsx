@@ -28,7 +28,7 @@ const ChangePW = () => {
       if (error instanceof AxiosError) {
         showToast(error.response?.data, 'warning');
       } else {
-        showToast(String(error), 'warning');
+        showToast(JSON.stringify(error), 'warning');
       }
       console.error(error);
     }
