@@ -144,20 +144,33 @@ public class UserController {
         String oldPassword = passwordUpdateRequest.getOld_password();
         String newPassword = passwordUpdateRequest.getNew_password();
 
-        // 사용자 정보 조회
+        oldPassword = oldPassword.trim();
+        newPassword = newPassword.trim();
+
+        // 입력값 null 또는 공백만 있는 경우 예외 처리
+        if (oldPassword == null || oldPassword.trim().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("현재 비밀번호를 입력해주세요.");
+        }
+
+        if (newPassword == null || newPassword.trim().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("새 비밀번호를 입력해주세요.");
+        }
+
+        // 사용자 정보 조회 및 현재 비밀번호 검증
         User user = userService.getUser(userId);
         String currentPassword = user.getPassword();
 
-        // 비밀번호 유효성 검사
         if (!oldPassword.equals(currentPassword)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("현재 비밀번호가 일치하지 않습니다.");
-        } else {
-            if (oldPassword.equals(newPassword)) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("새 비밀번호가 현재 비밀번호와 동일합니다.");
-            } else {
-                userService.updatePassword(userId, newPassword);
-                return ResponseEntity.ok("비밀번호 변경 성공");
-            }
         }
+
+        if (oldPassword.equals(newPassword)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("새 비밀번호가 현재 비밀번호와 동일합니다.");
+        }
+
+        // 비밀번호 변경 수행
+        userService.updatePassword(userId, newPassword);
+        return ResponseEntity.ok("비밀번호 변경 성공");
+
     }
 }
