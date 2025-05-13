@@ -14,7 +14,7 @@ const CandidateGroup = ({ candidateArr }: { candidateArr: string[] }) => {
 
   return (
     <div className="w-fit">
-      <div className="grid grid-cols-2 gap-[10%]">
+      <div className="grid grid-cols-2 grid-rows-2 gap-5">
         {candidateArr.map((item, idx) => {
           return (
             <Candidate

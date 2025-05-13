@@ -1,6 +1,7 @@
 import Process from '@/components/Process/Process';
 import Candidate from '@/components/Candidate/Candidate';
 import Button from '@/components/Button/Button';
+import CandidateGroup from '@/components/Candidate/CandidateGroup';
 import { useState } from 'react';
 import useIsMobile from '@/hook/useIsMobile';
 
@@ -29,15 +30,8 @@ const Vote = () => {
                 <p>무인도에서 가장 탈출 못할 것 같은 사람은?</p>
               </div>
             </div>
-            <div className="flex flex-col items-center justify-center gap-1">
-              <div className="flex flex-row">
-                <Candidate name="이영주"></Candidate>
-                <Candidate name="박은서"></Candidate>
-              </div>
-              <div className="flex flex-row">
-                <Candidate name="진영호"></Candidate>
-                <Candidate name="이다예"></Candidate>
-              </div>
+            <div className="flex flex-col items-center justify-center">
+              <CandidateGroup candidateArr={['이영주', '박은서', '진영호', '이다예']} />
             </div>
           </div>
           <div className="flex justify-between items-center w-full p-5">
@@ -47,22 +41,18 @@ const Vote = () => {
         </div>
       ) : (
         <div className="p-5">
-          <div className="flex flex-col bg-gray-50 p-5 rounded-[30px] sm:flex-row">
-            <div className="flex flex-1 p-10">
+          <div className="flex flex-col items-center justify-center bg-gray-50 p-5 rounded-[30px] sm:flex-row">
+            <div className="flex flex-1 p-13">
               <div className="flex flex-col items-center justify-center gap-10 font-ps text-2xl text-center ">
                 <p>무인도에서 가장 탈출 못할 것 같은 사람은?</p>
-                <img src="/public/assets/images/question/island.svg" />
+                <img
+                  src="/public/assets/images/question/island.svg"
+                  className="w-full max-w-[250px] h-full object-contain"
+                />
               </div>
             </div>
-            <div className="flex flex-1 flex-col items-center justify-center gap-5">
-              <div className="flex flex-row">
-                <Candidate name="이영주"></Candidate>
-                <Candidate name="박은서"></Candidate>
-              </div>
-              <div className="flex flex-row">
-                <Candidate name="진영호"></Candidate>
-                <Candidate name="이다예"></Candidate>
-              </div>
+            <div className="flex-1 flex-col items-center justify-center p-10">
+              <CandidateGroup candidateArr={['이영주', '박은서', '진영호', '이다예']} />
             </div>
           </div>
           <div className="flex justify-between items-center w-full mt-10">

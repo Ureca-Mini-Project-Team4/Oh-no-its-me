@@ -2,7 +2,7 @@ import { CandidateProps } from './Candidate.types';
 
 const Candidate = ({ name, isSelected, handleClick, idx }: CandidateProps) => {
   return (
-    <div className="p-2 sm:p-5">
+    <div>
       <button
         onClick={() => handleClick(idx)}
         className={`relative pt-1 pb-3 rounded-2xl bg-white flex flex-col items-center border-2 
@@ -16,14 +16,13 @@ const Candidate = ({ name, isSelected, handleClick, idx }: CandidateProps) => {
             alt="선택됨"
           />
         )}
-
         <img
           src={`/assets/images/people/${name}.png`}
           alt={name}
           className={'object-cover w-[120px] h-[120px] sm:w-[160px] sm:h-[160px]'}
         />
 
-        <span className={'font-ps text-[14px] sm:text-[24px]'}>{name}</span>
+        <span className={'font-ps text-[14px] sm:text-[20px]'}>{name}</span>
       </button>
     </div>
   );
