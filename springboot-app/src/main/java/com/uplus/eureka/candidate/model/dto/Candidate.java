@@ -102,6 +102,7 @@ public class Candidate {
     	private int pollId;
     	private String userName;
     	private String questionText;
+    	private String icon;
     	
         public int getPollId() {
             return pollId;
@@ -125,6 +126,14 @@ public class Candidate {
 
         public void setQuestionText(String questionText) {
             this.questionText = questionText;
+        }
+        
+        public String getIcon() {
+            return icon;
+        }
+
+        public void setIcon(String icon) {
+            this.icon = icon;
         }
     }
 }

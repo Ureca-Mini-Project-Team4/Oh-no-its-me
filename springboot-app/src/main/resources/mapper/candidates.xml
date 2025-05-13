@@ -19,7 +19,7 @@
 	    FROM Users
 	    WHERE is_selected = false
 	    ORDER BY RAND()
-	    LIMIT #{limit}
+	    LIMIT 4
 	</select>
 
     <!-- candidates 테이블에 user_id와 poll_id를 삽입하는 쿼리 -->    
@@ -45,7 +45,7 @@
     
     <!-- candidate_id가 높은 순으로 16개의 candidate를 가져오는 쿼리 -->
 	<select id="getTopCandidate" resultType="com.uplus.eureka.candidate.model.dto.Candidate$CandidateInfo">
-  		SELECT Candidates.poll_id AS pollId, Users.user_name AS userName, Questions.question_text AS questionText, candidate_id AS candidateId
+  		SELECT Candidates.poll_id AS pollId, Users.user_name AS userName, Questions.question_text AS questionText, candidate_id AS candidateId, Questions.icon
     	FROM Candidates
     	LEFT JOIN Users ON Users.user_id = Candidates.user_id
     	LEFT JOIN Polls ON Polls.poll_id = Candidates.poll_id
