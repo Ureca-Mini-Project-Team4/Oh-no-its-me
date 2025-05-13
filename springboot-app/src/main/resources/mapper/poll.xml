@@ -10,7 +10,7 @@
 
     <!-- 랜덤 4개 질문을 가져오는 쿼리 -->
     <select id="getQuestions" resultMap="questionResultMap">
-        SELECT question_id, question_text
+        SELECT question_id, question_text, icon
         FROM Questions
         ORDER BY RAND()
         LIMIT 4
@@ -21,6 +21,16 @@
 	    INSERT INTO Polls(question_id, start_time, end_time)
 	    VALUES (#{questionId}, #{startTime}, #{endTime})
 	</insert>
+	
+	<!-- 가장 최근 투표 4개 가져오기 -->
+	<select id="getLatestPollIds" resultType="int">
+	    SELECT poll_id
+	    FROM Polls
+	    ORDER BY poll_id DESC
+	    LIMIT 4
+	</select>
+
+
 
 
 </mapper>

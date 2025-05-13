@@ -9,6 +9,11 @@
         <result property="username" column="user_name"/>    <!-- user_name(DB) → username(Java) -->
         <result property="voteCount" column="vote_count"/>  <!-- vote_count(DB) → voteCount(Java) -->
     </resultMap>
+    
+    <resultMap id="questionMap" type="com.uplus.eureka.vote.model.dto.VoteResult$Question">
+        <result property="questionText" column="question_text"/>    <!-- user_name(DB) → username(Java) -->
+        <result property="icon" column="icon"/>  <!-- vote_count(DB) → voteCount(Java) -->
+    </resultMap>
 
     <!-- 특정 투표 결과 조회 -->
     <select id="findTopCandidateByPollId" resultMap="voteResultMap">
@@ -21,8 +26,8 @@
     </select>
 
     <!-- 질문 조회 -->
-    <select id="findQuestionTextByPollId" resultType="String">
-        SELECT Q.question_text
+    <select id="findQuestionByPollId" resultMap="questionMap">
+        SELECT Q.question_text, Q.icon
         FROM Polls P
                  JOIN Questions Q ON P.question_id = Q.question_id
         WHERE P.poll_id = #{pollId}

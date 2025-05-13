@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(
       try {
         const refreshToken = localStorage.getItem('refreshToken');
 
-        if (!refreshToken) throw new Error('No refresh token');
+        if (!refreshToken) throw error;
 
         const res = await axios.post(
           `${import.meta.env.VITE_API_BASE_URL}/api/token/refresh`,
@@ -54,7 +54,6 @@ axiosInstance.interceptors.response.use(
         // 리프레시 실패 → 로그아웃 처리
         store.dispatch(clearAuth());
         localStorage.clear();
-        window.location.href = '/login';
         return Promise.reject(refreshError);
       }
     }

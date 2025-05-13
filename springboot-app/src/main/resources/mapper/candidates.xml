@@ -4,12 +4,11 @@
 
 <mapper namespace="com.uplus.eureka.candidate.model.dao.CandidateDao">
 
-    <!-- poll_id가 높은 순으로 4개의 poll_id를 가져오는 쿼리 -->
+    <!-- poll_id가 낮은 순으로 4개의 poll_id를 가져오는 쿼리 -->
 	<select id="getTopPollIds" resultType="com.uplus.eureka.candidate.model.dto.Candidate$PollInfo">
   		SELECT poll_id AS pollId, question_text AS questionText
     	FROM Polls
     	LEFT JOIN Questions ON Polls.question_id = Questions.question_id
-    	ORDER BY poll_id DESC
     	LIMIT #{limit}
 	</select>
 

@@ -32,6 +32,11 @@ public class PollServiceImp implements PollService {
     public void putQuestions(Question question) {
         pollDao.putQuestions(question);
     }
+    
+    @Override
+    public List<Integer> getLatestPollIds() {
+        return pollDao.getLatestPollIds(); // MyBatis mapper에서 실제 쿼리 실행
+    }
 }
 
 

@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { changePassword } from '@/apis/user/changePassword';
+import { useToast } from '@/hook/useToast';
+import { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ChangePW = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const { showToast } = useToast();
+  const navigation = useNavigate();
 
   const handleChangePassword = async () => {
     try {
@@ -15,12 +20,26 @@ const ChangePW = () => {
         new_password: newPassword,
       });
 
-      alert('비밀번호가 변경되었습니다.');
       setOldPassword('');
       setNewPassword('');
-    } catch (err) {
-      alert('비밀번호 변경 실패');
-      console.error(err);
+
+      navigation('/main');
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.status === 404) {
+          showToast(error.message, 'warning');
+        } else {
+          const message =
+            typeof error.response?.data === 'string'
+              ? error.response.data
+              : JSON.stringify(error.response?.data);
+
+          showToast(message, 'warning');
+        }
+      } else {
+        showToast(String(error), 'warning');
+      }
+      console.error(error);
     }
   };
 
@@ -45,7 +64,7 @@ const ChangePW = () => {
           className="w-full px-3 py-2 border rounded focus:ring focus:outline-none"
         />
       </div>
-      <button onClick={handleChangePassword} className="w-full py-2 text-white rounded ">
+      <button onClick={handleChangePassword} className="w-full py-2 text-black rounded ">
         변경하기
       </button>
     </div>
