@@ -41,8 +41,8 @@
 
 
     <insert id="insertComment" parameterType="com.uplus.eureka.comment.model.dto.CommentRequest">
-        INSERT INTO Comments (user_id, comment_text)
-        VALUES (#{userId}, #{commentText})
+        INSERT INTO Comments (user_id, random_nickname, comment_text)
+        VALUES (#{userId}, #{randomNickname}, #{commentText})
     </insert>
 
     <!-- 특정 comment_id에 대한 댓글 삭제 -->
