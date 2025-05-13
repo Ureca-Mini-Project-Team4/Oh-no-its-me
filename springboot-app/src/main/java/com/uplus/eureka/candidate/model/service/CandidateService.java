@@ -56,21 +56,22 @@ public class CandidateService {
                     throw new RuntimeException("poll_id " + pollId + "에 대해 선택할 수 있는 사용자가 없습니다.");
                 }
                 
-                Candidate candidate = new Candidate();
-                candidate.setPollId(pollId);
-                candidate.setQuestionText(pollInfo.getQuestionText());
 
                 for (Candidate.UserInfo user : users) {
                     int userId = user.getUserId();
 
+                    Candidate candidate = new Candidate();
                     candidateDao.updateUserSelectedStatus(userId);
-
+                    
+                    candidate.setPollId(pollId);
                     candidate.setUserId(userId);
+                    candidateDao.insertCandidate(candidate);
+                    
+                    candidate.setQuestionText(pollInfo.getQuestionText());
                     candidate.setUserName(user.getUserName());
                     
+                    result.add(candidate);
                 }
-                candidateDao.insertCandidate(candidate);
-                result.add(candidate);
             }
 
             return result;
@@ -78,8 +79,6 @@ public class CandidateService {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
-
-
     
     public void resetIsSelected() {
     	try {
