@@ -13,7 +13,7 @@ public class CandidateScheduler {
         this.candidateService = candidateService;
     }
 
-    @Scheduled(cron = "0 30 15 * * ?") // 오후 2시 1분
+    @Scheduled(cron = "0 1 16 * * ?") // 오후 4시 1분
     public void runCreateCandidates() {
         candidateService.createCandidates();
     }

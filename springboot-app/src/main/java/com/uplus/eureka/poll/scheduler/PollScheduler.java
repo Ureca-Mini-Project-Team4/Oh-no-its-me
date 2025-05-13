@@ -14,7 +14,7 @@ public class PollScheduler {
         this.pollService = pollService;
     }
 
-    @Scheduled(cron = "0 30 15 * * ?") // 오후 2시 정각
+    @Scheduled(cron = "0 0 16 * * ?") // 오후 4시 정각
     public void runPutQuestions() {
         Question question = new Question(); // 설정할 값이 있다면 여기에
         pollService.putQuestions(question);
