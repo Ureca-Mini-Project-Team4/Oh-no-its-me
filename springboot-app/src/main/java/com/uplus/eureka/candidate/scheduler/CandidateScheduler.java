@@ -1,20 +1,20 @@
 package com.uplus.eureka.candidate.scheduler;
 
-import com.uplus.eureka.candidate.model.service.CandidateService;
+import com.uplus.eureka.candidate.controller.CandidateController;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CandidateScheduler {
 
-    private final CandidateService candidateService;
+    private final CandidateController candidateController;
 
-    public CandidateScheduler(CandidateService candidateService) {
-        this.candidateService = candidateService;
+    public CandidateScheduler(CandidateController candidateController) {
+        this.candidateController = candidateController;
     }
 
-    @Scheduled(cron = "0 1 16 * * ?") // 오후 4시 1분
+    @Scheduled(cron = "0 21 16 * * ?")
     public void runCreateCandidates() {
-        candidateService.createCandidates();
+    	candidateController.createCandidates();
     }
 }
