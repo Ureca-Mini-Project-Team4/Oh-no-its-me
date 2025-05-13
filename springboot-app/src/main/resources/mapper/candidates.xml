@@ -4,12 +4,13 @@
 
 <mapper namespace="com.uplus.eureka.candidate.model.dao.CandidateDao">
 
-    <!-- poll_id가 낮은 순으로 4개의 poll_id를 가져오는 쿼리 -->
+    <!-- poll_id가 높은 순으로 4개의 poll_id를 가져오는 쿼리 -->
 	<select id="getTopPollIds" resultType="com.uplus.eureka.candidate.model.dto.Candidate$PollInfo">
   		SELECT poll_id AS pollId, question_text AS questionText
     	FROM Polls
     	LEFT JOIN Questions ON Polls.question_id = Questions.question_id
-    	LIMIT #{limit}
+    	ORDER BY pollId DESC
+    	LIMIT 4
 	</select>
 
     <!-- poll_id에 대해 is_selected가 false인 user_id 4명을 랜덤으로 가져오는 쿼리 -->
@@ -18,8 +19,8 @@
 	    FROM Users
 	    WHERE is_selected = false
 	    ORDER BY RAND()
-	    LIMIT #{limit}
-	</select>0
+	    LIMIT 4
+	</select>
 
     <!-- candidates 테이블에 user_id와 poll_id를 삽입하는 쿼리 -->    
 	<insert id="insertCandidate"
@@ -41,6 +42,17 @@
     	UPDATE Users
     	SET is_selected = false
     </update>
+    
+    <!-- candidate_id가 높은 순으로 16개의 candidate를 가져오는 쿼리 -->
+	<select id="getTopCandidate" resultType="com.uplus.eureka.candidate.model.dto.Candidate$CandidateInfo">
+  		SELECT Candidates.poll_id AS pollId, Users.user_name AS userName, Questions.question_text AS questionText, candidate_id AS candidateId, Questions.icon
+    	FROM Candidates
+    	LEFT JOIN Users ON Users.user_id = Candidates.user_id
+    	LEFT JOIN Polls ON Polls.poll_id = Candidates.poll_id
+    	LEFT JOIN Questions ON Polls.question_id = Questions.question_id
+    	ORDER BY candidate_id DESC
+    	LIMIT 16
+	</select>
 
 </mapper>
 
