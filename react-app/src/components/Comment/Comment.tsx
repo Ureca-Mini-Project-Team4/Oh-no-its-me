@@ -6,7 +6,7 @@ interface CommentProps {
   comment: string | null;
 }
 
-const Comment = ({ nickname, comment }: CommentProps) => {
+const CommentCard = ({ nickname, comment }: CommentProps) => {
   return (
     <div className="w-[300px] pt-[5px] pb-[5px] h-auto sm:w-[450px] flex flex-initial rounded-xl sm:rounded-2xl border-solid border-[1px] border-gray-100 items-center">
       <div className="flex justify-between w-full">
@@ -27,4 +27,4 @@ const Comment = ({ nickname, comment }: CommentProps) => {
   );
 };
 
-export default Comment;
+export default CommentCard;
