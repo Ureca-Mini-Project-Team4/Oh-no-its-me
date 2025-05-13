@@ -2,6 +2,7 @@ package com.uplus.eureka.candidate.model.service;
 
 import com.uplus.eureka.candidate.model.dao.CandidateDao;
 import com.uplus.eureka.candidate.model.dto.Candidate;
+import com.uplus.eureka.candidate.model.dto.Candidate.CandidateInfo;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,12 +19,31 @@ public class CandidateService {
     public CandidateService(CandidateDao candidateDao) {
         this.candidateDao = candidateDao;
     }
+    
+    public List<CandidateInfo> getTopCandidate() {
+    	List<CandidateInfo> result = new ArrayList<>();
+
+    	try {
+    		List<CandidateInfo> candidateInfos = candidateDao.getTopCandidate();
+    		if (candidateInfos.isEmpty()) {
+    			throw new RuntimeException("선택할 수 있는 후보자가 없습니다.");
+    		}
+    		
+    		for (CandidateInfo candidateInfo: candidateInfos) {
+    			result.add(candidateInfo);
+    		}
+    		return result;
+    		
+    	} catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+    	}
+    }
 
     public List<Candidate> createCandidates() {
         List<Candidate> result = new ArrayList<>();
 
         try {
-            List<Candidate.PollInfo> pollInfos = candidateDao.getTopPollIds(4);
+            List<Candidate.PollInfo> pollInfos = candidateDao.getTopPollIds();
             if (pollInfos.isEmpty()) {
                 throw new RuntimeException("선택할 수 있는 투표가 없습니다.");
             }
@@ -35,21 +55,22 @@ public class CandidateService {
                 if (users.isEmpty()) {
                     throw new RuntimeException("poll_id " + pollId + "에 대해 선택할 수 있는 사용자가 없습니다.");
                 }
+                
+                Candidate candidate = new Candidate();
+                candidate.setPollId(pollId);
+                candidate.setQuestionText(pollInfo.getQuestionText());
 
                 for (Candidate.UserInfo user : users) {
                     int userId = user.getUserId();
 
                     candidateDao.updateUserSelectedStatus(userId);
 
-                    Candidate candidate = new Candidate();
                     candidate.setUserId(userId);
-                    candidate.setPollId(pollId);
                     candidate.setUserName(user.getUserName());
-                    candidate.setQuestionText(pollInfo.getQuestionText());
-
-                    candidateDao.insertCandidate(candidate);
-                    result.add(candidate);
+                    
                 }
+                candidateDao.insertCandidate(candidate);
+                result.add(candidate);
             }
 
             return result;

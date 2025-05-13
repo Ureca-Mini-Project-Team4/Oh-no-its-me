@@ -6,6 +6,7 @@ public class Candidate {
     private int pollId;
     private String questionText;
     private String userName;
+    
 
     public Candidate() {}
 
@@ -54,17 +55,6 @@ public class Candidate {
         this.userName = userName;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "\"candidateId\": " + candidateId + ", " +
-                "\"userId\": " + userId + ", " +
-                "\"userName\": \"" + userName + "\", " +
-                "\"pollId\": " + pollId + ", " +
-                "\"questionText\": \"" + questionText + "\"" +
-                "}";
-    }
-
     
     public static class PollInfo {
         private int pollId;
@@ -105,6 +95,36 @@ public class Candidate {
 
         public void setUserName(String userName) {
             this.userName = userName;
+        }
+    }
+    
+    public static class CandidateInfo {
+    	private int pollId;
+    	private String userName;
+    	private String questionText;
+    	
+        public int getPollId() {
+            return pollId;
+        }
+
+        public void setPollId(int pollId) {
+            this.pollId = pollId;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+        
+        public String getQuestionText() {
+            return questionText;
+        }
+
+        public void setQuestionText(String questionText) {
+            this.questionText = questionText;
         }
     }
 }
