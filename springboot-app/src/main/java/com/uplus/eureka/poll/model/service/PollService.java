@@ -9,4 +9,7 @@ public interface PollService {
 
     // 각 Question 객체를 DB에 저장하는 메서드
     void putQuestions(Question question);  
+    
+    List<Integer> getLatestPollIds();
+
 }
