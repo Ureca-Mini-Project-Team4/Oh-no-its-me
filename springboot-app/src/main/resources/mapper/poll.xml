@@ -21,6 +21,16 @@
 	    INSERT INTO Polls(question_id, start_time, end_time)
 	    VALUES (#{questionId}, #{startTime}, #{endTime})
 	</insert>
+	
+	<!-- 가장 최근 투표 4개 가져오기 -->
+	<select id="getLatestPollIds" resultType="int">
+	    SELECT poll_id
+	    FROM Polls
+	    ORDER BY poll_id DESC
+	    LIMIT 4
+	</select>
+
+
 
 
 </mapper>
