@@ -20,7 +20,7 @@
 	    WHERE is_selected = false
 	    ORDER BY RAND()
 	    LIMIT #{limit}
-	</select>
+	</select>0
 
     <!-- candidates 테이블에 user_id와 poll_id를 삽입하는 쿼리 -->    
 	<insert id="insertCandidate"
