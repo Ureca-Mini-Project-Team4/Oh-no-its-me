@@ -13,7 +13,7 @@ public class PollScheduler {
         this.pollController = pollController;
     }
 
-    @Scheduled(cron = "0 20 16 * * ?")
+    @Scheduled(cron = "0 00 14 * * ?")
     public void runPutQuestions() {
         pollController.getRandomQuestions();
     }

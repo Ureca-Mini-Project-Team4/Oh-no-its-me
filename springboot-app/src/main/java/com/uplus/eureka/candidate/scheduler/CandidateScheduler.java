@@ -13,7 +13,7 @@ public class CandidateScheduler {
         this.candidateController = candidateController;
     }
 
-    @Scheduled(cron = "0 21 16 * * ?")
+    @Scheduled(cron = "0 01 14 * * ?")
     public void runCreateCandidates() {
     	candidateController.createCandidates();
     }
