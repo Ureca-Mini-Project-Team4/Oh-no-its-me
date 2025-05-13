@@ -7,7 +7,7 @@ import ChangePW from './pages/ChangePW';
 import Result from './pages/Result';
 import Main from './pages/Main';
 import Comment from './pages/Comment';
-import ErrorBoundary from './pages/ErrorBoundary';
+import NotFound from './pages/NotFound';
 
 const router = createBrowserRouter([
   {
@@ -22,11 +22,11 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: 'vote',
+        path: '/vote',
         element: <Vote />,
       },
       {
-        path: 'change-password',
+        path: '/change-password',
         element: <ChangePW />,
       },
       {
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
       },
       {
         path: '*',
-        element: <ErrorBoundary />,
+        element: <NotFound />,
       },
     ],
   },

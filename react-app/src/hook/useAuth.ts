@@ -14,6 +14,21 @@ export function useAuth() {
 
   const user = useSelector((state: RootState) => state.auth.user);
 
+  const getErrorMessage = (error: unknown): string => {
+    if (error instanceof AxiosError) {
+      const status = error.response?.status;
+      const data = error.response?.data;
+
+      if (status === 404) return error.message;
+      if (typeof data === 'string') return data;
+      if (typeof data?.message === 'string') return data.message;
+      if (typeof data?.error === 'string') return data.error;
+
+      return error.message;
+    }
+    return String(error);
+  };
+
   const handleLogin = async (username: string, password: string) => {
     try {
       const { user, accessToken, refreshToken } = await login({ username, password });
@@ -28,19 +43,8 @@ export function useAuth() {
         throw new Error('로그인 정보가 올바르지 않습니다.');
       }
     } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.status === 404) {
-          showToast(error.message, 'warning');
-        } else {
-          const message =
-            typeof error.response?.data === 'string'
-              ? error.response.data
-              : JSON.stringify(error.response?.data);
-          showToast(message, 'warning');
-        }
-      } else {
-        showToast(String(error), 'warning');
-      }
+      const message = getErrorMessage(error);
+      showToast(message, 'warning');
       throw error;
     }
   };
