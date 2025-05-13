@@ -19,7 +19,7 @@ public class Comment {
     @Schema(description = "사용자 ID", example = "1")
     private Integer userId;
 
-    @JsonProperty("randome_nickname")
+    @JsonProperty("random_nickname")
     @Schema(description = "사용자 닉네임", example = "똑똑한 토끼")
     private String randomNickname;
 
