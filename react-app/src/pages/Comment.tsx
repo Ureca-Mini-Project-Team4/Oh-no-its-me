@@ -5,7 +5,7 @@ import {
   getVoteResultByPollIdResponse,
 } from './../apis/vote/getVoteResultByPollId';
 import { useEffect, useState } from 'react';
-import { getLastestPollIdsResponse, getLatestPollIds } from '@/apis/poll/getPollLatest';
+import { getLatestPollIds } from '@/apis/poll/getPollLatest';
 import { CommentResponse } from '@/apis/comment/getComment';
 import { getComments } from '@/apis/comment/getAllComments';
 import CommentCard from '@/components/Comment/Comment';
@@ -39,9 +39,7 @@ const Comment = () => {
       try {
         if (pollIds.length === 0) return;
 
-        const res = await Promise.all(
-          pollIds.map((poll) => getVoteResultByPollId({ pollId: poll.pollId })),
-        );
+        const res = await Promise.all(pollIds.map((pollId) => getVoteResultByPollId({ pollId })));
         setResults(res);
       } catch (error) {
         console.log('투표 결과 불러오기 실패 : ', error);
