@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Confetti from '@/components/Confetti/Confetti';
 import Winner from '@/components/Winner/Winner';
 import Spinner from '@/components/Spinner/Spinner';
@@ -12,13 +13,18 @@ const Result = () => {
   const [results, setResults] = useState<
     { pollId: number; questionText: string; username: string; voteCount: number }[]
   >([]);
+  const navigate = useNavigate();
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isTimedOut, setIsTimedOut] = useState(false);
   const { showToast } = useToast();
 
+  const handleClickButton = () => {
+    navigate('/comment');
+  };
+
   useEffect(() => {
-    const timeout = setTimeout(() => setIsTimedOut(true), 10000); // 10초 뒤 타임아웃 표시
+    const timeout = setTimeout(() => setIsTimedOut(true), 10000); // 10초 이상 지연되면 결과 없음 처리
     return () => clearTimeout(timeout);
   }, []);
 
@@ -59,7 +65,7 @@ const Result = () => {
 
       <div className="relative z-10 w-full h-screen flex items-center justify-center px-4">
         <div className="flex flex-col items-center justify-end w-full max-w-[1280px] gap-10">
-          {/* 상태 메시지 */}
+          {/* loading state에 따른 메시지 변경 */}
           {isLoading ? (
             isTimedOut ? (
               <p className="text-gray-400">아직 결과가 없어요!</p>
@@ -97,9 +103,20 @@ const Result = () => {
                   {results.slice(0, 4).map((data, index) => {
                     const shift = index % 2 === 0 ? '-translate-y-8' : 'translate-y-8';
                     return (
-                      <div key={data.pollId} className={`w-full flex justify-center ${shift}`}>
-                        <div className="w-44">
+                      <div
+                        key={data.pollId}
+                        className={`w-full flex justify-center ${shift} relative`}
+                      >
+                        <div className="w-44 relative">
                           <Winner name={data.username} question={data.questionText} />
+                          {index === 1 && (
+                            <img
+                              src="/assets/icons/arrow-right.png"
+                              alt="arrow"
+                              className="absolute top-1/2 right-2 ml-2 -translate-y-1/2 w-8 h-8 cursor-pointer z-20"
+                              onClick={handleClickButton}
+                            />
+                          )}
                         </div>
                       </div>
                     );
@@ -114,9 +131,20 @@ const Result = () => {
                       'bottom-[0%] left-1/2 -translate-x-1/2',
                       'top-1/2 right-[5%] -translate-y-1/2',
                     ];
+
                     return (
                       <div key={data.pollId} className={`absolute ${positions[index]} w-auto`}>
-                        <Winner name={data.username} question={data.questionText} />
+                        <div className="relative">
+                          <Winner name={data.username} question={data.questionText} />
+                          {index === 3 && (
+                            <img
+                              src="/assets/icons/arrow-right.png"
+                              alt="arrow"
+                              className="absolute top-1/2 left-full ml-6 -translate-y-1/2 w-10 h-10 cursor-pointer z-20"
+                              onClick={handleClickButton}
+                            />
+                          )}
+                        </div>
                       </div>
                     );
                   })}
