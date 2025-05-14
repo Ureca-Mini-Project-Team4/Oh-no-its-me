@@ -113,7 +113,7 @@ const Comment = () => {
           </div>
 
           {/* 댓글 */}
-          <div className=" w-full h-[550px] border border-gray-300 rounded-2xl flex flex-col justify-between px-4 py-2">
+          <div className="flex-1 w-full h-[550px] border border-gray-300 rounded-2xl flex flex-col justify-between px-4 py-2">
             {/* 스크롤 가능한 댓글 리스트 */}
             <div className="flex-1 overflow-y-auto pr-2">
               {comments.length === 0 ? (
