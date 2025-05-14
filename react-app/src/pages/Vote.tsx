@@ -10,8 +10,10 @@ import {
   getCandidateLatestResponse,
 } from '@/apis/candidate/getCandidateLatest';
 import { updateVoteCount } from '@/apis/vote/updateVoteCount';
+import { postVoteResult } from '@/apis/vote/postVoteResult';
 
 const Vote = () => {
+  const userId = Number(localStorage.getItem('userId'));
   const [pollData, setPollData] = useState<{ [pollId: number]: getCandidateLatestResponse[] }>({});
   const [pollIds, setPollIds] = useState<number[]>([]);
   const [pageIndex, setPageIndex] = useState(0);
@@ -55,6 +57,11 @@ const Vote = () => {
   const handleConfirm = async () => {
     setIsModalOpen(false);
 
+    if (!userId) {
+      alert('로그인이 필요합니다.'); // /페이지로 이동
+      return;
+    }
+
     const voteResults = Object.entries(selectedCandidates).map(([pollId, candidateId]) => ({
       pollId: Number(pollId),
       candidateId: candidateId!,
@@ -62,8 +69,7 @@ const Vote = () => {
 
     try {
       await Promise.all(voteResults.map(updateVoteCount));
-      console.log(voteResults);
-      alert('투표가 성공적으로 제출되었습니다!');
+      await postVoteResult({ userId });
     } catch (err) {
       console.error(err);
       alert('투표 제출 중 오류가 발생했습니다.');
