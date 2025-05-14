@@ -1,37 +1,74 @@
 import Process from '@/components/Process/Process';
-import Candidate from '@/components/Candidate/Candidate';
 import Button from '@/components/Button/Button';
 import CandidateGroup from '@/components/Candidate/CandidateGroup';
-import { useState } from 'react';
+
+import { useEffect, useState } from 'react';
 import useIsMobile from '@/hook/useIsMobile';
+import {
+  getCandidateLatests,
+  getCandidateLatestResponse,
+} from '@/apis/candidate/getCandidateLatest';
 
 const Vote = () => {
-  const [page, setPage] = useState(1);
+  const [pollData, setPollData] = useState<{ [pollId: number]: getCandidateLatestResponse[] }>({});
+  const [pollIds, setPollIds] = useState<number[]>([]);
+  const [pageIndex, setPageIndex] = useState(0);
   const isMobile = useIsMobile();
 
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getCandidateLatests();
+      const groupedData: { [pollId: number]: getCandidateLatestResponse[] } = {};
+
+      data.forEach((item) => {
+        if (!groupedData[item.pollId]) {
+          groupedData[item.pollId] = [];
+        }
+        groupedData[item.pollId].push(item);
+      });
+
+      const ids: number[] = Object.keys(groupedData)
+        .map(Number)
+        .sort((a, b) => a - b);
+
+      setPollData(groupedData);
+      setPollIds(ids);
+      setPageIndex(0);
+    }
+    fetchData();
+  }, []);
+
   const handlePrev = () => {
-    setPage((prev) => Math.max(prev - 1, 1));
+    setPageIndex((prev) => Math.max(prev - 1, 0));
   };
 
   const handleNext = () => {
-    setPage((prev) => Math.min(prev + 1, 4));
+    setPageIndex((prev) => Math.min(prev + 1, pollIds.length - 1));
   };
+
+  if (pollIds.length === 0) return <div>Loading...</div>; //loading 컴포넌트 부르는 걸로 바꾸자
+
+  const currentPollId = pollIds[pageIndex];
+  const currentCandidates = pollData[currentPollId];
+  const questionText = currentCandidates[0]?.questionText;
+  const icon = currentCandidates[0]?.icon;
+  const candidateArr = currentCandidates.map((c) => c.userName);
 
   return (
     <div className="min-h-screen bg-white flex items-center flex-col justify-center p-5">
       <div>
-        <Process page={page} />
+        <Process page={currentPollId} />
       </div>
       {isMobile ? (
         <div className="">
           <div className="flex flex-col p-5 ">
             <div className="p-2">
               <div className="flex flex-col items-center justify-center font-ps text-lg text-center mb-10">
-                <p>무인도에서 가장 탈출 못할 것 같은 사람은?</p>
+                <p>{questionText}</p>
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <CandidateGroup candidateArr={['이영주', '박은서', '진영호', '이다예']} />
+              <CandidateGroup candidateArr={candidateArr} />
             </div>
           </div>
           <div className="flex justify-between items-center w-full p-5">
@@ -44,15 +81,24 @@ const Vote = () => {
           <div className="flex flex-col items-center justify-center bg-gray-50 p-5 rounded-[30px] sm:flex-row">
             <div className="flex flex-1 p-13">
               <div className="flex flex-col items-center justify-center gap-10 font-ps text-2xl text-center ">
-                <p>무인도에서 가장 탈출 못할 것 같은 사람은?</p>
-                <img
-                  src="/public/assets/images/question/island.svg"
-                  className="w-full max-w-[250px] h-full object-contain"
-                />
+                <p>{questionText}</p>
+                {icon ? (
+                  <img
+                    src={icon}
+                    className="w-full max-w-[250px] h-full object-contain"
+                    alt="question icon"
+                  />
+                ) : (
+                  <img
+                    src="/public/assets/images/question/island.svg"
+                    className="w-full max-w-[250px] h-full object-contain"
+                    alt="default icon"
+                  />
+                )}
               </div>
             </div>
             <div className="flex-1 flex-col items-center justify-center p-10">
-              <CandidateGroup candidateArr={['이영주', '박은서', '진영호', '이다예']} />
+              <CandidateGroup candidateArr={candidateArr} />
             </div>
           </div>
           <div className="flex justify-between items-center w-full mt-10">

@@ -4,7 +4,7 @@ export interface getCandidateLatestResponse {
   pollId: number;
   userName: string;
   questionText: string;
-  //   icon: string;
+  icon: string;
 }
 
 export async function getCandidateLatests(): Promise<getCandidateLatestResponse[]> {
