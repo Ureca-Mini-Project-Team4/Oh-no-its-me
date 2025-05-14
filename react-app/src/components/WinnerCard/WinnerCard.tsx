@@ -48,7 +48,7 @@ const WinnerCard = ({ text, icon, name, num }: WinnerCardProps) => {
   }, [num]);
 
   return (
-    <div className="w-[160px] h-[200px] sm:w-[240px] sm:h-[300px]">
+    <div className="w-[160px] h-[200px] sm:w-[180px] sm:h-[240px]">
       <ReactCardFlip
         isFlipped={state}
         containerStyle={{
@@ -74,7 +74,7 @@ const WinnerCardFront = ({ text, icon, color, onClick }: WinnerCardFrontProps) =
       onClick={onClick}
       className={`${BASE_CSS} ${color} items-end justify-evenly cursor-pointer`}
     >
-      <p className="text-[12px] sm:text-[18px] break-keep">{text}</p>
+      <p className="text-[12px] sm:text-[18px] break-keep font-pr">{text}</p>
       <img src={new_src} className="w-[80px] h-[80px] sm:w-[120px] sm:h-[120px]" />
     </div>
   );
@@ -88,9 +88,9 @@ const WinnerCardBack = ({ name, color, onClick }: WinnderCardBackProps) => {
       onClick={onClick}
       className={`${BASE_CSS} ${color} items-center justify-evenly cursor-pointer`}
     >
-      <img src={`${BASE_URL}medal.png`} className="w-[40px] h-[50px] sm:w-[60px] sm:h-[75px]" />
+      <img src={`${BASE_URL}medal.png`} className="w-[35px] h-[45px] sm:w-[45px] sm:h-[60px]" />
       <img src={new_src} className="w-[80px] h-[80px] sm:w-[120px] sm:h-[120px]" />
-      <p className="text-[14px] sm:text-[21px]">{name}</p>
+      <p className="text-[16px] sm:text-[21px] font-pr">{name}</p>
     </div>
   );
 };

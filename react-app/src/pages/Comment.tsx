@@ -10,8 +10,12 @@ import { CommentResponse } from '@/apis/comment/getComment';
 import { getComments } from '@/apis/comment/getAllComments';
 import CommentCard from '@/components/Comment/Comment';
 import CharacterCard from '@/components/Character/Character';
+import useIsMobile from '@/hook/useIsMobile';
+import { Dropdown } from '@/components/Comment/Dropdown';
 
 const Comment = () => {
+  const isMobile = useIsMobile();
+
   // 결과 조회
   const [results, setResults] = useState<getVoteResultByPollIdResponse[]>([]);
   const [pollIds, setPollIds] = useState<number[]>([]);
@@ -66,7 +70,7 @@ const Comment = () => {
 
   return (
     <>
-      <div className="p-5 flex flex-col justify-center items-center">
+      <div className="p-10 sm:p-5 flex flex-col justify-center items-center">
         {/* 제목 */}
         <div className="flex justify-center items-center gap-3 sm:gap-7 sm:pt-0 pt-5">
           {/* 왼쪽 이미지: 모바일에서만 보이게 */}
@@ -75,7 +79,7 @@ const Comment = () => {
             className="w-[40px] sm:w-[100px]"
             alt="popper-left"
           />
-          <h1 className="text-xl font-pm sm:text-3xl">투표 결과</h1>
+          <h1 className="text-2xl font-pm sm:text-3xl">투표 결과</h1>
           {/* 오른쪽 이미지: 모든 화면에서 보이지만 크기는 반응형 */}
           <img
             src="/assets/images/popper-left.png"
@@ -84,25 +88,31 @@ const Comment = () => {
           />
         </div>
 
-        <div className="flex flex-col sm:flex-row p-5 gap-5 sm:gap-0 max-h-screen overflow-auto">
-          {/* 카드 */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-            {results.map((poll, idx) => (
-              <div key={poll.pollId} className={idx % 2 === 1 ? 'sm:mt-10' : ''}>
-                <WinnerCard
+        <div className="p-10 flex flex-col sm:flex-row sm:p-3 gap-10 sm:gap-20">
+          {/* 카드 영역 */}
+          <div className="w-full sm:w-auto flex justify-center">
+            <div className="grid grid-cols-2 grid-rows-2 gap-6 sm:gap-8 place-items-center">
+              {results.map((poll, idx) => (
+                <div
                   key={poll.pollId}
-                  text={poll.questionText}
-                  name={poll.results[0].username}
-                  num={idx}
-                  icon={poll.icon}
-                />
-              </div>
-            ))}
+                  className={`w-full ${!isMobile && idx % 2 === 1 ? 'mt-5' : ''}`}
+                >
+                  <WinnerCard
+                    text={poll.questionText}
+                    name={poll.results[0].username}
+                    num={idx}
+                    icon={poll.icon}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* 댓글 */}
           <div
-            className={`w-full sm:w-120 h-130 border border-gray-300 rounded-2xl flex justify-center ${comments.length === 0 ? 'items-center' : 'items-start'} px-4 py-2 overflow-y-auto`}
+            className={`flex-1  w-full h-[500px] border border-gray-300 rounded-2xl flex justify-center ${
+              comments.length === 0 ? 'items-center' : 'items-start'
+            } px-4 py-2 overflow-y-auto`}
           >
             {comments.length === 0 ? (
               <div className="pl-10 w-full">

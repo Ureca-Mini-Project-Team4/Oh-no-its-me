@@ -72,20 +72,19 @@
       --color-gray-200: #e5e7eb;
     }
   }
-
   .bg-lemon-gradient {
-    background: linear-gradient(180deg, var(--color-lemon), white);
+    background: linear-gradient(180deg, var(--color-lemon) 60%, #fff9bc 100%);
   }
 
   .bg-soda-gradient {
-    background: linear-gradient(180deg, var(--color-soda), white);
+    background: linear-gradient(180deg, var(--color-soda) 60%, #c3f2ff 100%);
   }
 
   .bg-peach-gradient {
-    background: linear-gradient(180deg, var(--color-peach), white);
+    background: linear-gradient(180deg, var(--color-peach) 60%, #fbd8fe 100%);
   }
 
   .bg-orange-gradient {
-    background: linear-gradient(180deg, var(--color-orange), white);
+    background: linear-gradient(180deg, var(--color-orange) 60%, #ffc18f 100%);
   }
 }
