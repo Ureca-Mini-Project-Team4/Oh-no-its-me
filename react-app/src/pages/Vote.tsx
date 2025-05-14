@@ -5,6 +5,7 @@ import Modal from '@/components/Modal/Modal';
 
 import { useEffect, useState } from 'react';
 import useIsMobile from '@/hook/useIsMobile';
+import { useNavigate } from 'react-router-dom';
 import {
   getCandidateLatests,
   getCandidateLatestResponse,
@@ -18,10 +19,11 @@ const Vote = () => {
   const [pollIds, setPollIds] = useState<number[]>([]);
   const [pageIndex, setPageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const isMobile = useIsMobile();
   const [selectedCandidates, setSelectedCandidates] = useState<{ [pollId: number]: number | null }>(
     {},
   );
+  const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     async function fetchData() {
@@ -70,6 +72,7 @@ const Vote = () => {
     try {
       await Promise.all(voteResults.map(updateVoteCount));
       await postVoteResult({ userId });
+      navigate('/main');
     } catch (err) {
       console.error(err);
       alert('투표 제출 중 오류가 발생했습니다.');
