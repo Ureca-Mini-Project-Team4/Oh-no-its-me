@@ -9,7 +9,7 @@ import {
   getCandidateLatests,
   getCandidateLatestResponse,
 } from '@/apis/candidate/getCandidateLatest';
-import { postVoteResult, postVoteResultResponse } from '@/apis/vote/postVoteResult';
+import { updateVoteCount } from '@/apis/vote/updateVoteCount';
 
 const Vote = () => {
   const [pollData, setPollData] = useState<{ [pollId: number]: getCandidateLatestResponse[] }>({});
@@ -17,6 +17,9 @@ const Vote = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isMobile = useIsMobile();
+  const [selectedCandidates, setSelectedCandidates] = useState<{ [pollId: number]: number | null }>(
+    {},
+  );
 
   useEffect(() => {
     async function fetchData() {
@@ -49,19 +52,37 @@ const Vote = () => {
     setPageIndex((prev) => Math.min(prev + 1, pollIds.length - 1));
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     setIsModalOpen(false);
-    alert('투표가 제출되었습니다!');
-    // 여기에 실제 제출 로직 추가 가능
+
+    const voteResults = Object.entries(selectedCandidates).map(([pollId, candidateId]) => ({
+      pollId: Number(pollId),
+      candidateId: candidateId!,
+    }));
+
+    try {
+      await Promise.all(voteResults.map(updateVoteCount));
+      console.log(voteResults);
+      alert('투표가 성공적으로 제출되었습니다!');
+    } catch (err) {
+      console.error(err);
+      alert('투표 제출 중 오류가 발생했습니다.');
+    }
   };
 
-  if (pollIds.length === 0) return <div>Loading...</div>; // 다른화면으로 이동하자
+  const handleCandidateSelect = (pollId: number, candidateId: number) => {
+    setSelectedCandidates((prev) => ({ ...prev, [pollId]: candidateId }));
+  };
+
+  if (pollIds.length === 0) return <div>Loading...</div>; // 메인화면으로 이동하자?
 
   const currentPollId = pollIds[pageIndex];
   const currentCandidates = pollData[currentPollId];
   const questionText = currentCandidates[0]?.questionText;
   const icon = currentCandidates[0]?.icon;
-  const candidateArr = currentCandidates.map((c) => c.userName);
+
+  const selectedCandidateId = selectedCandidates[currentPollId] ?? null;
+  const isCandidateSelected = selectedCandidateId !== null;
 
   return (
     <div className="min-h-screen bg-white flex items-center flex-col justify-center p-5">
@@ -77,20 +98,38 @@ const Vote = () => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <CandidateGroup candidateArr={candidateArr} />
+              <CandidateGroup
+                candidateArr={currentCandidates.map((c) => ({
+                  id: c.candidateId,
+                  userName: c.userName,
+                }))}
+                selectedCandidateId={selectedCandidateId}
+                onSelect={(candidateId) => handleCandidateSelect(currentPollId, candidateId)}
+              />
             </div>
           </div>
           <div className="flex justify-between items-center w-full p-5">
             {pageIndex > 0 ? (
-              <Button label="이전" onClick={handlePrev} type="outline" size="sm" />
+              <Button
+                label="이전"
+                onClick={handlePrev}
+                type="outline"
+                size="sm"
+                disabled={!isCandidateSelected}
+              />
             ) : (
-              <div className="w-[188px]" /> // '이전' 자리를 고정
+              <div className="w-[188px]" />
             )}
 
             {pageIndex < pollIds.length - 1 ? (
-              <Button label="다음" onClick={handleNext} size="sm" />
+              <Button label="다음" onClick={handleNext} size="sm" disabled={!isCandidateSelected} />
             ) : (
-              <Button label="제출" onClick={() => setIsModalOpen(true)} size="sm" />
+              <Button
+                label="제출"
+                onClick={() => setIsModalOpen(true)}
+                size="sm"
+                disabled={!isCandidateSelected}
+              />
             )}
           </div>
         </div>
@@ -116,20 +155,38 @@ const Vote = () => {
               </div>
             </div>
             <div className="flex-1 flex-col items-center justify-center p-10">
-              <CandidateGroup candidateArr={candidateArr} />
+              <CandidateGroup
+                candidateArr={currentCandidates.map((c) => ({
+                  id: c.candidateId,
+                  userName: c.userName,
+                }))}
+                selectedCandidateId={selectedCandidateId}
+                onSelect={(candidateId) => handleCandidateSelect(currentPollId, candidateId)}
+              />
             </div>
           </div>
           <div className="flex justify-between items-center w-full mt-10">
             {pageIndex > 0 ? (
-              <Button label="이전" onClick={handlePrev} type="outline" size="lg" />
+              <Button
+                label="이전"
+                onClick={handlePrev}
+                type="outline"
+                size="lg"
+                disabled={!isCandidateSelected}
+              />
             ) : (
               <div className="w-[188px]" />
             )}
 
             {pageIndex < pollIds.length - 1 ? (
-              <Button label="다음" onClick={handleNext} size="lg" />
+              <Button label="다음" onClick={handleNext} size="lg" disabled={!isCandidateSelected} />
             ) : (
-              <Button label="제출" onClick={() => setIsModalOpen(true)} size="lg" />
+              <Button
+                label="제출"
+                onClick={() => setIsModalOpen(true)}
+                size="lg"
+                disabled={!isCandidateSelected}
+              />
             )}
           </div>
         </div>

@@ -1,10 +1,10 @@
 import { CandidateProps } from './Candidate.types';
 
-const Candidate = ({ name, isSelected, handleClick, idx }: CandidateProps) => {
+const Candidate = ({ name, isSelected, handleClick, id }: CandidateProps) => {
   return (
     <div>
       <button
-        onClick={() => handleClick(idx)}
+        onClick={() => handleClick(id)}
         className={`relative pt-1 pb-3 rounded-2xl bg-white flex flex-col items-center border-2 
     transition-colors ease-in-out hover:cursor-pointer 
     ${isSelected ? 'border-[var(--color-primary-base)] hover:border-[var(--color-primary-base)]' : 'border-[var(--color-gray-200)] hover:border-[var(--color-primary-base)]'}`}
