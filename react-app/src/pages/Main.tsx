@@ -1,11 +1,10 @@
-import { getPoll } from '@/apis/poll/getPoll';
+// import { getLatestPollIds } from '@/apis/poll/getPollLatest';
 import Button from '@/components/Button/Button';
 import { store } from '@/store';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
-  const [endTime, setEndTime] = useState(() => new Date());
   const [restTime, setRestTime] = useState(10);
   const isVoted = store.getState().auth.user?.voted;
 
@@ -18,34 +17,21 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
-    const fetchPoll = async () => {
-      try {
-        const response = await getPoll();
-        if (response[0].endTime) {
-          setEndTime(new Date(response[0].endTime));
-        }
-      } catch (error) {
-        console.log(error);
-      }
+    const todayAtFour = new Date();
+    todayAtFour.setHours(16, 0, 0, 0); // 16시
+
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const end = todayAtFour.getTime();
+      const diff = end - now;
+      setRestTime(diff > 0 ? diff : 0);
     };
-    fetchPoll();
-  }, []);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const now = new Date();
-      const diff = endTime.getTime() - now.getTime();
-
-      if (diff <= 0) {
-        setRestTime(0);
-        clearInterval(timer);
-      } else {
-        setRestTime(diff);
-      }
-    }, 1000);
+    updateTimer();
+    const timer = setInterval(updateTimer, 1000);
 
     return () => clearInterval(timer);
-  }, [endTime]);
+  }, []);
 
   const navigation = useNavigate();
 
