@@ -9,11 +9,12 @@ import { getLastestPollIdsResponse, getLatestPollIds } from '@/apis/poll/getPoll
 import { CommentResponse } from '@/apis/comment/getComment';
 import { getComments } from '@/apis/comment/getAllComments';
 import CommentCard from '@/components/Comment/Comment';
+import CharacterCard from '@/components/Character/Character';
 
 const Comment = () => {
   // 결과 조회
   const [results, setResults] = useState<getVoteResultByPollIdResponse[]>([]);
-  const [pollIds, setPollIds] = useState<getLastestPollIdsResponse[]>([]);
+  const [pollIds, setPollIds] = useState<number[]>([]);
 
   // 댓글 조회
   const [comments, setComments] = useState<CommentResponse[]>([]);
@@ -23,6 +24,7 @@ const Comment = () => {
     const fetchAllResults = async () => {
       try {
         const res = await getLatestPollIds();
+        console.log('댓글', res);
         setPollIds(res);
       } catch (error) {
         console.error('투표 결과 불러오기 실패 : ', error);
@@ -54,6 +56,8 @@ const Comment = () => {
     const getAllComments = async () => {
       try {
         const res = await getComments();
+        if (res.length === 0) {
+        }
         setComments(res);
       } catch (error) {
         console.log('댓글 불러오기 실패 : ', error);
@@ -73,6 +77,7 @@ const Comment = () => {
 
         <div className="flex p-5">
           {/* 카드 */}
+
           <div className="grid grid-cols-2 gap-10">
             {results.map((poll, idx) => (
               <div key={poll.pollId} className={idx % 2 === 1 ? 'mt-10' : ''}>
@@ -86,14 +91,21 @@ const Comment = () => {
               </div>
             ))}
           </div>
-
           {/* 댓글 */}
-          <div className="border border-gray-300 rounded-2xl sm:w-120 sm:h-130">
-            <div className="flex flex-col items-center pt-4 gap-2">
-              {comments.map((comment, idx) => (
-                <CommentCard nickname={comment.random_nickname} comment={comment.comment_text} />
-              ))}
-            </div>
+          <div className="border border-gray-300 rounded-2xl sm:w-120 sm:h-130 flex justify-center items-center pl-15 pb-10">
+            {comments.length === 0 ? (
+              <CharacterCard />
+            ) : (
+              <div className="flex flex-col items-center pt-4 gap-2 w-full">
+                {comments.map((comment, idx) => (
+                  <CommentCard
+                    key={idx}
+                    nickname={comment.random_nickname}
+                    comment={comment.comment_text}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
