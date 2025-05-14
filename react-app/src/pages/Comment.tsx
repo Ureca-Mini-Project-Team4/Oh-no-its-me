@@ -12,6 +12,7 @@ import CommentCard from '@/components/Comment/Comment';
 import CharacterCard from '@/components/Character/Character';
 import useIsMobile from '@/hook/useIsMobile';
 import { Dropdown } from '@/components/Comment/Dropdown';
+import CommentInputField from '@/components/Comment/CommentInputField';
 
 const Comment = () => {
   const isMobile = useIsMobile();
@@ -22,6 +23,9 @@ const Comment = () => {
 
   // 댓글 조회
   const [comments, setComments] = useState<CommentResponse[]>([]);
+
+  // 댓글 입력창 상태 추가
+  const [commentText, setCommentText] = useState('');
 
   // 최신 pollIds 불러오기
   useEffect(() => {
@@ -70,7 +74,7 @@ const Comment = () => {
 
   return (
     <>
-      <div className="p-10 sm:p-5 flex flex-col justify-center items-center">
+      <div className="py-10 sm:p-5 flex flex-col justify-center items-center">
         {/* 제목 */}
         <div className="flex justify-center items-center gap-3 sm:gap-7 sm:pt-0 pt-5">
           {/* 왼쪽 이미지: 모바일에서만 보이게 */}
@@ -88,14 +92,14 @@ const Comment = () => {
           />
         </div>
 
-        <div className="p-10 flex flex-col sm:flex-row sm:p-3 gap-10 sm:gap-20">
+        <div className="p-5 flex flex-col sm:flex-row sm:p-3 gap-10 sm:gap-30">
           {/* 카드 영역 */}
           <div className="w-full sm:w-auto flex justify-center">
-            <div className="grid grid-cols-2 grid-rows-2 gap-6 sm:gap-8 place-items-center">
+            <div className="grid grid-cols-2 grid-rows-2 gap-6 sm:gap-x-10 sm:gap-y-0">
               {results.map((poll, idx) => (
                 <div
                   key={poll.pollId}
-                  className={`w-full ${!isMobile && idx % 2 === 1 ? 'mt-5' : ''}`}
+                  className={`w-full ${!isMobile && idx % 2 === 1 ? 'mt-7' : ''}`}
                 >
                   <WinnerCard
                     text={poll.questionText}
@@ -109,26 +113,35 @@ const Comment = () => {
           </div>
 
           {/* 댓글 */}
-          <div
-            className={`flex-1  w-full h-[500px] border border-gray-300 rounded-2xl flex justify-center ${
-              comments.length === 0 ? 'items-center' : 'items-start'
-            } px-4 py-2 overflow-y-auto`}
-          >
-            {comments.length === 0 ? (
-              <div className="pl-10 w-full">
-                <CharacterCard />
-              </div>
-            ) : (
-              <div className="flex flex-col items-center gap-2 w-full">
-                {comments.map((comment, idx) => (
-                  <CommentCard
-                    key={idx}
-                    nickname={comment.random_nickname}
-                    comment={comment.comment_text}
-                  />
-                ))}
-              </div>
-            )}
+          <div className=" w-full h-[550px] border border-gray-300 rounded-2xl flex flex-col justify-between px-4 py-2">
+            {/* 스크롤 가능한 댓글 리스트 */}
+            <div className="flex-1 overflow-y-auto pr-2">
+              {comments.length === 0 ? (
+                // flex items-center justify-center h-full w-full
+                <div className="pl-10 w-full flex items-center justify-center h-full">
+                  <CharacterCard />
+                </div>
+              ) : (
+                <div className="flex flex-col items-center gap-2 w-full">
+                  {comments.map((comment, idx) => (
+                    <CommentCard
+                      key={idx}
+                      nickname={comment.random_nickname}
+                      comment={comment.comment_text}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* 고정된 입력창 */}
+            <div className="mt-4">
+              <CommentInputField
+                nickname="부드럽게 움직이는 황금도토리"
+                comment={commentText}
+                onChangeComment={(e) => setCommentText(e.target.value)}
+              />
+            </div>
           </div>
         </div>
       </div>
