@@ -4,6 +4,7 @@ export interface getCandidateLatestResponse {
   pollId: number;
   userName: string;
   questionText: string;
+  candidateId: number;
   icon: string;
 }
 

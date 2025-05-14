@@ -72,8 +72,14 @@ const Vote = () => {
             </div>
           </div>
           <div className="flex justify-between items-center w-full p-5">
-            <Button label="이전" onClick={handlePrev} type="outline" size="sm"></Button>
-            <Button label="다음" onClick={handleNext} size="sm"></Button>
+            {pageIndex !== 0 && (
+              <Button label="이전" onClick={handlePrev} type="outline" size="sm" />
+            )}
+            {pageIndex === pollIds.length - 1 ? (
+              <Button label="제출" onClick={() => alert('제출되었습니다')} size="sm" />
+            ) : (
+              <Button label="다음" onClick={handleNext} size="sm" />
+            )}
           </div>
         </div>
       ) : (
@@ -102,8 +108,14 @@ const Vote = () => {
             </div>
           </div>
           <div className="flex justify-between items-center w-full mt-10">
-            <Button label="이전" onClick={handlePrev} type="outline" size="lg"></Button>
-            <Button label="다음" onClick={handleNext} size="lg"></Button>
+            {pageIndex !== 0 && (
+              <Button label="이전" onClick={handlePrev} type="outline" size="lg" />
+            )}
+            {pageIndex === pollIds.length - 1 ? (
+              <Button label="제출" onClick={() => alert('제출되었습니다')} size="lg" />
+            ) : (
+              <Button label="다음" onClick={handleNext} size="lg" />
+            )}
           </div>
         </div>
       )}
