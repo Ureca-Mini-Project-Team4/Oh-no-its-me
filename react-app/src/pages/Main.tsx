@@ -1,11 +1,13 @@
 import { getPoll } from '@/apis/poll/getPoll';
 import Button from '@/components/Button/Button';
+import { store } from '@/store';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
   const [endTime, setEndTime] = useState(() => new Date());
-  const [restTime, setRestTime] = useState(1);
+  const [restTime, setRestTime] = useState(10);
+  const isVoted = store.getState().auth.user?.voted;
 
   const changeDateTime = useCallback((diff: number) => {
     const hours = Math.floor(diff / (1000 * 60 * 60));
@@ -33,15 +35,26 @@ const Main = () => {
     const timer = setInterval(() => {
       const now = new Date();
       const diff = endTime.getTime() - now.getTime();
-      setRestTime(diff);
+
+      if (diff <= 0) {
+        setRestTime(0);
+        clearInterval(timer);
+      } else {
+        setRestTime(diff);
+      }
     }, 1000);
 
     return () => clearInterval(timer);
   }, [endTime]);
 
   const navigation = useNavigate();
+
   const handleMoveToVote = useCallback(() => {
     navigation('/vote');
+  }, [navigation]);
+
+  const handleMoveToResult = useCallback(() => {
+    navigation('/result');
   }, [navigation]);
 
   return (
@@ -56,7 +69,15 @@ const Main = () => {
         <span className="bg-[var(--color-primary-base)] px-2">너로</span> 정했다!
       </p>
       <div className="w-full max-w-[320px] text-[16px] sm:text-[20px] md:text-[24px] font-pb">
-        <Button onClick={handleMoveToVote} label="투표하기" disabled={restTime <= 0} />
+        {restTime > 0 ? (
+          <Button
+            onClick={handleMoveToVote}
+            label={isVoted ? '투표완료' : '투표하기'}
+            disabled={isVoted}
+          />
+        ) : (
+          <Button onClick={handleMoveToResult} label="결과보기" />
+        )}
       </div>
     </div>
   );
