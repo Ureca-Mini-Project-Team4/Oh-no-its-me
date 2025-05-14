@@ -1,6 +1,7 @@
 import Process from '@/components/Process/Process';
 import Button from '@/components/Button/Button';
 import CandidateGroup from '@/components/Candidate/CandidateGroup';
+import Modal from '@/components/Modal/Modal';
 
 import { useEffect, useState } from 'react';
 import useIsMobile from '@/hook/useIsMobile';
@@ -8,11 +9,13 @@ import {
   getCandidateLatests,
   getCandidateLatestResponse,
 } from '@/apis/candidate/getCandidateLatest';
+import { postVoteResult, postVoteResultResponse } from '@/apis/vote/postVoteResult';
 
 const Vote = () => {
   const [pollData, setPollData] = useState<{ [pollId: number]: getCandidateLatestResponse[] }>({});
   const [pollIds, setPollIds] = useState<number[]>([]);
   const [pageIndex, setPageIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -46,7 +49,13 @@ const Vote = () => {
     setPageIndex((prev) => Math.min(prev + 1, pollIds.length - 1));
   };
 
-  if (pollIds.length === 0) return <div>Loading...</div>; //loading 컴포넌트 부르는 걸로 바꾸자
+  const handleConfirm = () => {
+    setIsModalOpen(false);
+    alert('투표가 제출되었습니다!');
+    // 여기에 실제 제출 로직 추가 가능
+  };
+
+  if (pollIds.length === 0) return <div>Loading...</div>; // 다른화면으로 이동하자
 
   const currentPollId = pollIds[pageIndex];
   const currentCandidates = pollData[currentPollId];
@@ -72,13 +81,16 @@ const Vote = () => {
             </div>
           </div>
           <div className="flex justify-between items-center w-full p-5">
-            {pageIndex !== 0 && (
+            {pageIndex > 0 ? (
               <Button label="이전" onClick={handlePrev} type="outline" size="sm" />
-            )}
-            {pageIndex === pollIds.length - 1 ? (
-              <Button label="제출" onClick={() => alert('제출되었습니다')} size="sm" />
             ) : (
+              <div className="w-[188px]" /> // '이전' 자리를 고정
+            )}
+
+            {pageIndex < pollIds.length - 1 ? (
               <Button label="다음" onClick={handleNext} size="sm" />
+            ) : (
+              <Button label="제출" onClick={() => setIsModalOpen(true)} size="sm" />
             )}
           </div>
         </div>
@@ -108,17 +120,21 @@ const Vote = () => {
             </div>
           </div>
           <div className="flex justify-between items-center w-full mt-10">
-            {pageIndex !== 0 && (
+            {pageIndex > 0 ? (
               <Button label="이전" onClick={handlePrev} type="outline" size="lg" />
-            )}
-            {pageIndex === pollIds.length - 1 ? (
-              <Button label="제출" onClick={() => alert('제출되었습니다')} size="lg" />
             ) : (
+              <div className="w-[188px]" />
+            )}
+
+            {pageIndex < pollIds.length - 1 ? (
               <Button label="다음" onClick={handleNext} size="lg" />
+            ) : (
+              <Button label="제출" onClick={() => setIsModalOpen(true)} size="lg" />
             )}
           </div>
         </div>
       )}
+      <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} onConfirm={handleConfirm} />
     </div>
   );
 };
