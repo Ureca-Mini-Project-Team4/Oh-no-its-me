@@ -1,6 +1,7 @@
 import { RootState } from '@/store';
 import Profile from '../Profile/Profile';
 import { useSelector } from 'react-redux';
+import { Dropdown } from './Dropdown';
 
 interface CommentProps {
   nickname: string;
@@ -27,7 +28,11 @@ const CommentCard = ({ nickname, comment }: CommentProps) => {
             <div className="text-[12px] sm:text-[15px] mb-[5px]">{comment}</div>
           </div>
         </div>
-        <div className="pr-3 flex items-center"></div>
+        {isCurrentUser && (
+          <div className="pr-3 flex items-center">
+            <Dropdown data={['수정', '삭제']} />
+          </div>
+        )}
       </div>
     </div>
   );

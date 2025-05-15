@@ -22,16 +22,16 @@ export const Dropdown = ({ data }: DropdownProps) => {
   }, []);
 
   return (
-    <div ref={selectRef}>
+    <div ref={selectRef} className="relative">
       <div className="items-center cursor-pointer" onClick={() => setShowOptions((prev) => !prev)}>
         <p className="text-gray-500 text-lg">…</p>
       </div>
       {showOptions && (
-        <ul className="absolute z-1 flex flex-col bg-white border border-gray-300 rounded-md">
+        <ul className="right-0 w-10 sm:w-13 absolute z-10 bg-white border border-gray-300 rounded-md mt-1">
           {data.map((item, index) => (
             <li
               key={index}
-              className="w-fit font-pm text-xs sm:text-sm pt-1.5 pb-1.5 pl-2 pr-2 text-center text-gray-600 hover:bg-blue-600 hover:text-white cursor-pointer rounded-md transition"
+              className="w-full font-pm text-xs sm:text-sm pt-1.5 pb-1.5 pl-2 pr-2 text-center text-gray-600 hover:bg-blue-600 hover:text-white cursor-pointer rounded-md transition"
             >
               {item}
             </li>
