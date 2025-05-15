@@ -1,5 +1,4 @@
 import Profile from '../Profile/Profile';
-import { Dropdown } from './Dropdown';
 
 interface CommentProps {
   nickname: string | null;
