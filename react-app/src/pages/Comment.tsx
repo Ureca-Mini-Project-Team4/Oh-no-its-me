@@ -1,5 +1,4 @@
 import WinnerCard from '@/components/WinnerCard/WinnerCard';
-
 import {
   getVoteResultByPollId,
   getVoteResultByPollIdResponse,
@@ -11,7 +10,6 @@ import { getComments } from '@/apis/comment/getAllComments';
 import CommentCard from '@/components/Comment/Comment';
 import CharacterCard from '@/components/Character/Character';
 import useIsMobile from '@/hook/useIsMobile';
-import { Dropdown } from '@/components/Comment/Dropdown';
 import CommentInputField from '@/components/Comment/CommentInputField';
 
 const Comment = () => {
