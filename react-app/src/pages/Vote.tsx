@@ -2,7 +2,6 @@ import Process from '@/components/Process/Process';
 import Button from '@/components/Button/Button';
 import CandidateGroup from '@/components/Candidate/CandidateGroup';
 import Modal from '@/components/Modal/Modal';
-import Spinner from '@/components/Spinner/Spinner';
 import Loading from '@/components/Loading/Loading';
 
 import { useEffect, useState } from 'react';
@@ -63,7 +62,8 @@ const Vote = () => {
     setIsModalOpen(false);
 
     if (!userId) {
-      alert('로그인이 필요합니다.'); // /페이지로 이동
+      alert('로그인이 필요합니다.');
+      navigate('/');
       return;
     }
 
@@ -93,7 +93,6 @@ const Vote = () => {
   if (pollIds.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        {/* <Spinner /> */}
         <Loading />
       </div>
     );
@@ -169,7 +168,7 @@ const Vote = () => {
                   />
                 ) : (
                   <img
-                    src="/public/assets/images/question/island.svg"
+                    src="/assets/images/question/island.svg"
                     className="w-full max-w-[250px] h-full object-contain"
                     alt="default icon"
                   />
