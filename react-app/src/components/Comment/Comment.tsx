@@ -1,4 +1,6 @@
+import { RootState } from '@/store';
 import Profile from '../Profile/Profile';
+import { useSelector } from 'react-redux';
 
 interface CommentProps {
   nickname: string;
@@ -6,16 +8,23 @@ interface CommentProps {
 }
 
 const CommentCard = ({ nickname, comment }: CommentProps) => {
+  const user = useSelector((state: RootState) => state.auth.user)!;
+
+  const isCurrentUser = user.randomNickname == nickname;
+
   return (
-    <div className="w-[300px] pt-[5px] pb-[5px] h-auto sm:w-[450px] flex flex-initial rounded-xl sm:rounded-2xl border-solid border-[1px] border-gray-100 items-center">
+    <div
+      className={`${isCurrentUser ? 'bg-gray-100' : ''} w-[300px] pt-[5px] pb-[5px] h-auto sm:w-[450px] flex flex-initial rounded-xl sm:rounded-2xl border-solid border-[1px] 
+    border-gray-100 items-center`}
+    >
       <div className="flex justify-between w-full">
         <div className="flex gap-[10px] pl-3 pr-3 items-center">
           <div className="h-full flex items-start">
             <Profile nickname={nickname} />
           </div>
-          <div className="font-pm flex flex-col gap-[5px]">
-            <div className="text-[8px] sm:text-[12px] text-gray-600 mt-[5px]">{nickname}</div>
-            <div className="text-[10px] sm:text-[15px] mb-[5px]">{comment}</div>
+          <div className="font-pm flex flex-col gap-[2px]">
+            <div className="text-[11px] sm:text-[12px] text-gray-600 mt-[5px]">{nickname}</div>
+            <div className="text-[12px] sm:text-[15px] mb-[5px]">{comment}</div>
           </div>
         </div>
         <div className="pr-3 flex items-center"></div>
