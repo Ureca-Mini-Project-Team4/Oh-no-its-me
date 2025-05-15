@@ -38,6 +38,7 @@ export function useAuth() {
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('userId', String(user.userId));
+        localStorage.setItem('voted', String(user.voted));
         navigate('/main');
       } else {
         throw new Error('로그인 정보가 올바르지 않습니다.');
