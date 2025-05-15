@@ -118,63 +118,42 @@ public class UserController {
 
     @Operation(
             summary = "비밀번호 변경",
-            description = "특정 유저의 비밀번호 변경 (인증 필요)",
-            security = @SecurityRequirement(name = "Bearer Authentication")
+            description = "특정 유저의 비밀번호 변경 (인증 없음)"
     )
     @ApiResponse(responseCode = "200", description = "비밀번호 변경 성공")
     @ApiResponse(responseCode = "400", description = "잘못된 요청")
-    @ApiResponse(responseCode = "401", description = "인증 실패")
-    @ApiResponse(responseCode = "403", description = "권한 없음")
     @PatchMapping("/password")
     public ResponseEntity<?> updatePassword(
-            @RequestBody PasswordUpdateRequest passwordUpdateRequest,
-            @RequestAttribute(name = "username", required = false) String tokenUsername) {
+            @RequestBody PasswordUpdateRequest passwordUpdateRequest) {
 
         String username = passwordUpdateRequest.getUsername();
-
-        if (tokenUsername == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
-                    Map.of("message", "인증이 필요합니다.")
-            );
-        }
-
-        if (!tokenUsername.equals(username)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
-                    Map.of("message", "비밀번호 변경 권한이 없습니다.")
-            );
-        }
-
         String oldPassword = passwordUpdateRequest.getOld_password();
         String newPassword = passwordUpdateRequest.getNew_password();
 
-        oldPassword = oldPassword.trim();
-        newPassword = newPassword.trim();
-
-        // 입력값 null 또는 공백만 있는 경우 예외 처리
+        // null 체크 후 trim
         if (oldPassword == null || oldPassword.trim().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("현재 비밀번호를 입력해주세요.");
         }
-
         if (newPassword == null || newPassword.trim().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("새 비밀번호를 입력해주세요.");
         }
 
-        // 사용자 정보 조회 및 현재 비밀번호 검증
+        oldPassword = oldPassword.trim();
+        newPassword = newPassword.trim();
+
+        // 사용자 정보 조회
         User user = userService.getUserByUsername(username);
         String currentPassword = user.getPassword();
 
         if (!oldPassword.equals(currentPassword)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("현재 비밀번호가 일치하지 않습니다.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("현재 비밀번호가 일치하지 않습니다.");
         }
 
         if (oldPassword.equals(newPassword)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("새 비밀번호가 현재 비밀번호와 동일합니다.");
         }
 
-        // 비밀번호 변경 수행
         userService.updatePassword(username, newPassword);
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "비밀번호 변경에 성공했습니다.");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(Map.of("message", "비밀번호 변경에 성공했습니다."));
     }
 }
