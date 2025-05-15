@@ -65,24 +65,20 @@ const Result = () => {
 
       <div className="relative z-10 w-full h-screen flex items-center justify-center px-4">
         <div className="flex flex-col items-center justify-end w-full max-w-[1280px] gap-10">
-          {/* loading state에 따른 메시지 변경 */}
           {isLoading ? (
             isTimedOut ? (
-              <p className="text-gray-400">아직 결과가 없어요!</p>
+              <p className="font-pm text-gray-400">아직 결과가 없어요!</p>
             ) : (
               <Spinner />
             )
           ) : error ? (
-            <p className="text-red-500">결과를 불러오는 데 실패했습니다.</p>
+            <p className="font-pm text-red-500">결과를 불러오는 데 실패했습니다.</p>
           ) : null}
 
-          {/* Confetti */}
           {!isLoading && !error && results.length > 0 && <Confetti />}
 
-          {/* 결과 카드 + 타이틀 */}
           {!isLoading && results.length > 0 && (
             <div className="relative w-full max-w-[1280px] h-[600px] sm:h-[900px] flex flex-col items-center justify-center gap-10">
-              {/* title */}
               <div className="flex flex-row items-center justify-center">
                 <img
                   src="/assets/images/popper-left.png"
@@ -97,7 +93,6 @@ const Result = () => {
                 />
               </div>
 
-              {/* Winner */}
               {isMobile ? (
                 <div className="grid grid-cols-2 grid-rows-2 gap-8 transform">
                   {results.slice(0, 4).map((data, index) => {
