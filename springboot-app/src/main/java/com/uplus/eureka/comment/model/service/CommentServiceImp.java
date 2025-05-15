@@ -83,15 +83,25 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
-    public void insertComment(CommentRequest comment) {
+    public void insertComment(CommentRequest commentRequest) {
 
+        System.out.println("---------------------------------------------INSERT----------------------------------------------");
         // 401 Unauthorized
-        User findUser = userDao.getUser(comment.getUserId());
-        if(findUser == null){
+        User user = userDao.getUser(commentRequest.getUserId());
+        if(user == null){
+            System.out.println("등록되지 않는 사용자");
             throw new CommentException("등록되지 않은 사용자입니다.", HttpStatus.UNAUTHORIZED);
         }
 
-        // 201 CREATED
+        System.out.println("--------------------------------------------user : " + user);    
+        // 닉네임을 포함한 Comment 객체 생성
+        Comment comment = new Comment();
+        comment.setUserId(commentRequest.getUserId());
+        comment.setRandomNickname(user.getRandomNickname());
+        comment.setCommentText(commentRequest.getCommentText());
+
+        System.out.println("--------------------------------------------insert comment : " + comment);
+        // // 201 CREATED
         dao.insertComment(comment);
     }
 

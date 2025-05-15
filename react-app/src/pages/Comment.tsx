@@ -14,8 +14,13 @@ import CommentInputField from '@/components/Comment/CommentInputField';
 import Loading from '@/components/Loading/Loading';
 import { postComment } from '@/apis/comment/postComment';
 import { useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 const Comment = () => {
+  // 사용자 정보
+  const user = useSelector((state: RootState) => state.auth.user)!;
+
   const isMobile = useIsMobile();
 
   // 결과 조회
@@ -118,8 +123,7 @@ const Comment = () => {
     try {
       console.log('댓글 내용 : ', commentText);
       await postComment({
-        user_id: 1,
-        random_nickname: '부드럽게 움직이는 황금도토리',
+        user_id: user.userId,
         comment_text: commentText,
       });
 
@@ -203,7 +207,7 @@ const Comment = () => {
           {/* 고정된 입력창 */}
           <div className="mt-4">
             <CommentInputField
-              nickname="부드럽게 움직이는 황금도토리"
+              nickname={user.randomNickname}
               comment={commentText}
               onChangeComment={(e) => setCommentText(e.target.value)}
               onSubmit={handleSubmitComment} // 이 부분 추가
