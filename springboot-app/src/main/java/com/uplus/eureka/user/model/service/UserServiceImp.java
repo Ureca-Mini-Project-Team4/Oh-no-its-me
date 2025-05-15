@@ -47,10 +47,20 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public void updatePassword(Integer userId, String newPassword) throws UserException {
-		User user = dao.getUser(userId);
+	public User getUserByUsername(String username) {
+		User user = dao.getUserByUsername(username);
 		if (user == null) {
-			throw new UserException("등록되지 않은 아이디입니다.");
+			throw new UserException("등록되지 않은 사용자입니다.");
+		}
+		return user;
+	}
+
+
+	@Override
+	public void updatePassword(String username, String newPassword) throws UserException {
+		User user = dao.getUserByUsername(username);
+		if (user == null) {
+			throw new UserException("등록되지 않은 사용자입니다.");
 		}
 
 		// 비밀번호 비교 로직
@@ -59,7 +69,7 @@ public class UserServiceImp implements UserService {
 		}
 
 		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("userId", userId);
+		paramMap.put("username", username);
 		paramMap.put("password", newPassword);
 		dao.updatePassword(paramMap);
 	}
