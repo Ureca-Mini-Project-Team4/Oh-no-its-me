@@ -72,6 +72,7 @@ const Vote = () => {
     try {
       await Promise.all(voteResults.map(updateVoteCount));
       await postVoteResult({ userId });
+      localStorage.setItem('voted', 'true');
       navigate('/main');
     } catch (err) {
       console.error(err);

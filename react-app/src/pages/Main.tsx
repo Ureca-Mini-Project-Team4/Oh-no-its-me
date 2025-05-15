@@ -1,12 +1,11 @@
 // import { getLatestPollIds } from '@/apis/poll/getPollLatest';
 import Button from '@/components/Button/Button';
-import { store } from '@/store';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
   const [restTime, setRestTime] = useState(10);
-  const isVoted = store.getState().auth.user?.voted;
+  const isVoted = localStorage.getItem('voted') === 'true';
 
   const changeDateTime = useCallback((diff: number) => {
     const hours = Math.floor(diff / (1000 * 60 * 60));
