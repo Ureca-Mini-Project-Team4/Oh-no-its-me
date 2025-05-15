@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 interface CommentInputFieldProps {
   nickname: string; // 사용자 이미지 파일명
