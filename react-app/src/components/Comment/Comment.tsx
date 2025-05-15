@@ -1,5 +1,4 @@
 import Profile from '../Profile/Profile';
-import { Dropdown } from './Dropdown';
 
 interface CommentProps {
   nickname: string | null;
@@ -19,9 +18,7 @@ const CommentCard = ({ nickname, comment }: CommentProps) => {
             <div className="text-[10px] sm:text-[15px] mb-[5px]">{comment}</div>
           </div>
         </div>
-        <div className="pr-3 flex items-center">
-          <Dropdown data={['수정', '삭제']} />
-        </div>
+        <div className="pr-3 flex items-center"></div>
       </div>
     </div>
   );

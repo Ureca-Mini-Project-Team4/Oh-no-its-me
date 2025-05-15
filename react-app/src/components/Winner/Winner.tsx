@@ -1,5 +1,5 @@
 import { WinnerProps } from './Winner.types';
-const BASE_URL = '../../../public/assets/images/people';
+const BASE_URL = '/assets/images/people';
 
 const Winner = ({ name, question }: WinnerProps) => {
   return (
