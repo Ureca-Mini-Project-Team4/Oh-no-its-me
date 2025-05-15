@@ -1,34 +1,24 @@
-import { useCallback, useState } from 'react';
 import Candidate from './Candidate';
+import { CandidateGroupProps } from './Candidate.types';
 
-const selectedArr = [false, false, false, false];
-
-const CandidateGroup = ({ candidateArr }: { candidateArr: string[] }) => {
-  const [isSelected, setIsSelected] = useState(selectedArr);
-
-  const handleClick = useCallback((idx: number) => {
-    const newSelectedArr = Array(selectedArr.length).fill(false);
-    newSelectedArr[idx] = true;
-    setIsSelected(newSelectedArr);
-  }, []);
-
+const CandidateGroup = ({ candidateArr, selectedCandidateId, onSelect }: CandidateGroupProps) => {
   return (
     <div className="w-fit">
-      <div className="grid grid-cols-2 gap-[10%]">
-        {candidateArr.map((item, idx) => {
-          return (
-            <Candidate
-              key={item}
-              name={item}
-              handleClick={handleClick}
-              isSelected={isSelected[idx]}
-              idx={idx}
-            />
-          );
-        })}
+      <div className="grid grid-cols-2 grid-rows-2 gap-5">
+        {candidateArr.map((candidate) => (
+          <Candidate
+            key={candidate.id}
+            name={candidate.userName}
+            isSelected={selectedCandidateId === candidate.id}
+            handleClick={() => onSelect(candidate.id)}
+            id={candidate.id}
+          />
+        ))}
       </div>
     </div>
   );
 };
 
 export default CandidateGroup;
+
+

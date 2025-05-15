@@ -1,10 +1,10 @@
 import { CandidateProps } from './Candidate.types';
 
-const Candidate = ({ name, isSelected, handleClick, idx }: CandidateProps) => {
+const Candidate = ({ name, isSelected, handleClick, id }: CandidateProps) => {
   return (
     <div>
       <button
-        onClick={() => handleClick(idx)}
+        onClick={() => handleClick(id)}
         className={`relative pt-1 pb-3 rounded-2xl bg-white flex flex-col items-center border-2 
     transition-colors ease-in-out hover:cursor-pointer 
     ${isSelected ? 'border-[var(--color-primary-base)] hover:border-[var(--color-primary-base)]' : 'border-[var(--color-gray-200)] hover:border-[var(--color-primary-base)]'}`}
@@ -16,14 +16,13 @@ const Candidate = ({ name, isSelected, handleClick, idx }: CandidateProps) => {
             alt="선택됨"
           />
         )}
-
         <img
           src={`/assets/images/people/${name}.png`}
           alt={name}
-          className={'object-cover w-[115.3px] h-[148px] sm:w-[217px] sm:h-[270px]'}
+          className={'object-cover w-[120px] h-[120px] sm:w-[160px] sm:h-[160px]'}
         />
 
-        <span className={'font-ps text-[14px] sm:text-[24px]'}>{name}</span>
+        <span className={'font-ps text-[14px] sm:text-[20px]'}>{name}</span>
       </button>
     </div>
   );
