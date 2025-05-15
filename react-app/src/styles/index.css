@@ -27,23 +27,23 @@
 
 @layer utilities {
   .font-pre {
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard Light', sans-serif;
     font-weight: 400;
   }
   .font-pr {
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard Regular', sans-serif;
     font-weight: 500;
   }
   .font-pm {
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard Medium', sans-serif;
     font-weight: 600;
   }
   .font-ps {
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard SemiBold', sans-serif;
     font-weight: 700;
   }
   .font-pb {
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard Bold', sans-serif;
     font-weight: 800;
   }
   .font-gumi {

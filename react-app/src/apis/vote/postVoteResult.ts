@@ -1,16 +1,16 @@
 import axiosInstance from '../axiosInstance';
 
-export interface getVoteResultRequest {
+export interface postVoteResultRequest {
   userId: number;
 }
 
-export interface getVoteResultResponse {
+export interface postVoteResultResponse {
   message: string;
 }
 
-export async function getVoteResult({
+export async function postVoteResult({
   userId,
-}: getVoteResultRequest): Promise<getVoteResultResponse> {
+}: postVoteResultRequest): Promise<postVoteResultResponse> {
   const response = await axiosInstance.post(`/vote/${userId}/complete`);
 
   return response.data;
