@@ -34,7 +34,7 @@ const Login = () => {
       <div className="flex justify-center items-center w-[70%] max-w-[900px] h-[80%] rounded-2xl overflow-hidden">
         {isDesktop && (
           <img
-            src="/public/assets/images/rocket.png"
+            src="/assets/images/rocket.png"
             alt="로켓"
             className="w-[40%] aspect-square flex justify-center items-center object-contain"
           />
