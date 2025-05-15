@@ -8,7 +8,7 @@ const Winner = ({ name, question }: WinnerProps) => {
       <div className="w-[95px] h-[95px] sm:w-[180px] sm:h-[160px] absolute -top-[15px] sm:-top-[50px] left-1/2 -translate-x-1/2 z-10">
         <img
           alt="Winner Img"
-          src={`${BASE_URL}/${name}.png`}
+          src={`${BASE_URL}/${encodeURIComponent(name)}.png`}
           className="w-full h-full object-cover"
         />
       </div>
