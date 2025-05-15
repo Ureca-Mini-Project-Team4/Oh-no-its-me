@@ -1,63 +1,56 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Confetti from '@/components/Confetti/Confetti';
-import Winner from '@/components/Winner/Winner';
-import Spinner from '@/components/Spinner/Spinner';
-import { getLatestPollIds } from '@/apis/poll/getPollLatest';
-import { getVoteResultByPollId } from '@/apis/vote/getVoteResultByPollId';
+import { useVoteResults } from '@/hook/useVoteResults';
 import useIsMobile from '@/hook/useIsMobile';
 import { useToast } from '@/hook/useToast';
+import axios from 'axios';
+import Spinner from '@/components/Spinner/Spinner';
+import Confetti from '@/components/Confetti/Confetti';
+import Winner from '@/components/Winner/Winner';
 
 const Result = () => {
-  const isMobile = useIsMobile();
-  const [results, setResults] = useState<
-    { pollId: number; questionText: string; username: string; voteCount: number }[]
-  >([]);
   const navigate = useNavigate();
-  const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isTimedOut, setIsTimedOut] = useState(false);
+  const isMobile = useIsMobile();
   const { showToast } = useToast();
+  const [isTimedOut, setIsTimedOut] = useState(false);
+
+  const { data: results, isLoading, isError, error } = useVoteResults();
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setIsTimedOut(true), 10000);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
+    if (isError && error instanceof Error) {
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status;
+        if (status === 500) {
+          showToast('서버에 연결할 수 없습니다.', 'warning');
+          navigate('/main');
+        } else if (status === 401) {
+          showToast('권한이 없습니다. 로그인 후 다시 시도해주세요.', 'warning');
+          navigate('/login');
+        } else if (status === 404) {
+          showToast('요청하신 데이터를 찾을 수 없습니다.', 'warning');
+          navigate('/main');
+        } else {
+          showToast('알 수 없는 오류가 발생했습니다.', 'warning');
+          navigate('/main');
+        }
+      } else {
+        showToast('서버에 연결할 수 없습니다.', 'warning');
+        navigate('/main');
+      }
+    }
+  }, [isError, error, showToast]);
 
   const handleClickButton = () => {
     navigate('/comment');
   };
 
-  useEffect(() => {
-    const timeout = setTimeout(() => setIsTimedOut(true), 10000); // 10초 이상 지연되면 결과 없음 처리
-    return () => clearTimeout(timeout);
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const latestPollIds = await getLatestPollIds();
-        const resultData = await Promise.all(
-          latestPollIds.map(async (pollId) => {
-            const result = await getVoteResultByPollId({ pollId });
-            const topResult = result.results[0];
-            return {
-              pollId,
-              questionText: result.questionText,
-              username: topResult?.username ?? '',
-              voteCount: topResult?.voteCount ?? 0,
-            };
-          }),
-        );
-        setResults(resultData);
-      } catch (err) {
-        setError(true);
-        showToast('투표 결과를 불러오는 데 실패했습니다.', 'warning');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
   return (
     <div className="relative w-full h-screen overflow-hidden bg-white">
-      {/* 배경 이미지 */}
       <picture className="absolute bottom-0 left-0 w-full z-0 pointer-events-none">
         <source media="(max-width: 768px)" srcSet="/assets/images/bg-m.png" />
         <img src="/assets/images/bg.svg" alt="background" className="w-full h-auto" />
@@ -71,13 +64,13 @@ const Result = () => {
             ) : (
               <Spinner />
             )
-          ) : error ? (
+          ) : isError ? (
             <p className="font-pm text-red-500">결과를 불러오는 데 실패했습니다.</p>
           ) : null}
 
-          {!isLoading && !error && results.length > 0 && <Confetti />}
+          {!isLoading && results && results.length > 0 && <Confetti />}
 
-          {!isLoading && results.length > 0 && (
+          {!isLoading && results && results.length > 0 && (
             <div className="relative w-full max-w-[1280px] h-[600px] sm:h-[900px] flex flex-col items-center justify-center gap-10">
               <div className="flex flex-row items-center justify-center">
                 <img
@@ -126,7 +119,6 @@ const Result = () => {
                       'bottom-[0%] left-1/2 -translate-x-1/2',
                       'top-1/2 right-[5%] -translate-y-1/2',
                     ];
-
                     return (
                       <div key={data.pollId} className={`absolute ${positions[index]} w-auto`}>
                         <div className="relative">

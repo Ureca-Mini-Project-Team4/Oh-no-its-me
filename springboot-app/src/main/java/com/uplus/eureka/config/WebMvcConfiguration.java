@@ -50,7 +50,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(jwtInterceptor)
 				.addPathPatterns("/api/**") // 모든 API 경로에 인터셉터 적용
-				.excludePathPatterns("/api/user/login"); // 로그인 경로는 제외
+				.excludePathPatterns("/api/user/login", "/api/user/password"); // 로그인 및 비밀번호 경로는 제외
 	}
 
 	/**
