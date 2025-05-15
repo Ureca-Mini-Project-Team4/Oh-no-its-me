@@ -40,7 +40,8 @@
     </update>
 
 
-    <insert id="insertComment" parameterType="com.uplus.eureka.comment.model.dto.CommentRequest">
+    <!-- 댓글 추가 -->
+    <insert id="insertComment" parameterType="com.uplus.eureka.comment.model.dto.Comment">
         INSERT INTO Comments (user_id, random_nickname, comment_text)
         VALUES (#{userId}, #{randomNickname}, #{commentText})
     </insert>

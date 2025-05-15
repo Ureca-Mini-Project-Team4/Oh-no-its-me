@@ -9,10 +9,17 @@ export interface PostCommentResponse {
   status: string;
 }
 
-export async function postComment(params: PostCommentRequest): Promise<PostCommentResponse> {
-  const response = await axiosInstance.post('/comment', params);
+export async function postComment(
+  params: PostCommentRequest,
+): Promise<PostCommentResponse | undefined> {
+  try {
+    console.log('params : ', params);
+    console.log('보내는 JSON : ', JSON.stringify(params));
 
-  return {
-    status: response.data,
-  };
+    const response = await axiosInstance.post('/comment', params);
+    return { status: response.data };
+  } catch (err) {
+    console.error('❌ postComment 에러:', err);
+    return undefined;
+  }
 }

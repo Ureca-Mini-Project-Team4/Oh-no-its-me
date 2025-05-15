@@ -1,8 +1,8 @@
 import Profile from '../Profile/Profile';
 
 interface CommentProps {
-  nickname: string | null;
-  comment: string | null;
+  nickname: string;
+  comment: string;
 }
 
 const CommentCard = ({ nickname, comment }: CommentProps) => {

@@ -19,7 +19,7 @@ import toastReducer from './slices/toastSlice';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [],
+  whitelist: ['auth'],
 };
 
 // 모든 슬라이스 리듀서를 통합
