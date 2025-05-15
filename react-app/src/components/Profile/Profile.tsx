@@ -1,7 +1,7 @@
 const BASE_URL = '/assets/images/';
 
 interface ProfileProps {
-  nickname: string | null;
+  nickname: string;
 }
 
 const Profile = ({ nickname }: ProfileProps) => {
@@ -9,7 +9,7 @@ const Profile = ({ nickname }: ProfileProps) => {
     <div className="w-[40px] h-[40px] sm:w-[60px] sm:h-[60px] rounded-xl">
       <img
         className="border-[1px] rounded-4xl border-gray-100"
-        src={`${BASE_URL}${nickname ? 'animal/' + nickname + '.jpg' : 'default-profile.png'}`}
+        src={`${BASE_URL}${encodeURIComponent(nickname) ? 'animal/' + nickname + '.jpg' : 'default-profile.png'}`}
       />
     </div>
   );

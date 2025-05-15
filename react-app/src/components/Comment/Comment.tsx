@@ -1,9 +1,8 @@
 import Profile from '../Profile/Profile';
-import { Dropdown } from './Dropdown';
 
 interface CommentProps {
-  nickname: string | null;
-  comment: string | null;
+  nickname: string;
+  comment: string;
 }
 
 const CommentCard = ({ nickname, comment }: CommentProps) => {

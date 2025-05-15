@@ -2,6 +2,7 @@ import axiosInstance from '../axiosInstance';
 
 export interface PostCommentRequest {
   user_id: number;
+  random_nickname: string;
   comment_text: string;
 }
 
