@@ -12,6 +12,10 @@ import {
 } from '@/apis/candidate/getCandidateLatest';
 import { updateVoteCount } from '@/apis/vote/updateVoteCount';
 import { postVoteResult } from '@/apis/vote/postVoteResult';
+import { setAuth } from '@/store/slices/authSlice';
+import { store } from '@/store';
+import { UserInfoResponse } from '@/apis/user/getUserInfo';
+import { useDispatch } from 'react-redux';
 
 const Vote = () => {
   const userId = Number(localStorage.getItem('userId'));
@@ -24,6 +28,7 @@ const Vote = () => {
   );
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchData() {
@@ -72,6 +77,19 @@ const Vote = () => {
     try {
       await Promise.all(voteResults.map(updateVoteCount));
       await postVoteResult({ userId });
+      const currentAuth = store.getState().auth;
+
+      dispatch(
+        setAuth({
+          ...currentAuth,
+
+          user: {
+            ...(currentAuth.user as UserInfoResponse),
+
+            voted: true,
+          },
+        }),
+      );
       navigate('/main');
     } catch (err) {
       console.error(err);
