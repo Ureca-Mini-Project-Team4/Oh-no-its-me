@@ -97,7 +97,7 @@ const Vote = () => {
   return (
     <div className="min-h-screen bg-white flex items-center flex-col justify-center p-5">
       <div>
-        <Process page={currentPollId} />
+        <Process page={pageIndex + 1} />
       </div>
       {isMobile ? (
         <div className="">
