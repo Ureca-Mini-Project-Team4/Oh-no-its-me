@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PasswordUpdateRequest {
+	@Schema(description = "사용자 이름", example = "사용자 이름", required = true)
+	private String username;
+
 	@Schema(description = "현재 비밀번호", example = "현재비밀번호", required = true)
 	private String old_password;
 

@@ -125,20 +125,23 @@ public class UserController {
     @ApiResponse(responseCode = "400", description = "잘못된 요청")
     @ApiResponse(responseCode = "401", description = "인증 실패")
     @ApiResponse(responseCode = "403", description = "권한 없음")
-    @PatchMapping("/{userId}")
+    @PatchMapping("/password")
     public ResponseEntity<?> updatePassword(
-            @PathVariable("userId") Integer userId,
             @RequestBody PasswordUpdateRequest passwordUpdateRequest,
-            @RequestAttribute(name = "userId", required = false) Integer tokenUserId) {
+            @RequestAttribute(name = "username", required = false) String tokenUsername) {
 
-        // 토큰 검증: 토큰이 유효하고 사용자가 인증되었는지 확인
-        if (tokenUserId == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증이 필요합니다.");
+        String username = passwordUpdateRequest.getUsername();
+
+        if (tokenUsername == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                    Map.of("message", "인증이 필요합니다.")
+            );
         }
 
-        // 토큰 기반 사용자 검증 (본인 확인)
-        if (!tokenUserId.equals(userId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("비밀번호 변경 권한이 없습니다.");
+        if (!tokenUsername.equals(username)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+                    Map.of("message", "비밀번호 변경 권한이 없습니다.")
+            );
         }
 
         String oldPassword = passwordUpdateRequest.getOld_password();
@@ -157,7 +160,7 @@ public class UserController {
         }
 
         // 사용자 정보 조회 및 현재 비밀번호 검증
-        User user = userService.getUser(userId);
+        User user = userService.getUserByUsername(username);
         String currentPassword = user.getPassword();
 
         if (!oldPassword.equals(currentPassword)) {
@@ -169,8 +172,9 @@ public class UserController {
         }
 
         // 비밀번호 변경 수행
-        userService.updatePassword(userId, newPassword);
-        return ResponseEntity.ok("비밀번호 변경 성공");
-
+        userService.updatePassword(username, newPassword);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "비밀번호 변경에 성공했습니다.");
+        return ResponseEntity.ok(response);
     }
 }
