@@ -6,7 +6,7 @@ public class Candidate {
     private int pollId;
     private String questionText;
     private String userName;
-    
+
 
     public Candidate() {}
 
@@ -55,7 +55,7 @@ public class Candidate {
         this.userName = userName;
     }
 
-    
+
     public static class PollInfo {
         private int pollId;
         private String questionText;
@@ -97,13 +97,14 @@ public class Candidate {
             this.userName = userName;
         }
     }
-    
+
     public static class CandidateInfo {
-    	private int pollId;
-    	private String userName;
-    	private String questionText;
-    	private String icon;
-    	
+        private int pollId;
+        private String userName;
+        private String questionText;
+        private int candidateId;
+        private String icon;
+
         public int getPollId() {
             return pollId;
         }
@@ -119,7 +120,7 @@ public class Candidate {
         public void setUserName(String userName) {
             this.userName = userName;
         }
-        
+
         public String getQuestionText() {
             return questionText;
         }
@@ -127,7 +128,15 @@ public class Candidate {
         public void setQuestionText(String questionText) {
             this.questionText = questionText;
         }
-        
+
+        public int getCandidateId() {
+            return candidateId;
+        }
+
+        public void setCandidateId(int candidateId) {
+            this.candidateId = candidateId;
+        }
+
         public String getIcon() {
             return icon;
         }
