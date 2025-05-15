@@ -2,6 +2,8 @@ import Process from '@/components/Process/Process';
 import Button from '@/components/Button/Button';
 import CandidateGroup from '@/components/Candidate/CandidateGroup';
 import Modal from '@/components/Modal/Modal';
+import Spinner from '@/components/Spinner/Spinner';
+import Loading from '@/components/Loading/Loading';
 
 import { useEffect, useState } from 'react';
 import useIsMobile from '@/hook/useIsMobile';
@@ -15,6 +17,7 @@ import { postVoteResult } from '@/apis/vote/postVoteResult';
 
 const Vote = () => {
   const userId = Number(localStorage.getItem('userId'));
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [pollData, setPollData] = useState<{ [pollId: number]: getCandidateLatestResponse[] }>({});
   const [pollIds, setPollIds] = useState<number[]>([]);
   const [pageIndex, setPageIndex] = useState(0);
@@ -70,6 +73,7 @@ const Vote = () => {
     }));
 
     try {
+      setIsSubmitting(true);
       await Promise.all(voteResults.map(updateVoteCount));
       await postVoteResult({ userId });
       localStorage.setItem('voted', 'true');
@@ -77,6 +81,8 @@ const Vote = () => {
     } catch (err) {
       console.error(err);
       alert('투표 제출 중 오류가 발생했습니다.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -84,8 +90,14 @@ const Vote = () => {
     setSelectedCandidates((prev) => ({ ...prev, [pollId]: candidateId }));
   };
 
-  if (pollIds.length === 0) return <div>Loading...</div>; // 메인화면으로 이동하자?
-
+  if (pollIds.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        {/* <Spinner /> */}
+        <Loading />
+      </div>
+    );
+  }
   const currentPollId = pollIds[pageIndex];
   const currentCandidates = pollData[currentPollId];
   const questionText = currentCandidates[0]?.questionText;
@@ -202,6 +214,11 @@ const Vote = () => {
         </div>
       )}
       <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} onConfirm={handleConfirm} />
+      {isSubmitting && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 };
