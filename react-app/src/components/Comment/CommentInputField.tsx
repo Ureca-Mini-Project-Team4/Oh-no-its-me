@@ -43,8 +43,12 @@ const CommentInputField = ({
                  text-sm sm:text-base font-pr
                  max-w-[calc(65%)] sm:max-w-full"
           value={comment}
-          onChange={(e) => {
-            onChangeComment(e);
+          onChange={onChangeComment}
+          onKeyDown={async (e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              await handleSubmit();
+            }
           }}
           placeholder="댓글을 입력하세요."
         />
@@ -52,7 +56,7 @@ const CommentInputField = ({
         {/* 확인 버튼 */}
         <button
           onClick={handleSubmit}
-          className="w-[60px] h-10 text-[12px] font-pr border rounded-lg bg-[var(--color-primary-base)] text-white 
+          className="cursor-pointer w-[60px] h-10 text-[12px] font-pr border rounded-lg bg-[var(--color-primary-base)] text-white 
                      flex items-center justify-center text-sm sm:text-base whitespace-nowrap 
                      focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]"
         >
