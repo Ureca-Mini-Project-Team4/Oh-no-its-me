@@ -5,6 +5,7 @@ import { Dropdown } from './Dropdown';
 import { useState, useRef, useEffect } from 'react';
 import { updateComment } from '@/apis/comment/updateComment';
 import { deleteComment } from '@/apis/comment/deleteComment';
+import Modal from '../Modal/Modal';
 
 interface CommentProps {
   commentId: number;
@@ -16,11 +17,13 @@ interface CommentProps {
 const CommentCard = ({ commentId, nickname, commentText, onUpdate }: CommentProps) => {
   const user = useSelector((state: RootState) => state.auth.user)!;
   const isCurrentUser = user.randomNickname === nickname;
-
+  // 댓글 수정
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(commentText);
-
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // 댓글 삭제
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (isEditing && textareaRef.current) {
@@ -68,20 +71,19 @@ const CommentCard = ({ commentId, nickname, commentText, onUpdate }: CommentProp
     }
   };
 
-  // 삭제
-  const handleRemove = async () => {
-    if (window.confirm('댓글을 삭제하시겠습니까?')) {
-      try {
-        await deleteComment({
-          comment_id: commentId,
-          user_id: user.userId,
-        });
-        onUpdate();
-      } catch (err) {
-        console.error('댓글 삭제 실패 : ', err);
-        alert('댓글 삭제에 실패했습니다.');
-      }
+  // 모달로 삭제 확인
+  const handleConfrimDelete = async () => {
+    try {
+      await deleteComment({
+        comment_id: commentId,
+        user_id: user.userId,
+      });
+      onUpdate();
+    } catch (err) {
+      console.error('댓글 삭제 실패 : ', err);
+      alert('댓글 삭제에 실패했습니다.');
     }
+    setIsModalOpen(false);
   };
 
   return (
@@ -153,11 +155,18 @@ const CommentCard = ({ commentId, nickname, commentText, onUpdate }: CommentProp
               data={['수정', '삭제']}
               commentText={commentText}
               handleEdit={handleEditClick}
-              handleRemove={handleRemove}
+              handleRemove={() => setIsModalOpen(true)}
             />
           </div>
         )}
       </div>
+      {/* 삭제 확인 모달 */}
+      <Modal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        onConfirm={handleConfrimDelete}
+        text1="댓글을 삭제하시겠습니까?"
+      />
     </div>
   );
 };
