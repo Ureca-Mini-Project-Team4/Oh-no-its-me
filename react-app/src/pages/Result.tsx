@@ -4,9 +4,9 @@ import { useVoteResults } from '@/hook/useVoteResults';
 import useIsMobile from '@/hook/useIsMobile';
 import { useToast } from '@/hook/useToast';
 import axios from 'axios';
-import Spinner from '@/components/Spinner/Spinner';
 import Confetti from '@/components/Confetti/Confetti';
 import Winner from '@/components/Winner/Winner';
+import Loading from '@/components/Loading/Loading';
 
 const Result = () => {
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ const Result = () => {
             isTimedOut ? (
               <p className="font-pm text-gray-400">아직 결과가 없어요!</p>
             ) : (
-              <Spinner />
+              <Loading />
             )
           ) : isError ? (
             <p className="font-pm text-red-500">결과를 불러오는 데 실패했습니다.</p>
