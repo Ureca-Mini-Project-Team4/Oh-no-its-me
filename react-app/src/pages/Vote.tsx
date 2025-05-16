@@ -155,7 +155,7 @@ const Vote = () => {
       {isMobile ? (
         <div className="">
           <div className="flex flex-col p-5">
-            <div className="flex flex-col items-center justify-center font-ps text-lg text-center p-2 mb-5 min-w-[100px] min-h-[150px] max-h-[150px]">
+            <div className="flex flex-col items-center justify-center font-ps text-base text-center p-2 mb-5 min-w-[100px] min-h-[150px] max-h-[150px]">
               <p className="break-all">{questionText}</p>
             </div>
             <div className="flex flex-col items-center justify-center">
@@ -171,21 +171,9 @@ const Vote = () => {
           </div>
           <div className="flex justify-between items-center w-full p-5">
             {pageIndex > 0 ? (
-              <Button
-                label="이전"
-                onClick={handlePrev}
-                type="outline"
-                size="sm"
-                disabled={!isCandidateSelected}
-              />
+              <Button label="이전" onClick={handlePrev} type="outline" size="sm" />
             ) : (
-              <Button
-                label="이전"
-                onClick={handleMain}
-                type="outline"
-                size="sm"
-                disabled={!isCandidateSelected}
-              />
+              <Button label="이전" onClick={handleMain} type="outline" size="sm" />
             )}
 
             {pageIndex < pollIds.length - 1 ? (
@@ -204,11 +192,11 @@ const Vote = () => {
         <div className="p-5 ">
           <div className="flex flex-col items-center justify-center bg-gray-50 p-5 rounded-[30px] sm:flex-row min-h-[400px] min-w-[1030px]">
             <div className="flex flex-1 p-13 min-h-[400px] min-w-[500px] items-center justify-center">
-              <div className="flex flex-col items-center justify-center gap-10 font-ps text-2xl text-center ">
-                <p>{questionText}</p>
+              <div className="flex flex-col items-center justify-center gap-10 font-ps text-xl text-center ">
+                <p className="break-all">{questionText}</p>
                 {icon ? (
                   <img
-                    src={icon}
+                    src={`/assets/images/question/${icon}.svg`}
                     className="w-full max-w-[250px] h-full object-contain"
                     alt="question icon"
                   />
@@ -234,15 +222,9 @@ const Vote = () => {
           </div>
           <div className="flex justify-between items-center w-full mt-10">
             {pageIndex > 0 ? (
-              <Button
-                label="이전"
-                onClick={handlePrev}
-                type="outline"
-                size="lg"
-                disabled={!isCandidateSelected}
-              />
+              <Button label="이전" onClick={handlePrev} type="outline" size="lg" />
             ) : (
-              <div className="w-[188px]" />
+              <Button label="이전" onClick={handleMain} type="outline" size="lg" />
             )}
 
             {pageIndex < pollIds.length - 1 ? (
