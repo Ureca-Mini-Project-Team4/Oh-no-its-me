@@ -155,8 +155,13 @@ const Vote = () => {
       {isMobile ? (
         <div className="">
           <div className="flex flex-col p-5">
-            <div className="flex flex-col items-center justify-center font-ps text-base text-center p-2 mb-5 min-w-[100px] min-h-[150px] max-h-[150px]">
+            <div className="flex flex-col items-center justify-center font-ps text-sm text-center p-2 min-w-[270px] min-h-[150px] max-h-[150px]">
               <p className="break-all">{questionText}</p>
+              <img
+                src={`/assets/images/question/${icon}.svg`}
+                className="w-full max-w-[90px] h-full object-contain p-2 mt-2"
+                alt="question icon"
+              />
             </div>
             <div className="flex flex-col items-center justify-center">
               <CandidateGroup
@@ -194,19 +199,11 @@ const Vote = () => {
             <div className="flex flex-1 p-13 min-h-[400px] min-w-[500px] items-center justify-center">
               <div className="flex flex-col items-center justify-center gap-10 font-ps text-xl text-center ">
                 <p className="break-all">{questionText}</p>
-                {icon ? (
-                  <img
-                    src={`/assets/images/question/${icon}.svg`}
-                    className="w-full max-w-[250px] h-full object-contain"
-                    alt="question icon"
-                  />
-                ) : (
-                  <img
-                    src="/assets/images/question/island.svg"
-                    className="w-full max-w-[250px] h-full object-contain"
-                    alt="default icon"
-                  />
-                )}
+                <img
+                  src={`/assets/images/question/${icon}.svg`}
+                  className="w-full max-w-[200px] h-full object-contain"
+                  alt="question icon"
+                />
               </div>
             </div>
             <div className="flex-1 flex-col items-center justify-center p-10">
@@ -247,7 +244,7 @@ const Vote = () => {
         onConfirm={handleConfirm}
         text2="한번 완료하면 다시 투표할 수 없어요"
       />
-              {isSubmitting && (
+      {isSubmitting && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
           <Loading />
         </div>
