@@ -5,6 +5,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import com.uplus.eureka.user.model.dto.User;
 import java.security.Key;
@@ -59,6 +61,9 @@ public class JwtUtil {
 	}
 
 	private Boolean isTokenExpired(String token) {
+		if (token == null) {
+			return true;
+		}
 		return extractExpiration(token).before(new Date());
 	}
 
@@ -99,13 +104,13 @@ public class JwtUtil {
 		try {
 			if (!checkToken(refreshToken)) {
 				log.error("Refresh 토큰이 만료되었습니다.");
-				return null;
+				return "Refresh 토큰이 만료되었습니다.";
 			}
 
 			Claims claims = extractAllClaims(refreshToken);
 			if (!"refresh".equals(claims.get("type"))) {
 				log.error("유효한 Refresh 토큰이 아닙니다.");
-				return null;
+				return "유효한 Refresh 토큰이 아닙니다.";
 			}
 
 			Integer userId = claims.get("userId", Integer.class);
@@ -117,7 +122,7 @@ public class JwtUtil {
 			return createToken(newClaims, username, accessTokenExpiration);
 		} catch (Exception e) {
 			log.error("액세스 토큰 재발급 실패: {}", e.getMessage());
-			return null;
+			return "액세스 토큰 재발급 실패: " + e.getMessage();
 		}
 	}
 }
