@@ -201,7 +201,12 @@ const Vote = () => {
           </div>
         </div>
       )}
-      <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} onConfirm={handleConfirm} />
+      <Modal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        onConfirm={handleConfirm}
+        text2="한번 완료하면 다시 투표할 수 없어요"
+      />
     </div>
   );
 };

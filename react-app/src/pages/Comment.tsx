@@ -37,9 +37,6 @@ const Comment = () => {
   // 댓글 맨 아래로 내리기
   const commentsEndRef = useRef<HTMLDivElement>(null);
 
-  // 댓글 렌더링, 모바일 여부는 그대로 유지 가능
-  const displayedComments = isMobile ? comments.slice(-6) : comments;
-
   // 최신 pollIds 불러오기
   useEffect(() => {
     const fetchAllResults = async () => {
@@ -136,6 +133,16 @@ const Comment = () => {
     }
   };
 
+  // 댓글 목록 새로고침 함수
+  const refreshComments = async () => {
+    try {
+      const res = await getComments();
+      setComments(res);
+    } catch (error) {
+      console.error('댓글 갱신 실패', error);
+    }
+  };
+
   return (
     <div className="pt-10 sm:p-5 flex flex-col justify-center items-center">
       {/* 제목 */}
@@ -182,20 +189,22 @@ const Comment = () => {
         </div>
 
         {/* 댓글 영역 */}
-        <div className=" flex-1 w-full h-[550px] border border-gray-300 rounded-2xl flex flex-col justify-between px-4 py-2">
+        <div className=" h-[550px] sm:h-[550px] border border-gray-300 rounded-2xl flex flex-col justify-between px-4 py-2">
           {/* 스크롤 가능한 댓글 리스트 */}
-          <div className="flex-1 overflow-y-auto pr-2 max-h-[400px] sm:max-h-full">
+          <div className="flex-1 overflow-y-auto pr-2">
             {comments.length === 0 ? (
               <div className="pl-10 w-full flex items-center justify-center h-full">
                 <CharacterCard />
               </div>
             ) : (
               <div className="flex flex-col items-center gap-2 w-full">
-                {displayedComments.map((comment, idx) => (
+                {comments.map((comment) => (
                   <CommentCard
-                    key={idx}
+                    key={comment.comment_id}
                     nickname={comment.random_nickname}
-                    comment={comment.comment_text}
+                    commentText={comment.comment_text}
+                    commentId={comment.comment_id}
+                    onUpdate={refreshComments}
                   />
                 ))}
 
