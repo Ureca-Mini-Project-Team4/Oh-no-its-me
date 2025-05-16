@@ -17,10 +17,6 @@ public class CommentRequest implements Serializable {
     @Schema(description = "댓글 작성자 ID", example = "1")
     private Integer userId;
 
-    @JsonProperty("random_nickname")
-    @Schema(description = "사용자 닉네임", example = "똑똑한 토끼")
-    private String randomNickname;
-
     @JsonProperty("comment_text")
     @Schema(description = "댓글 내용", example = "좋은 투표 결과입니다.")
     private String commentText;

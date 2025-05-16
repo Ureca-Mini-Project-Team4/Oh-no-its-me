@@ -59,12 +59,19 @@ public class CommentController {
     })
     @PostMapping
     public ResponseEntity<String> insertComment(@RequestBody CommentRequest comment) {
+        System.out.println("------------------------------CONTROLLER-------------------------------------");
         System.out.println(comment);
-        if(comment.getUserId() == null){
-            return new ResponseEntity<String>("FAILED", HttpStatus.NOT_FOUND);
+        try {
+            if(comment.getUserId() == null){
+                return new ResponseEntity<String>("FAILED", HttpStatus.NOT_FOUND);
+            }
+            commentService.insertComment(comment);
+            return new ResponseEntity<String>("SUCCESS", HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("처리 중 오류 발생");
         }
-        commentService.insertComment(comment);
-        return new ResponseEntity<String>("SUCCESS", HttpStatus.CREATED);
     }
 
     @Operation(summary = "댓글 수정", description = "본인이 작성한 댓글 수정")

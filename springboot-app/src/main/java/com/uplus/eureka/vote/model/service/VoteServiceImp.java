@@ -60,4 +60,13 @@ public class VoteServiceImp implements VoteService {
         }
         return true;
     }
+    
+    @Override
+    public void resetIsVoted() {
+    	try {
+    		voteDao.resetIsVoted();
+    	} catch (VoteException e) {
+    		throw new VoteException("초기화에 실패했습니다.", HttpStatus.BAD_REQUEST);
+    	}
+    }
 }

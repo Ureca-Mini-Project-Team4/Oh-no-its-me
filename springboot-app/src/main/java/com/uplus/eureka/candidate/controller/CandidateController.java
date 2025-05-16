@@ -33,7 +33,7 @@ public class CandidateController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("후보자 생성 중 예상치 못한 오류가 발생했습니다.");
+                    .body(e.getMessage());
         }
     }
     
@@ -44,7 +44,7 @@ public class CandidateController {
     		return ResponseEntity.ok(candidates);
     	} catch (Exception e) {
     		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-    				.body("최근 후보자 검색 중 예상치 못한 오류가 발생했습니다." + e);
+    				.body(e.getMessage());
     	}
     }
 }

@@ -46,5 +46,11 @@
         SET is_voted = true
         WHERE user_id = #{userId}
     </update>
+    
+    <!-- 투표 종료 후 is_voted를 모두 false로 초기화 -->
+    <update id="resetIsVoted" parameterType="java.lang.String">
+    	UPDATE Users
+    	SET is_voted = false
+    </update>
 
 </mapper>

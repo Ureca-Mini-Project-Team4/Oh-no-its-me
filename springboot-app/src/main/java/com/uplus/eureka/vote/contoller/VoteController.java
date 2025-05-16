@@ -64,6 +64,16 @@ public class VoteController {
             return ResponseEntity.status(e.getStatus()).body(e.getMessage());
         }
     }
+    
+    @PatchMapping("/reset")
+    public ResponseEntity<?> resetVoted() {
+    	try {
+    		voteService.resetIsVoted();
+    		return ResponseEntity.ok().body("성공적으로 초기화 했습니다.");
+    	} catch (VoteException e){
+    		return ResponseEntity.status(e.getStatus()).body(e.getMessage());
+    	}
+    }
 
 }
 

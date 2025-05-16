@@ -7,4 +7,5 @@ public interface VoteService {
     VoteResult getVoteResult(int pollId);
     void increaseVoteCount(int pollId, VoteRequest voteRequest);
     boolean completeVote(int userId);
+    void resetIsVoted();
 }

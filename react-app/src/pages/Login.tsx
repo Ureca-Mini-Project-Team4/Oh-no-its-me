@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useAuth } from '@/hook/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 
 const Login = () => {
-  const { login, logout } = useAuth();
+  const navigation = useNavigate();
+  const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const isDesktop = useMediaQuery({ query: '(min-width: 768px)' });
 
   const handleLogin = async () => {
     try {
@@ -16,44 +21,76 @@ const Login = () => {
     }
   };
 
+  const handlePasswordChange = useCallback(() => {
+    navigation('/change-password');
+  }, [navigation]);
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-sm">
-        <h2 className="font-gumi text-2xl font-bold text-center mb-6">
-          <span className="text-(--color-primary-base)">너</span>로 정했다!
-        </h2>
-        <div className="mb-4">
-          <label className="font-pm block text-gray-700 mb-2">아이디</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-(--color-primary-base)/70"
-            placeholder="아이디를 입력하세요"
+    <div
+      className={`flex justify-center items-center w-screen h-screen overflow-hidden ${
+        isDesktop ? 'text-[1.2vw]' : 'text-[2.5vw]'
+      }`}
+    >
+      <div className="flex justify-center items-center w-[70%] max-w-[900px] h-[80%] rounded-2xl overflow-hidden">
+        {isDesktop && (
+          <img
+            src="/assets/images/rocket.png"
+            alt="로켓"
+            className="w-[40%] aspect-square flex justify-center items-center object-contain"
           />
-        </div>
-        <div className="mb-6">
-          <label className="font-pm block text-gray-700 mb-2">비밀번호</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-(--color-primary-base)/70"
-            placeholder="비밀번호를 입력하세요"
-          />
-        </div>
-        <button
-          onClick={handleLogin}
-          className="w-full py-2 bg-(--color-primary-base) text-white font-semibold rounded-lg hover:bg-(--color-primary-hover) transition duration-200"
+        )}
+        <div
+          className={`flex flex-col justify-center ${isDesktop ? 'w-1/2 px-8' : 'w-full px-6 gap-[2vw]'}`}
         >
-          로그인
-        </button>
-        <button
-          onClick={logout}
-          className="mt-4 w-full py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition duration-200"
-        >
-          로그아웃
-        </button>
+          <h2
+            className={`font-gumi font-bold text-center mb-8 ${
+              isDesktop ? 'text-[3vw]' : 'text-[6vw]'
+            }`}
+          >
+            <span className="text-[var(--color-primary-base)]">너</span>로 정했다!
+          </h2>
+
+          <div className={`mb-6 grid ${isDesktop ? 'grid-cols-7' : 'grid-cols-2 gap-4'}`}>
+            <label className="flex items-center col-span-2 font-pm text-gray-700 break-keep">
+              아이디
+            </label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="col-span-5 w-full px-3 py-2 border border-gray-300 rounded-lg placeholder:text-[80%] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
+              placeholder="아이디를 입력하세요"
+            />
+          </div>
+
+          <div className={`mb-6 grid ${isDesktop ? 'grid-cols-7' : 'grid-cols-2 gap-4'}`}>
+            <label className="flex items-center col-span-2 font-pm text-gray-700 break-keep">
+              비밀번호
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="col-span-5 w-full px-3 py-2 border border-gray-300 rounded-lg placeholder:text-[80%] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
+              placeholder="비밀번호를 입력하세요"
+            />
+          </div>
+
+          <div className="flex flex-col ">
+            <button
+              onClick={handleLogin}
+              className="w-full mt-2 py-2 bg-[var(--color-primary-base)] font-ps text-white rounded-lg hover:bg-[var(--color-primary-hover)] transition duration-200"
+            >
+              로그인
+            </button>
+            <button
+              onClick={handlePasswordChange}
+              className="w-full mt-2 py-2 font-ps text-gray-400 hover:text-gray-600 transition duration-200"
+            >
+              비밀번호 변경
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

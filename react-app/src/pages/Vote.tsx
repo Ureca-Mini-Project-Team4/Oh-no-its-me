@@ -240,8 +240,14 @@ const Vote = () => {
           </div>
         </div>
       )}
-      <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} onConfirm={handleConfirm} />
-      {isSubmitting && (
+
+      <Modal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        onConfirm={handleConfirm}
+        text2="한번 완료하면 다시 투표할 수 없어요"
+      />
+              {isSubmitting && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
           <Loading />
         </div>

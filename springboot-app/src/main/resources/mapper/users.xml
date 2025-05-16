@@ -23,7 +23,7 @@
 	</select>
 
 	<update id="updatePassword" parameterType="map">
-		UPDATE Users SET password = #{password} WHERE user_id = #{userId}
+		UPDATE Users SET password = #{password} WHERE user_name = #{username}
 	</update>
 
 	<update id="saveRefreshToken" parameterType="map">

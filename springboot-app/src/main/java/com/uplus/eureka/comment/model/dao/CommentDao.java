@@ -15,7 +15,7 @@ public interface CommentDao {
     List<Comment> getAllComments();
     int totalCount();
     Comment getCommentById(Integer commentId);
-    void insertComment(CommentRequest comment);
+    void insertComment(Comment comment);
 	void deleteCommentById(Integer commentId, CommentDeleteRequest commentDeleteRequest);
     void updateComment(CommentUpdateRequest comment);
 }
