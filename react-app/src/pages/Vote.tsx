@@ -2,6 +2,8 @@ import Process from '@/components/Process/Process';
 import Button from '@/components/Button/Button';
 import CandidateGroup from '@/components/Candidate/CandidateGroup';
 import Modal from '@/components/Modal/Modal';
+import Loading from '@/components/Loading/Loading';
+import { useToast } from '@/hook/useToast';
 
 import { useEffect, useState } from 'react';
 import useIsMobile from '@/hook/useIsMobile';
@@ -12,9 +14,11 @@ import {
 } from '@/apis/candidate/getCandidateLatest';
 import { updateVoteCount } from '@/apis/vote/updateVoteCount';
 import { postVoteResult } from '@/apis/vote/postVoteResult';
+import { AxiosError } from 'axios';
 
 const Vote = () => {
   const userId = Number(localStorage.getItem('userId'));
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [pollData, setPollData] = useState<{ [pollId: number]: getCandidateLatestResponse[] }>({});
   const [pollIds, setPollIds] = useState<number[]>([]);
   const [pageIndex, setPageIndex] = useState(0);
@@ -24,32 +28,57 @@ const Vote = () => {
   );
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const { showToast } = useToast();
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getCandidateLatests();
-      const groupedData: { [pollId: number]: getCandidateLatestResponse[] } = {};
+      try {
+        const data = await getCandidateLatests();
+        const groupedData: { [pollId: number]: getCandidateLatestResponse[] } = {};
 
-      data.forEach((item) => {
-        if (!groupedData[item.pollId]) {
-          groupedData[item.pollId] = [];
+        data.forEach((item) => {
+          if (!groupedData[item.pollId]) {
+            groupedData[item.pollId] = [];
+          }
+          groupedData[item.pollId].push(item);
+        });
+
+        const ids: number[] = Object.keys(groupedData)
+          .map(Number)
+          .sort((a, b) => a - b);
+
+        setPollData(groupedData);
+        setPollIds(ids);
+        setPageIndex(0);
+      } catch (error) {
+        navigate('/main');
+        if (error instanceof AxiosError) {
+          if (error.status === 404) {
+            showToast(error.message, 'warning');
+          } else {
+            const message =
+              typeof error.response?.data === 'string'
+                ? error.response.data
+                : JSON.stringify(error.response?.data);
+
+            showToast(message, 'warning');
+          }
+        } else {
+          showToast(String(error), 'warning');
         }
-        groupedData[item.pollId].push(item);
-      });
-
-      const ids: number[] = Object.keys(groupedData)
-        .map(Number)
-        .sort((a, b) => a - b);
-
-      setPollData(groupedData);
-      setPollIds(ids);
-      setPageIndex(0);
+        console.error(error);
+      }
     }
+
     fetchData();
   }, []);
 
   const handlePrev = () => {
     setPageIndex((prev) => Math.max(prev - 1, 0));
+  };
+
+  const handleMain = () => {
+    navigate('/main');
   };
 
   const handleNext = () => {
@@ -60,7 +89,8 @@ const Vote = () => {
     setIsModalOpen(false);
 
     if (!userId) {
-      alert('로그인이 필요합니다.'); // /페이지로 이동
+      navigate('/');
+      showToast('로그인이 필요합니다.', 'warning');
       return;
     }
 
@@ -70,13 +100,31 @@ const Vote = () => {
     }));
 
     try {
+      setIsSubmitting(true);
       await Promise.all(voteResults.map(updateVoteCount));
       await postVoteResult({ userId });
       localStorage.setItem('voted', 'true');
       navigate('/main');
-    } catch (err) {
-      console.error(err);
-      alert('투표 제출 중 오류가 발생했습니다.');
+      showToast('투표가 성공적으로 완료되었습니다.', 'success');
+    } catch (error) {
+      navigate('/main');
+      if (error instanceof AxiosError) {
+        if (error.status === 404) {
+          showToast(error.message, 'warning');
+        } else {
+          const message =
+            typeof error.response?.data === 'string'
+              ? error.response.data
+              : JSON.stringify(error.response?.data);
+
+          showToast(message, 'warning');
+        }
+      } else {
+        showToast(String(error), 'warning');
+      }
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -84,8 +132,13 @@ const Vote = () => {
     setSelectedCandidates((prev) => ({ ...prev, [pollId]: candidateId }));
   };
 
-  if (pollIds.length === 0) return <div>Loading...</div>; // 메인화면으로 이동하자?
-
+  if (pollIds.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loading />
+      </div>
+    );
+  }
   const currentPollId = pollIds[pageIndex];
   const currentCandidates = pollData[currentPollId];
   const questionText = currentCandidates[0]?.questionText;
@@ -101,11 +154,9 @@ const Vote = () => {
       </div>
       {isMobile ? (
         <div className="">
-          <div className="flex flex-col p-5 ">
-            <div className="p-2">
-              <div className="flex flex-col items-center justify-center font-ps text-lg text-center mb-10">
-                <p>{questionText}</p>
-              </div>
+          <div className="flex flex-col p-5">
+            <div className="flex flex-col items-center justify-center font-ps text-base text-center p-2 mb-5 min-w-[100px] min-h-[150px] max-h-[150px]">
+              <p className="break-all">{questionText}</p>
             </div>
             <div className="flex flex-col items-center justify-center">
               <CandidateGroup
@@ -120,15 +171,9 @@ const Vote = () => {
           </div>
           <div className="flex justify-between items-center w-full p-5">
             {pageIndex > 0 ? (
-              <Button
-                label="이전"
-                onClick={handlePrev}
-                type="outline"
-                size="sm"
-                disabled={!isCandidateSelected}
-              />
+              <Button label="이전" onClick={handlePrev} type="outline" size="sm" />
             ) : (
-              <div className="w-[188px]" />
+              <Button label="이전" onClick={handleMain} type="outline" size="sm" />
             )}
 
             {pageIndex < pollIds.length - 1 ? (
@@ -144,20 +189,20 @@ const Vote = () => {
           </div>
         </div>
       ) : (
-        <div className="p-5">
-          <div className="flex flex-col items-center justify-center bg-gray-50 p-5 rounded-[30px] sm:flex-row">
-            <div className="flex flex-1 p-13">
-              <div className="flex flex-col items-center justify-center gap-10 font-ps text-2xl text-center ">
-                <p>{questionText}</p>
+        <div className="p-5 ">
+          <div className="flex flex-col items-center justify-center bg-gray-50 p-5 rounded-[30px] sm:flex-row min-h-[400px] min-w-[1030px]">
+            <div className="flex flex-1 p-13 min-h-[400px] min-w-[500px] items-center justify-center">
+              <div className="flex flex-col items-center justify-center gap-10 font-ps text-xl text-center ">
+                <p className="break-all">{questionText}</p>
                 {icon ? (
                   <img
-                    src={icon}
+                    src={`/assets/images/question/${icon}.svg`}
                     className="w-full max-w-[250px] h-full object-contain"
                     alt="question icon"
                   />
                 ) : (
                   <img
-                    src="/public/assets/images/question/island.svg"
+                    src="/assets/images/question/island.svg"
                     className="w-full max-w-[250px] h-full object-contain"
                     alt="default icon"
                   />
@@ -177,15 +222,9 @@ const Vote = () => {
           </div>
           <div className="flex justify-between items-center w-full mt-10">
             {pageIndex > 0 ? (
-              <Button
-                label="이전"
-                onClick={handlePrev}
-                type="outline"
-                size="lg"
-                disabled={!isCandidateSelected}
-              />
+              <Button label="이전" onClick={handlePrev} type="outline" size="lg" />
             ) : (
-              <div className="w-[188px]" />
+              <Button label="이전" onClick={handleMain} type="outline" size="lg" />
             )}
 
             {pageIndex < pollIds.length - 1 ? (
@@ -201,12 +240,18 @@ const Vote = () => {
           </div>
         </div>
       )}
+
       <Modal
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
         onConfirm={handleConfirm}
         text2="한번 완료하면 다시 투표할 수 없어요"
       />
+              {isSubmitting && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 };
