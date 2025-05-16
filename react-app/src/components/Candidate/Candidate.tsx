@@ -19,7 +19,7 @@ const Candidate = ({ name, isSelected, handleClick, id }: CandidateProps) => {
         <img
           src={`/assets/images/people/${name}.png`}
           alt={name}
-          className={'object-cover w-[120px] h-[120px] sm:w-[160px] sm:h-[160px]'}
+          className={'object-cover w-[100px] h-[100px] sm:w-[160px] sm:h-[160px]'}
         />
 
         <span className={'font-ps text-[14px] sm:text-[20px]'}>{name}</span>

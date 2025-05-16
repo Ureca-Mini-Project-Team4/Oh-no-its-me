@@ -67,7 +67,7 @@ const WinnerCard = ({ text, icon, name, num }: WinnerCardProps) => {
 export default WinnerCard;
 
 const WinnerCardFront = ({ text, icon, color, onClick }: WinnerCardFrontProps) => {
-  const new_src = `${BASE_URL}question/${icon}.png`;
+  const new_src = `${BASE_URL}question/${icon}.svg`;
 
   return (
     <div
@@ -75,7 +75,7 @@ const WinnerCardFront = ({ text, icon, color, onClick }: WinnerCardFrontProps) =
       className={`${BASE_CSS} ${color} items-end justify-evenly cursor-pointer`}
     >
       <p className="text-[12px] sm:text-[18px] break-keep font-pr">{text}</p>
-      <img src={new_src} className="w-[80px] h-[80px] sm:w-[120px] sm:h-[120px]" />
+      <img src={new_src} className="w-[80px] h-[80px] sm:w-[90px] sm:h-[90px]" />
     </div>
   );
 };
