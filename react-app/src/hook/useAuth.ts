@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserInfoResponse } from '@/apis/user/getUserInfo';
 import { useToast } from './useToast';
 import { AxiosError } from 'axios';
+import { useMutation } from '@tanstack/react-query';
 
 export function useAuth() {
   const dispatch = useDispatch();
@@ -29,10 +30,9 @@ export function useAuth() {
     return String(error);
   };
 
-  const handleLogin = async (username: string, password: string) => {
-    try {
-      const { user, accessToken, refreshToken } = await login({ username, password });
-
+  const { mutate: loginMutate } = useMutation({
+    mutationFn: login,
+    onSuccess: ({ user, accessToken, refreshToken }) => {
       if (user && accessToken && refreshToken) {
         dispatch(setAuth({ user: user as UserInfoResponse }));
         localStorage.setItem('accessToken', accessToken);
@@ -43,12 +43,13 @@ export function useAuth() {
       } else {
         throw new Error('로그인 정보가 올바르지 않습니다.');
       }
-    } catch (error) {
+    },
+    onError: (error) => {
       const message = getErrorMessage(error);
       showToast(message, 'warning');
       throw error;
-    }
-  };
+    },
+  });
 
   const logout = () => {
     dispatch(clearAuth());
@@ -57,5 +58,5 @@ export function useAuth() {
 
   const isLoggedIn = Boolean(user);
 
-  return { user, isLoggedIn, login: handleLogin, logout };
+  return { user, isLoggedIn, login: loginMutate, logout };
 }

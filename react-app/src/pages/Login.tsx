@@ -11,15 +11,13 @@ const Login = () => {
 
   const isDesktop = useMediaQuery({ query: '(min-width: 768px)' });
 
-  const handleLogin = async () => {
+  const handleLogin = useCallback(() => {
     try {
-      await login(username, password);
+      login({ username, password });
     } catch (e) {
-      console.error(e);
-      setUsername('');
       setPassword('');
     }
-  };
+  }, [login, username, password]);
 
   const handlePasswordChange = useCallback(() => {
     navigation('/change-password');

@@ -1,59 +1,64 @@
 import { useCallback, useState } from 'react';
-import { changePassword } from '@/apis/user/changePassword';
 import { useToast } from '@/hook/useToast';
 import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
+import { useMutation } from '@tanstack/react-query';
+import { changePassword, ChangePasswordRequest } from '@/apis/user/changePassword';
 
 const ChangePW = () => {
+  const isDesktop = useMediaQuery({ query: '(min-width: 768px)' });
   const [username, setUsername] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const { showToast } = useToast();
   const navigation = useNavigate();
 
-  const isDesktop = useMediaQuery({ query: '(min-width: 768px)' });
-
-  const handleChangePassword = async () => {
-    try {
-      await changePassword({
-        username,
-        old_password: oldPassword,
-        new_password: newPassword,
-      });
-
+  const { mutate: changePasswordMutate } = useMutation({
+    mutationFn: changePassword,
+    onSuccess: () => {
       setUsername('');
       setOldPassword('');
       setNewPassword('');
 
       navigation('/login');
       showToast('비밀번호가 성공적으로 변경되었습니다.', 'success');
-    } catch (error) {
+    },
+    onError: (error) => {
       if (error instanceof AxiosError) {
-        if (error.status === 404) {
+        if (error.response?.status === 404) {
           showToast(error.message, 'warning');
         } else {
           const message =
             typeof error.response?.data === 'string'
               ? error.response.data
               : JSON.stringify(error.response?.data);
-
           showToast(message, 'warning');
         }
       } else {
         showToast(String(error), 'warning');
       }
       console.error(error);
-    }
-  };
+    },
+  });
+
+  const handleSubmit = useCallback(() => {
+    changePasswordMutate({
+      username,
+      old_password: oldPassword,
+      new_password: newPassword,
+    });
+  }, [changePasswordMutate]);
 
   const handlePrev = useCallback(() => {
     navigation('/login');
-  }, []);
+  }, [navigation]);
 
   return (
     <div
-      className={`flex justify-center items-center w-screen h-screen ${isDesktop ? 'text-[1.2vw]' : 'text-[2.5vw]'}`}
+      className={`flex justify-center items-center w-screen h-screen ${
+        isDesktop ? 'text-[1.2vw]' : 'text-[2.5vw]'
+      }`}
     >
       <div className="flex justify-center items-center w-[70%] max-w-[900px] h-[80%] rounded-2xl">
         {isDesktop && (
@@ -64,7 +69,9 @@ const ChangePW = () => {
           />
         )}
         <div
-          className={`flex flex-col justify-center ${isDesktop ? 'w-1/2 px-8' : 'w-full px-6 gap-[2vw]'}`}
+          className={`flex flex-col justify-center ${
+            isDesktop ? 'w-1/2 px-8' : 'w-full px-6 gap-[2vw]'
+          }`}
         >
           <h2 className={`font-gumi text-center mb-8 ${isDesktop ? 'text-[3vw]' : 'text-[6vw]'}`}>
             <span className="text-[var(--color-primary-base)]">너</span>로 정했다!
@@ -111,7 +118,7 @@ const ChangePW = () => {
 
           <div className="flex flex-col">
             <button
-              onClick={handleChangePassword}
+              onClick={handleSubmit}
               className="w-full mt-2 py-2 bg-[var(--color-primary-base)] font-ps text-white rounded-lg hover:bg-[var(--color-primary-hover)] transition duration-200"
             >
               확인
