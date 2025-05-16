@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Dropdown } from './Dropdown';
 import { useState, useRef, useEffect } from 'react';
 import { updateComment } from '@/apis/comment/updateComment';
+import { deleteComment } from '@/apis/comment/deleteComment';
 
 interface CommentProps {
   commentId: number;
@@ -64,6 +65,22 @@ const CommentCard = ({ commentId, nickname, commentText, onUpdate }: CommentProp
       onUpdate();
     } catch (err) {
       console.error('댓글 수정 실패 : ', err);
+    }
+  };
+
+  // 삭제
+  const handleRemove = async () => {
+    if (window.confirm('댓글을 삭제하시겠습니까?')) {
+      try {
+        await deleteComment({
+          comment_id: commentId,
+          user_id: user.userId,
+        });
+        onUpdate();
+      } catch (err) {
+        console.error('댓글 삭제 실패 : ', err);
+        alert('댓글 삭제에 실패했습니다.');
+      }
     }
   };
 
@@ -136,9 +153,7 @@ const CommentCard = ({ commentId, nickname, commentText, onUpdate }: CommentProp
               data={['수정', '삭제']}
               commentText={commentText}
               handleEdit={handleEditClick}
-              handleRemove={() => {
-                console.log('삭제');
-              }}
+              handleRemove={handleRemove}
             />
           </div>
         )}
