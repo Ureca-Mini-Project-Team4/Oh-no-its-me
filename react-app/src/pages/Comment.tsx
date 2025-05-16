@@ -144,7 +144,7 @@ const Comment = () => {
   };
 
   return (
-    <div className="pt-10 sm:p-5 flex flex-col justify-center items-center">
+    <div className="min-h-screen flex flex-col justify-center items-center">
       {/* 제목 */}
       <div className="flex justify-center items-center gap-3 sm:gap-7 sm:pt-0 pt-5">
         <img
@@ -160,12 +160,12 @@ const Comment = () => {
         />
       </div>
 
-      <div className="px-5 py-10 flex flex-col sm:flex-row sm:p-3 gap-10 sm:gap-30">
+      <div className="px-5 py-10 flex flex-col justify-center items-center sm:flex-row sm:p-3 gap-10 sm:gap-30">
         {/* 카드 영역 */}
         <div className="w-full sm:w-auto flex justify-center relative">
           {/* 로딩 스피너 */}
           {isLoading && (
-            <div className="sm:w-[400px] absolute inset-0 flex justify-center items-center bg-white/80 z-10">
+            <div className="sm:w-[400px] absolute inset-0 flex  bg-white/80 z-10">
               <Loading />
             </div>
           )}
@@ -189,7 +189,7 @@ const Comment = () => {
         </div>
 
         {/* 댓글 영역 */}
-        <div className=" h-[550px] sm:h-[550px] border border-gray-300 rounded-2xl flex flex-col justify-between px-4 py-2">
+        <div className=" h-[550px] sm:h-[550px] border border-gray-300 rounded-2xl flex flex-col justify-center items-center px-4 py-2">
           {/* 스크롤 가능한 댓글 리스트 */}
           <div className="flex-1 overflow-y-auto pr-2">
             {comments.length === 0 ? (
