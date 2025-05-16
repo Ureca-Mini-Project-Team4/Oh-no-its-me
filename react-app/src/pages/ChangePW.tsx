@@ -55,7 +55,7 @@ const ChangePW = () => {
     <div
       className={`flex justify-center items-center w-screen h-screen ${isDesktop ? 'text-[1.2vw]' : 'text-[2.5vw]'}`}
     >
-      <div className="flex justify-center items-center w-[70%] max-w-[900px] h-[80%] rounded-2xl overflow-hidden">
+      <div className="flex justify-center items-center w-[70%] max-w-[900px] h-[80%] rounded-2xl">
         {isDesktop && (
           <img
             src="/assets/images/seal-change-password.png"
@@ -118,9 +118,12 @@ const ChangePW = () => {
             </button>
             <button
               onClick={handlePrev}
-              className="flex justify-center gap-[1vw] w-full mt-2 py-2 font-ps text-gray-400 hover:text-gray-600 transition duration-200"
+              className="flex justify-center items-center gap-[1vw] w-full mt-2 py-2 font-ps text-gray-400 hover:text-gray-600 transition duration-200"
             >
-              <img className="aspect-square" src="/public/assets/images/vector.png" />
+              <img
+                className={`${isDesktop ? 'size-[1.8vw]' : 'size-[3vw]'} aspect-square`}
+                src="/assets/images/vector.png"
+              />
               이전으로
             </button>
           </div>
