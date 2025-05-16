@@ -50,7 +50,7 @@ public class CandidateService {
 
             for (Candidate.PollInfo pollInfo : pollInfos) {
                 int pollId = pollInfo.getPollId();
-                List<Candidate.UserInfo> users = candidateDao.getRandomUsersForPoll(pollId, 4);
+                List<Candidate.UserInfo> users = candidateDao.getRandomUsersForPoll(pollId);
 
                 if (users.isEmpty()) {
                     throw new RuntimeException("poll_id " + pollId + "에 대해 선택할 수 있는 사용자가 없습니다.");

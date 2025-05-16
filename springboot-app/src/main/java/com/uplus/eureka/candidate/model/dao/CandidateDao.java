@@ -15,9 +15,12 @@ public interface CandidateDao {
 	List<PollInfo> getTopPollIds();
 
     // 특정 poll_id에 대해 is_selected가 false인 사용자 4명을 랜덤으로 가져오는 쿼리
-	List<UserInfo> getRandomUsersForPoll(@Param("pollId") int pollId, @Param("limit") int limit);
+	List<UserInfo> getRandomUsersForPoll(@Param("pollId") int pollId);
 
-    // candidates 테이블에 후보자를 추가하는 쿼리
+	// candidate_id가 높은 순으로 16개 가져오는 쿼리
+	List<CandidateInfo> getTopCandidate();
+
+	// candidates 테이블에 후보자를 추가하는 쿼리
     void insertCandidate(@Param("candidate") Candidate candidate);
 
     // user_id에 해당하는 is_selected 값을 true로 업데이트하는 쿼리
@@ -25,9 +28,5 @@ public interface CandidateDao {
     
     // 투표 종료 후 is_selected 값을 false로 업데이트하는 쿼리
     void updateUserSelectedFalse();
-    
-    // candidate_id가 높은 순으로 16개 가져오는 쿼리
-    List<CandidateInfo> getTopCandidate();
-    
     }
 

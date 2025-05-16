@@ -20,4 +20,7 @@ public interface VoteDao {
 
     //투표 완료 등록
     int completeVote(@Param("userId") int userId);
+    
+    // isVoted 초기화
+    void resetIsVoted();
 }
