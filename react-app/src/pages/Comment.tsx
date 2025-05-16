@@ -1,5 +1,4 @@
 import WinnerCard from '@/components/WinnerCard/WinnerCard';
-
 import {
   getVoteResultByPollId,
   getVoteResultByPollIdResponse,
