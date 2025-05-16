@@ -89,8 +89,8 @@ const Vote = () => {
     setIsModalOpen(false);
 
     if (!userId) {
-      alert('로그인이 필요합니다.');
       navigate('/');
+      showToast('로그인이 필요합니다.', 'warning');
       return;
     }
 
