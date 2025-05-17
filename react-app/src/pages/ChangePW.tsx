@@ -4,7 +4,7 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { useMutation } from '@tanstack/react-query';
-import { changePassword, ChangePasswordRequest } from '@/apis/user/changePassword';
+import { changePassword } from '@/apis/user/changePassword';
 
 const ChangePW = () => {
   const isDesktop = useMediaQuery({ query: '(min-width: 768px)' });
