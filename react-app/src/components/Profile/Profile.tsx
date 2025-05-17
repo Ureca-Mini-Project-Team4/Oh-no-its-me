@@ -1,15 +1,18 @@
-const BASE_URL = '/assets/images/';
+import { IMAGES } from '@/constants/imagePath';
 
 interface ProfileProps {
   nickname: string;
 }
 
 const Profile = ({ nickname }: ProfileProps) => {
+  const imageSrc = nickname ? IMAGES.ANIMAL(nickname) : IMAGES.DEFAULT_PROFILE;
+
   return (
     <div className="w-[40px] h-[40px] sm:w-[60px] sm:h-[60px] rounded-xl">
       <img
-        className="border-[1px] rounded-4xl border-gray-100"
-        src={`${BASE_URL}${encodeURIComponent(nickname) ? 'animal/' + nickname + '.jpg' : 'default-profile.png'}`}
+        src={imageSrc}
+        alt={`${nickname || '기본'} 프로필`}
+        className="border border-gray-100 rounded-4xl object-cover w-full h-full"
       />
     </div>
   );

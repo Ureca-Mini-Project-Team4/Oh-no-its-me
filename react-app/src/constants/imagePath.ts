@@ -5,4 +5,18 @@ export const IMAGES = {
   POPPER_RIGHT: '/assets/images/popper-right.png',
   ARROW: '/assets/icons/arrow-right.png',
   WINNER_BASE: '/assets/images/people',
+  DEFAULT_PROFILE: '/assets/images/default-profile.png',
+  MEDAL: '/assets/images/medal.png',
+  SEAL_CHANGE_PASSWORD: '/assets/images/seal-change-password.png',
+  ARROW_LEFT: '/assets/images/vector.png',
+  MOCKUP: '/assets/images/mockup.png',
+  MAIN: [
+    '/assets/images/main1.png',
+    '/assets/images/main2.png',
+    '/assets/images/main3.png',
+    '/assets/images/main4.png',
+  ],
+  ROCKET: '/assets/images/rocket.png',
+  PEOPLE: (name: string) => `/assets/images/people/${encodeURIComponent(name)}.png`,
+  ANIMAL: (nickname: string) => `/assets/images/animal/${encodeURIComponent(nickname)}.jpg`,
 };

@@ -4,7 +4,6 @@ import CandidateGroup from '@/components/Candidate/CandidateGroup';
 import Modal from '@/components/Modal/Modal';
 import Loading from '@/components/Loading/Loading';
 import { useToast } from '@/hook/useToast';
-
 import { useEffect, useState } from 'react';
 import useIsMobile from '@/hook/useIsMobile';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +11,7 @@ import {
   getCandidateLatests,
   getCandidateLatestResponse,
 } from '@/apis/candidate/getCandidateLatest';
+import { ICONS } from '@/constants/iconPath';
 import { updateVoteCount } from '@/apis/vote/updateVoteCount';
 import { postVoteResult } from '@/apis/vote/postVoteResult';
 import { AxiosError } from 'axios';
@@ -158,7 +158,7 @@ const Vote = () => {
             <div className="flex flex-col items-center justify-center font-ps text-sm text-center p-2 min-w-[270px] min-h-[150px] max-h-[150px]">
               <p className="break-all">{questionText}</p>
               <img
-                src={`/assets/images/question/${icon}.svg`}
+                src={ICONS.QUESTION_ICON(icon)}
                 className="w-full max-w-[90px] h-full object-contain p-2 mt-2"
                 alt="question icon"
               />
@@ -200,7 +200,7 @@ const Vote = () => {
               <div className="flex flex-col items-center justify-center gap-10 font-ps text-xl text-center ">
                 <p className="break-all">{questionText}</p>
                 <img
-                  src={`/assets/images/question/${icon}.svg`}
+                  src={ICONS.QUESTION_ICON(icon)}
                   className="w-full max-w-[200px] h-full object-contain"
                   alt="question icon"
                 />
