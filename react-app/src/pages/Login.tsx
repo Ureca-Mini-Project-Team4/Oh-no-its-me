@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { useAuth } from '@/hook/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
+import { IMAGES } from '@/constants/imagePath';
 
 const Login = () => {
   const navigation = useNavigate();
@@ -32,7 +33,7 @@ const Login = () => {
       <div className="flex justify-center items-center w-[70%] max-w-[900px] h-[80%] rounded-2xl overflow-hidden">
         {isDesktop && (
           <img
-            src="/assets/images/rocket.png"
+            src={IMAGES.ROCKET}
             alt="로켓"
             className="w-[40%] aspect-square flex justify-center items-center object-contain"
           />

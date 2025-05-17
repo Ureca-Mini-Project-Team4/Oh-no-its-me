@@ -16,6 +16,7 @@ import { postComment } from '@/apis/comment/postComment';
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import { IMAGES } from '@/constants/imagePath';
 
 const Comment = () => {
   // 사용자 정보
@@ -147,17 +148,9 @@ const Comment = () => {
     <div className="min-h-screen flex flex-col justify-center items-center">
       {/* 제목 */}
       <div className="flex justify-center items-center gap-3 sm:gap-7 sm:pt-0 pt-5">
-        <img
-          src="/assets/images/popper-right.png"
-          className="w-[40px] sm:w-[100px]"
-          alt="popper-left"
-        />
+        <img src={IMAGES.POPPER_LEFT} className="w-[40px] sm:w-[100px]" alt="popper-left" />
         <h1 className="text-2xl font-pm sm:text-3xl">투표 결과</h1>
-        <img
-          src="/assets/images/popper-left.png"
-          className="w-[40px] sm:hidden"
-          alt="popper-right"
-        />
+        <img src={IMAGES.POPPER_RIGHT} className="w-[40px] sm:hidden" alt="popper-right" />
       </div>
 
       <div className="px-5 py-10 flex flex-col justify-center items-center sm:flex-row sm:p-3 gap-10 sm:gap-30">

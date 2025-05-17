@@ -105,7 +105,7 @@ const Result = () => {
         </div>
       </div>
       <img
-        src={`../../public/assets/icons/${ICONS.ARROW}`}
+        src={ICONS.ARROW}
         alt="arrow"
         className="fixed top-1/2 right-6 sm:right-10 -translate-y-1/2 w-12 h-12 cursor-pointer z-50"
         onClick={handleClickButton}
