@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useVoteResults } from '@/hook/useVoteResults';
 import { useToast } from '@/hook/useToast';
 import { IMAGES } from '@/constants/imagePath';
+import { ICONS } from '@/constants/iconPath';
 import Confetti from '@/components/Confetti/Confetti';
 import Winner from '@/components/Winner/Winner';
 import Loading from '@/components/Loading/Loading';
@@ -75,14 +76,6 @@ const Result = () => {
                       >
                         <div className="relative w-full max-w-[160px] flex justify-center">
                           <Winner name={data.username} question={data.questionText} />
-                          {index === 1 && (
-                            <img
-                              src={IMAGES.ARROW}
-                              alt="arrow"
-                              className="absolute top-1/2 right-0 ml-2 -translate-y-1/2 w-8 h-8 cursor-pointer z-20"
-                              onClick={handleClickButton}
-                            />
-                          )}
                         </div>
                       </div>
                     );
@@ -101,14 +94,6 @@ const Result = () => {
                       <div key={data.pollId} className={`absolute ${positions[index]} w-auto`}>
                         <div className="relative">
                           <Winner name={data.username} question={data.questionText} />
-                          {index === 3 && (
-                            <img
-                              src={IMAGES.ARROW}
-                              alt="arrow"
-                              className="absolute top-1/2 left-full ml-6 -translate-y-1/2 w-10 h-10 cursor-pointer z-20"
-                              onClick={handleClickButton}
-                            />
-                          )}
                         </div>
                       </div>
                     );
@@ -119,6 +104,12 @@ const Result = () => {
           )}
         </div>
       </div>
+      <img
+        src={`../../public/assets/icons/${ICONS.ARROW}`}
+        alt="arrow"
+        className="fixed top-1/2 right-6 sm:right-10 -translate-y-1/2 w-12 h-12 cursor-pointer z-50"
+        onClick={handleClickButton}
+      />
     </div>
   );
 };

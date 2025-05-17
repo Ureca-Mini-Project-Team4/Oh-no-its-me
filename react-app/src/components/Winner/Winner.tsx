@@ -2,7 +2,7 @@ import { WinnerProps } from './Winner.types';
 import { IMAGES } from '@/constants/imagePath';
 
 const Winner = ({ name, question }: WinnerProps) => {
-  const imageSrc = `../../../public/${IMAGES.WINNER_BASE}/${encodeURIComponent(name)}.png`;
+  const imageSrc = `${IMAGES.WINNER_BASE}/${encodeURIComponent(name)}.png`;
 
   return (
     <div className="relative flex flex-col items-center w-[160px] h-[95px] sm:w-[360px] sm:h-[200px] mt-4">

@@ -1,3 +1,3 @@
 export const ICONS = {
-  ARROW: '/assets/icons/arrow-right.png',
+  ARROW: '/assets/icons/arrow-right.svg',
 };
