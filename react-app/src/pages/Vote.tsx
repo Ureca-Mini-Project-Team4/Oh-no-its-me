@@ -5,7 +5,7 @@ import Modal from '@/components/Modal/Modal';
 import Loading from '@/components/Loading/Loading';
 import { useToast } from '@/hook/useToast';
 import { useEffect, useState } from 'react';
-import useIsMobile from '@/hook/useIsMobile';
+import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import {
   getCandidateLatests,
@@ -27,7 +27,7 @@ const Vote = () => {
     {},
   );
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   const { showToast } = useToast();
 
   useEffect(() => {
