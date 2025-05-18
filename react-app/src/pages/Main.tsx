@@ -43,16 +43,20 @@ const Main = () => {
   }, [navigation]);
 
   return (
-    <div className="flex flex-col justify-center items-center w-screen h-screen sm:space-y-20 space-y-8 px-4 text-center">
-      <p className="text-[18px] sm:text-[20px] md:text-[28px] font-pb leading-tight">
-        투표 결과 발표까지 남은 시간
-      </p>
-      <p className="text-[32px] sm:text-[48px] md:text-[64px] font-pb">
-        {restTime > 0 ? changeDateTime(restTime) : '투표가 종료되었습니다.'}
-      </p>
-      <p className="text-[32px] sm:text-[48px] md:text-[72px] font-pb leading-none">
-        <span className="bg-[var(--color-primary-base)] px-2">너로</span> 정했다!
-      </p>
+    <div className="flex flex-col min-w-[250px] justify-center items-center w-screen h-screen sm:space-y-20 space-y-8 px-4 text-center">
+      <div className="flex flex-col justify-center gap-[1.4vw]">
+        <p className="text-[18px] text-gray-600 sm:text-[20px] md:text-[28px] font-pb">
+          {restTime > 0 ? '투표 결과 발표까지 남은 시간' : '투표 집계가 완료되었습니다.'}
+        </p>
+        <p
+          className={`${restTime > 0 ? 'text-gray-600' : 'bg-gradient-to-r from-red-500 to-lime-300 bg-clip-text text-transparent'} text-[32px] sm:text-[48px] md:text-[64px] font-pb`}
+        >
+          {restTime > 0 ? changeDateTime(restTime) : '결과 발표'}
+        </p>
+        <p className="mt-[1vw] text-[32px] sm:text-[48px] md:text-[72px] font-pb leading-none">
+          <span className="bg-[var(--color-primary-base)] px-2">너로</span> 정했다!
+        </p>
+      </div>
       <div className="w-full max-w-[320px] text-[16px] sm:text-[20px] md:text-[24px] font-pb">
         {restTime > 0 ? (
           <Button
@@ -61,7 +65,7 @@ const Main = () => {
             disabled={isVoted}
           />
         ) : (
-          <Button onClick={handleMoveToResult} label="결과보기" />
+          <Button onClick={handleMoveToResult} label="결과 확인" />
         )}
       </div>
     </div>
