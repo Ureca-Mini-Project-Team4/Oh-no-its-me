@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useAuth } from '@/hook/useAuth';
+import { useLogin } from '@/hook/useLogin';
 import { useToast } from '@/hook/useToast';
 import { RootState } from '@/store';
 import { ICONS } from '@/constants/iconPath';
@@ -11,7 +11,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isLogin = useSelector((state: RootState) => !!state.auth.user?.userId);
-  const { logout } = useAuth();
+  const { logout } = useLogin();
   const { showToast } = useToast();
 
   const handleGoHome = () => {

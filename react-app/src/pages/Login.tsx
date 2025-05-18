@@ -1,20 +1,19 @@
 import { useCallback, useState } from 'react';
-import { useAuth } from '@/hook/useAuth';
+import { useLogin } from '@/hook/useLogin';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { IMAGES } from '@/constants/imagePath';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login } = useLogin();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const isDesktop = useMediaQuery({ query: '(min-width: 768px)' });
 
-  const handleLogin = useCallback(() => {
+  const handleLogin = useCallback(async () => {
     try {
-      login({ username, password });
+      await login({ username, password });
     } catch (e) {
       setPassword('');
     }
