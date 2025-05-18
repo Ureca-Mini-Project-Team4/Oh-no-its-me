@@ -4,7 +4,7 @@ import Nav from '../Nav/Nav';
 
 const Layout = () => {
   return (
-    <section className="flex flex-col min-h-screen w-screen">
+    <section className="flex flex-col min-h-screen">
       <Toast />
       <Nav />
       <Outlet />
