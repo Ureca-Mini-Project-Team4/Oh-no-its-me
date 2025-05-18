@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import Toast from '../Toast/Toast';
-import Nav from '../Nav/Nav';
+import Header from '../Header/Header';
 
 const Layout = () => {
   return (
     <section className="flex flex-col min-h-screen">
       <Toast />
-      <Nav />
+      <Header />
       <Outlet />
     </section>
   );
