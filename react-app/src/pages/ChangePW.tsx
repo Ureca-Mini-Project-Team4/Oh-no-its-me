@@ -65,7 +65,7 @@ const ChangePW = () => {
           <img
             src={IMAGES.SEAL_CHANGE_PASSWORD}
             alt="물개"
-            className="w-[40%] aspect-square flex justify-center items-center object-contain m-5"
+            className="w-[40%] aspect-square flex justify-center items-center object-contain m-5 pr-13 pt-13"
           />
         )}
         <div
