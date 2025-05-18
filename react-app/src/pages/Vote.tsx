@@ -6,6 +6,7 @@ import Loading from '@/components/Loading/Loading';
 import { useMediaQuery } from 'react-responsive';
 import { ICONS } from '@/constants/iconPath';
 import { useVote } from '@/hook/useVote';
+import { useCallback, useMemo } from 'react';
 
 const Vote = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
@@ -21,6 +22,25 @@ const Vote = () => {
     handleSelect,
     handleSubmit,
   } = useVote();
+  
+  const currentPollId = useMemo(() => pollIds[pageIndex], [pollIds, pageIndex]);
+
+  const currentCandidates = useMemo(() => pollData[currentPollId] || [], [pollData, currentPollId]);
+
+  const selectedCandidateId = useMemo(
+    () => selectedCandidates[currentPollId] ?? null,
+    [selectedCandidates, currentPollId],
+  );
+
+  const questionText = currentCandidates[0]?.questionText;
+  const icon = currentCandidates[0]?.icon;
+  const isCandidateSelected = selectedCandidateId !== null;
+
+  const handlePrev = useCallback(() => setPageIndex((prev) => Math.max(prev - 1, 0)), []);
+  const handleNext = useCallback(
+    () => setPageIndex((prev) => Math.min(prev + 1, pollIds.length - 1)),
+    [pollIds.length],
+  );
 
   if (!pollIds.length) {
     return (
@@ -29,16 +49,6 @@ const Vote = () => {
       </div>
     );
   }
-
-  const currentPollId = pollIds[pageIndex];
-  const currentCandidates = pollData[currentPollId];
-  const questionText = currentCandidates[0]?.questionText;
-  const icon = currentCandidates[0]?.icon;
-  const selectedCandidateId = selectedCandidates[currentPollId] ?? null;
-  const isCandidateSelected = selectedCandidateId !== null;
-
-  const handlePrev = () => setPageIndex((prev) => Math.max(prev - 1, 0));
-  const handleNext = () => setPageIndex((prev) => Math.min(prev + 1, pollIds.length - 1));
 
   return (
     <div className="min-h-screen bg-white flex items-center flex-col justify-center p-5">

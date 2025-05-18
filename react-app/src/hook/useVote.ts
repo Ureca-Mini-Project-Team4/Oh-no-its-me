@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   getCandidateLatests,
@@ -57,11 +57,11 @@ export const useVote = () => {
     fetchData();
   }, []);
 
-  const handleSelect = (pollId: number, candidateId: number) => {
+  const handleSelect = useCallback((pollId: number, candidateId: number) => {
     setSelectedCandidates((prev) => ({ ...prev, [pollId]: candidateId }));
-  };
+  },[]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     const userId = Number(localStorage.getItem('userId'));
     if (!userId) {
       navigate('/');
@@ -93,7 +93,7 @@ export const useVote = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [selectedCandidates, showToast, navigate]);
 
   return {
     pollData,
