@@ -18,5 +18,5 @@ export const IMAGES = {
   ],
   ROCKET: '/assets/images/rocket.png',
   PEOPLE: (name: string) => `/assets/images/people/${encodeURIComponent(name)}.png`,
-  ANIMAL: (nickname: string) => `/assets/images/animal/${encodeURIComponent(nickname)}.jpg`,
+  ANIMAL: (nickname: string) => `/assets/images/animal/${encodeURIComponent(nickname)}.png`,
 };
