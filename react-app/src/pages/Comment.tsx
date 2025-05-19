@@ -145,25 +145,25 @@ const Comment = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center">
+    <div className="md:h-full flex flex-col justify-center items-center">
       {/* 제목 */}
-      <div className="flex justify-center items-center gap-3 sm:gap-7 sm:pt-0 pt-5">
-        <img src={IMAGES.POPPER_LEFT} className="w-[40px] sm:w-[100px]" alt="popper-left" />
-        <h1 className="text-2xl font-pm sm:text-3xl">투표 결과</h1>
-        <img src={IMAGES.POPPER_RIGHT} className="w-[40px] sm:hidden" alt="popper-right" />
+      <div className="flex justify-center items-center gap-3 md:gap-7 md:pt-0 pt-5">
+        <img src={IMAGES.POPPER_LEFT} className="w-[40px] md:w-[100px]" alt="popper-left" />
+        <h1 className="text-2xl font-pm md:text-3xl">투표 결과</h1>
+        <img src={IMAGES.POPPER_RIGHT} className="w-[40px] md:hidden" alt="popper-right" />
       </div>
 
-      <div className="px-5 py-10 flex flex-col justify-center items-center sm:flex-row sm:p-3 gap-10 sm:gap-30">
+      <div className="px-5 py-10 flex flex-col justify-center items-center md:flex-row md:p-3 gap-10 md:gap-30">
         {/* 카드 영역 */}
-        <div className="w-full sm:w-auto flex justify-center relative">
+        <div className="w-full md:w-auto flex justify-center relative">
           {/* 로딩 스피너 */}
           {isLoading && (
-            <div className="sm:w-[400px] absolute inset-0 flex  bg-white/80 z-10">
+            <div className="md:w-[400px] absolute inset-0 flex  bg-white/80 z-10">
               <Loading />
             </div>
           )}
 
-          <div className="grid grid-cols-2 grid-rows-2 gap-6 sm:gap-x-10 sm:gap-y-0">
+          <div className="grid grid-cols-2 grid-rows-2 gap-6 md:gap-x-10 md:gap-y-0">
             {!isLoading &&
               results.map((poll, idx) => (
                 <div
@@ -182,7 +182,7 @@ const Comment = () => {
         </div>
 
         {/* 댓글 영역 */}
-        <div className=" h-[550px] sm:h-[550px] border border-gray-300 rounded-2xl flex flex-col justify-center items-center px-4 py-2">
+        <div className=" h-[550px] md:h-[550px] border border-gray-300 rounded-2xl flex flex-col justify-center items-center px-4 py-2">
           {/* 스크롤 가능한 댓글 리스트 */}
           <div className="flex-1 overflow-y-auto pr-2">
             {comments.length === 0 ? (
