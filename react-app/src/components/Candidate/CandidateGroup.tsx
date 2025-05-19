@@ -1,3 +1,4 @@
+import React from 'react';
 import Candidate from './Candidate';
 import { CandidateGroupProps } from './Candidate.types';
 
@@ -19,6 +20,6 @@ const CandidateGroup = ({ candidateArr, selectedCandidateId, onSelect }: Candida
   );
 };
 
-export default CandidateGroup;
+export default React.memo(CandidateGroup);
 
 
