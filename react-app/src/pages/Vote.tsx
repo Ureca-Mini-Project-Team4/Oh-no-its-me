@@ -22,7 +22,7 @@ const Vote = () => {
     handleSelect,
     handleSubmit,
   } = useVote();
-  
+
   const currentPollId = useMemo(() => pollIds[pageIndex], [pollIds, pageIndex]);
 
   const currentCandidates = useMemo(() => pollData[currentPollId] || [], [pollData, currentPollId]);
@@ -73,7 +73,7 @@ const Vote = () => {
                   userName: c.userName,
                 }))}
                 selectedCandidateId={selectedCandidateId}
-                onSelect={(candidateId) => handleCandidateSelect(currentPollId, candidateId)}
+                onSelect={(candidateId) => handleSelect(currentPollId, candidateId)}
               />
             </div>
           </div>
