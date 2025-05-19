@@ -9,7 +9,7 @@ import { CommentResponse } from '@/apis/comment/getComment';
 import { getComments } from '@/apis/comment/getAllComments';
 import CommentCard from '@/components/Comment/Comment';
 import CharacterCard from '@/components/Character/Character';
-import useIsMobile from '@/hook/useIsMobile';
+import { useMediaQuery } from 'react-responsive';
 import CommentInputField from '@/components/Comment/CommentInputField';
 import Loading from '@/components/Loading/Loading';
 import { postComment } from '@/apis/comment/postComment';
@@ -22,7 +22,7 @@ const Comment = () => {
   // 사용자 정보
   const user = useSelector((state: RootState) => state.auth.user)!;
 
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   // 결과 조회
   const [results, setResults] = useState<getVoteResultByPollIdResponse[]>([]);
