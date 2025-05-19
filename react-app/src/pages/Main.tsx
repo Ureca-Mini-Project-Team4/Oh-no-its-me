@@ -1,6 +1,7 @@
 import Button from '@/components/Button/Button';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import FloatingBackground from '@/components/FloatingBackground/FloatingBackground';
 
 const Main = () => {
   const [restTime, setRestTime] = useState(10);
@@ -42,7 +43,8 @@ const Main = () => {
   }, [navigation]);
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen px-4 text-center">
+    <div className="flex flex-col justify-center items-center min-h-screen px-4 text-center relative">
+      <FloatingBackground />
       <div className="flex flex-col justify-center gap-6">
         <p className="text-base sm:text-lg md:text-xl text-gray-600 font-pb">
           {restTime > 0 ? '투표 결과 발표까지 남은 시간' : '투표 집계가 완료되었습니다.'}
