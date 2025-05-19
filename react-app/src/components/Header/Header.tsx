@@ -35,8 +35,8 @@ export default function Header() {
   };
 
   return (
-    <>
-      <header className="sticky top-0 left-0 w-full h-10 md:h-12 bg-[var(--color-primary-base)] z-50 shadow-md">
+    <div className="w-full h-10 md:h-12">
+      <header className="sticky top-0 w-full h-10 md:h-12 bg-[var(--color-primary-base)] z-50">
         <div className="flex items-center justify-between w-full h-full px-4">
           <img
             src={ICONS.HOME}
@@ -60,6 +60,6 @@ export default function Header() {
         onConfirm={handleConfirmAction}
         text1={isLogin ? '정말로 로그아웃 하시겠습니까?' : '로그인 하시겠습니까?'}
       />
-    </>
+    </div>
   );
 }
