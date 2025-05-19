@@ -5,7 +5,7 @@ import Modal from '@/components/Modal/Modal';
 import Loading from '@/components/Loading/Loading';
 import { useMediaQuery } from 'react-responsive';
 import { ICONS } from '@/constants/iconPath';
-import { useVote } from '@/hook/useVote';
+import { useVote } from '@/hooks/useVote';
 import { useCallback, useMemo } from 'react';
 
 const Vote = () => {

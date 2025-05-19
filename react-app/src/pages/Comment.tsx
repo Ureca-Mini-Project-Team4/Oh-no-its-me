@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { useComment } from '@/hook/useComment';
+import { useComment } from '@/hooks/useComment';
 import { useMediaQuery } from 'react-responsive';
 import WinnerCard from '@/components/WinnerCard/WinnerCard';
 import CommentCard from '@/components/Comment/Comment';

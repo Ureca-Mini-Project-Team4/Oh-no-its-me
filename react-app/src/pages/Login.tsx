@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { useLogin } from '@/hook/useLogin';
+import { useLogin } from '@/hooks/useLogin';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import Loading from '@/components/Loading/Loading';
@@ -48,7 +48,7 @@ const Login = () => {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
+                  className="font-pr w-full px-4 py-2 border border-gray-300 rounded-lg placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
                   placeholder="아이디를 입력하세요"
                 />
               </div>
@@ -58,7 +58,7 @@ const Login = () => {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
+                  className="font-pr w-full px-4 py-2 border border-gray-300 rounded-lg placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
                   placeholder="비밀번호를 입력하세요"
                 />
               </div>

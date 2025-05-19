@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { useToast } from '@/hook/useToast';
+import { useToast } from '@/hooks/useToast';
 import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useLogin } from '@/hook/useLogin';
-import { useToast } from '@/hook/useToast';
+import { useLogin } from '@/hooks/useLogin';
+import { useToast } from '@/hooks/useToast';
 import { RootState } from '@/store';
 import { ICONS } from '@/constants/iconPath';
 import Modal from '../Modal/Modal';
