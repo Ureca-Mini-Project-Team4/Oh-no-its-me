@@ -16,13 +16,13 @@ import {
   getVoteResultByPollId,
   getVoteResultByPollIdResponse,
 } from '@/apis/vote/getVoteResultByPollId';
-import Loading from '../Loading/Loading';
 
 interface CommentProps {
   setIsLoading: (loading: boolean) => void;
+  onError?: (e: unknown) => void;
 }
 
-const CommentContext = ({ setIsLoading }: CommentProps) => {
+const CommentContext = ({ setIsLoading, onError }: CommentProps) => {
   // 사용자 정보
   const user = useSelector((state: RootState) => state.auth.user)!;
   const isMobile = useIsMobile();
@@ -52,10 +52,11 @@ const CommentContext = ({ setIsLoading }: CommentProps) => {
       } catch (error) {
         console.error('투표 결과 불러오기 실패 : ', error);
         setPollIds([]);
+        onError?.(error);
       }
     };
     fetchAllResults();
-  }, []);
+  }, [onError]);
 
   // pollIds가 갱신되면 결과 가져오기
   useEffect(() => {
@@ -72,13 +73,14 @@ const CommentContext = ({ setIsLoading }: CommentProps) => {
         setResults(res);
       } catch (error) {
         console.log('투표 결과 불러오기 실패 : ', error);
+        onError?.(error);
       } finally {
         setResultsLoading(false);
       }
     };
 
     fetchResultsByPollIds();
-  }, [pollIds]);
+  }, [pollIds, onError]);
 
   // 댓글 불러오기
   useEffect(() => {
@@ -89,12 +91,13 @@ const CommentContext = ({ setIsLoading }: CommentProps) => {
         setComments(res);
       } catch (error) {
         console.log('댓글 불러오기 실패 : ', error);
+        onError?.(error);
       } finally {
         setCommentsLoading(false);
       }
     };
     getAllComments();
-  }, []);
+  }, [onError]);
 
   // isLoading 값은 두 로딩 상태가 모두 끝났을 때 false
   useEffect(() => {
@@ -153,6 +156,7 @@ const CommentContext = ({ setIsLoading }: CommentProps) => {
       scrollToBottom();
     } catch (error) {
       console.log('댓글 등록 실패', error);
+      onError?.(error);
     }
   };
 
@@ -163,6 +167,7 @@ const CommentContext = ({ setIsLoading }: CommentProps) => {
       setComments(res);
     } catch (error) {
       console.error('댓글 갱신 실패', error);
+      onError?.(error);
     }
   };
 
@@ -170,7 +175,7 @@ const CommentContext = ({ setIsLoading }: CommentProps) => {
     <div className="md:h-full flex flex-col justify-center items-center">
       {/* 제목 */}
       <div className="flex justify-center items-center gap-3 md:gap-7 md:pt-0 pt-5">
-        <img src={IMAGES.POPPER_LEFT} className="w-[40px] md:w-[100px]" alt="popper-left" />
+        <img src={IMAGES.POPPER_LEFT} className="w-[40px] md:w-[80px]" alt="popper-left" />
         <h1 className="text-2xl font-pm md:text-3xl">투표 결과</h1>
         <img src={IMAGES.POPPER_RIGHT} className="w-[40px] md:hidden" alt="popper-right" />
       </div>

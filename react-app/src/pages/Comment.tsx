@@ -1,9 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Loading from '@/components/Loading/Loading';
 import CommentContext from '@/components/Comment/CommentContext';
+import { useNavigate } from 'react-router-dom';
 
 const CommentPage = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<unknown>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!error) return;
+    navigate('/main');
+  }, [error, navigate]);
 
   return (
     <div className="relative w-full h-full min-h-screen flex justify-center items-center">
@@ -12,7 +20,7 @@ const CommentPage = () => {
           <Loading />
         </div>
       )}
-      <CommentContext setIsLoading={setIsLoading} />
+      <CommentContext setIsLoading={setIsLoading} onError={setError} />
     </div>
   );
 };

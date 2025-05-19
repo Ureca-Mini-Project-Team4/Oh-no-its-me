@@ -51,7 +51,7 @@ const Vote = () => {
   }
 
   return (
-    <div className="h-fit bg-white flex items-center flex-col justify-center p-5">
+    <div className="h-fit md:h-full bg-white flex items-center flex-col justify-center p-5">
       <div>
         <Process page={pageIndex + 1} />
       </div>
