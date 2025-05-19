@@ -66,7 +66,7 @@ const Result = () => {
                   <h1 className="flex items-center font-pb text-2xl text-black mx-4 whitespace-nowrap">
                     너로 정했다!
                   </h1>
-                  <img src={IMAGES.POPPER_RIGHT} alt="popper" className="w-10 md:w-15 md:hidden" />
+                  <img src={IMAGES.POPPER_RIGHT} alt="popper" className="w-10 md:w-15" />
                 </div>
                 {isMobile ? (
                   <div className="grid grid-cols-2 grid-rows-2 gap-10 pt-10">
