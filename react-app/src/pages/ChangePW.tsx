@@ -51,7 +51,7 @@ const ChangePW = () => {
   }, [navigation]);
 
   return (
-    <div className="flex justify-center items-center min-h-screen px-4 py-8">
+    <div className="flex justify-center items-center h-full px-4 py-8">
       <div className="flex flex-col md:flex-row w-full max-w-3xl bg-white overflow-hidden gap-8">
         {isDesktop && (
           <div className="flex justify-center items-center w-full md:w-[50%] p-4">

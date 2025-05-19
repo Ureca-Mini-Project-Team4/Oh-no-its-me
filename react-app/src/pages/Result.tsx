@@ -42,13 +42,13 @@ const Result = () => {
   const hasResults = results && results.length > 0;
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-white">
+    <div className="relative w-full h-full overflow-hidden bg-white">
       <picture className="absolute bottom-0 left-0 w-full z-0 pointer-events-none">
         <source media="(max-width: 768px)" srcSet={IMAGES.BG_MOBILE} />
         <img src={IMAGES.BG} alt="background" className="w-full h-auto" />
       </picture>
 
-      <div className="relative z-10 w-full h-screen flex items-center justify-center px-4">
+      <div className="relative z-10 w-full h-full flex items-center justify-center px-4">
         <div className="flex flex-col items-center justify-end w-full max-w-[1280px] gap-10">
           {isLoading && !isTimedOut && <Loading />}
 
@@ -59,11 +59,11 @@ const Result = () => {
           {hasResults && <Confetti />}
 
           {hasResults && (
-            <div className="relative w-full max-w-[1280px] h-[600px] sm:h-[900px] flex flex-col items-center justify-center gap-10">
-              <div className="flex items-center justify-center pb-20">
-                <img src={IMAGES.POPPER_LEFT} alt="popper" className="w-10 sm:w-15" />
+            <div className="relative w-full max-w-[1280px] h-[600px] md:h-[900px] flex flex-col items-center justify-center">
+              <div className="flex items-center justify-center pb-20 md:pb-10">
+                <img src={IMAGES.POPPER_LEFT} alt="popper" className="w-10 md:w-15" />
                 <h1 className="font-pb text-2xl text-black mx-4 whitespace-nowrap">너로 정했다!</h1>
-                <img src={IMAGES.POPPER_RIGHT} alt="popper" className="w-10 sm:w-15" />
+                <img src={IMAGES.POPPER_RIGHT} alt="popper" className="w-10 md:w-15" />
               </div>
               {isMobile ? (
                 <div className="grid grid-cols-2 grid-rows-2 gap-8">
@@ -107,7 +107,7 @@ const Result = () => {
       <img
         src={ICONS.ARROW}
         alt="arrow"
-        className="fixed top-1/2 right-6 sm:right-10 -translate-y-1/2 w-12 h-12 cursor-pointer z-50"
+        className="fixed top-1/2 right-6 md:right-10 -translate-y-1/2 w-12 h-12 cursor-pointer z-50"
         onClick={handleClickButton}
       />
     </div>

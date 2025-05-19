@@ -134,7 +134,7 @@ const Vote = () => {
 
   if (pollIds.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="h-full flex items-center justify-center">
         <Loading />
       </div>
     );
@@ -148,12 +148,12 @@ const Vote = () => {
   const isCandidateSelected = selectedCandidateId !== null;
 
   return (
-    <div className="min-h-screen bg-white flex items-center flex-col justify-center p-5">
-      <div>
+    <div className="h-full overflow-hidden bg-white flex items-center flex-col justify-center p-5">
+      <div className="md:mt-10">
         <Process page={pageIndex + 1} />
       </div>
       {isMobile ? (
-        <div className="">
+        <div>
           <div className="flex flex-col p-5">
             <div className="flex flex-col items-center justify-center font-ps text-sm text-center p-2 min-w-[270px] min-h-[150px] max-h-[150px]">
               <p className="break-all">{questionText}</p>
@@ -195,7 +195,7 @@ const Vote = () => {
         </div>
       ) : (
         <div className="p-5 ">
-          <div className="flex flex-col items-center justify-center bg-gray-50 p-5 rounded-[30px] sm:flex-row min-h-[400px] min-w-[1030px]">
+          <div className="flex flex-col items-center justify-center bg-gray-50 p-5 rounded-[30px] md:flex-row min-h-[400px] min-w-[1030px]">
             <div className="flex flex-1 p-13 min-h-[400px] min-w-[500px] items-center justify-center">
               <div className="flex flex-col items-center justify-center gap-10 font-ps text-xl text-center ">
                 <p className="break-all">{questionText}</p>
@@ -206,7 +206,7 @@ const Vote = () => {
                 />
               </div>
             </div>
-            <div className="flex-1 flex-col items-center justify-center p-10">
+            <div className="flex-1 flex-col items-center justify-center p-5">
               <CandidateGroup
                 candidateArr={currentCandidates.map((c) => ({
                   id: c.candidateId,
@@ -217,7 +217,7 @@ const Vote = () => {
               />
             </div>
           </div>
-          <div className="flex justify-between items-center w-full mt-10">
+          <div className="flex justify-between items-center w-full mt-5 mb-5">
             {pageIndex > 0 ? (
               <Button label="이전" onClick={handlePrev} type="outline" size="lg" />
             ) : (
