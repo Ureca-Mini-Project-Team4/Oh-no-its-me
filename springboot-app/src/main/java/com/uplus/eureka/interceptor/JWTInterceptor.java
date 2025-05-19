@@ -80,7 +80,8 @@ public class JWTInterceptor implements HandlerInterceptor {
 		// Refresh Token 검증 및 Access Token 재발급
 		if (refreshToken != null) {
 			String newAccessToken = jwtUtil.generateAccessTokenFromRefreshToken(refreshToken);
-			if (newAccessToken != null) {
+
+			if (newAccessToken != null && jwtUtil.checkToken(newAccessToken)) {
 				log.info("Refresh Token 사용 가능, Access Token 갱신");
 				log.info("재 발행한 access Token:{}", newAccessToken);
 
@@ -96,15 +97,17 @@ public class JWTInterceptor implements HandlerInterceptor {
 				if (!newAccessToken.startsWith("Bearer ")) {
 					newAccessToken = "Bearer " + newAccessToken;
 				}
-				response.addHeader(HEADER_AUTH, newAccessToken);
-
 
 				// 토큰이 갱신되었음을 클라이언트에게 알림
+				response.addHeader(HEADER_AUTH, newAccessToken);
 				response.addHeader("Token-Renewed", "true");
 
 				return true;
 			}
+
+			log.warn("재발급된 Access Token이 유효하지 않음");
 		}
+
 
 		log.info("Access Token과 Refresh Token 모두 사용 불가능");
 		throw new UnAuthorizedException();

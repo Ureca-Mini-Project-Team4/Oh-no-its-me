@@ -39,18 +39,19 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
-            // 입력된 사용자 ID와 비밀번호의 유효성 검사
-            if (loginRequest.getUsername() == null ||
-                    loginRequest.getPassword() == null ||
-                    loginRequest.getUsername().isEmpty() ||
-                    loginRequest.getPassword().isEmpty()) {
+            String username = loginRequest.getUsername();
+            String password = loginRequest.getPassword();
+
+            // 입력값 유효성 검사
+            if (username == null || username.trim().isEmpty() ||
+                    password == null || password.trim().isEmpty()) {
                 return ResponseEntity.badRequest().body("유저 ID와 비밀번호를 입력하세요.");
             }
 
             // 사용자 로그인 시도
-            User loggedInUser = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
+            User loggedInUser = userService.login(username.trim(), password.trim());
 
-            // 비밀번호 정보는 응답에서 제거
+            // 비밀번호 제거된 사용자 정보 생성
             User userWithoutPassword = new User();
             userWithoutPassword.setUserId(loggedInUser.getUserId());
             userWithoutPassword.setUsername(loggedInUser.getUsername());
@@ -63,24 +64,25 @@ public class UserController {
             String accessToken = jwtUtil.generateAccessToken(loggedInUser);
             String refreshToken = jwtUtil.generateRefreshToken(loggedInUser);
 
-            // DB에 리프레시 토큰 저장
+            // 리프레시 토큰 저장
             userService.saveRefreshToken(loggedInUser.getUserId(), refreshToken);
 
-            // 응답 생성
+            // 응답 데이터 구성
             Map<String, Object> response = new HashMap<>();
             response.put("user", userWithoutPassword);
             response.put("message", "로그인 성공");
 
-            // 토큰을 헤더에 추가
-            HttpStatus status = HttpStatus.OK;
-            return ResponseEntity.status(status)
+            return ResponseEntity.ok()
                     .header("Authorization", "Bearer " + accessToken)
                     .header("Refresh-Token", refreshToken)
                     .body(response);
         } catch (UserException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다.");
         }
     }
+
 
     @Operation(
             summary = "유저 정보 조회",
