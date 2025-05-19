@@ -25,7 +25,7 @@ const CommentInputField = ({
   };
 
   return (
-    <div className="flex items-start gap-2 w-full">
+    <div className="flex items-start gap-2 sm:w-[400px]">
       <img
         src={IMAGES.ANIMAL(nickname)}
         alt={`${nickname} 프로필`}
@@ -34,11 +34,10 @@ const CommentInputField = ({
       <div className="flex flex-1 items-center gap-2">
         <input
           ref={inputRef}
-          className="flex-1 px-3 py-2 rounded-md border border-gray-300 bg-gray-100 
-                     focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)] 
-                     focus:border-[var(--color-primary-base)] 
-                     text-sm sm:text-base font-pr
-                     max-w-[calc(65%)] sm:max-w-full"
+          className="w-full px-3 py-2 rounded-md border border-gray-300 bg-gray-100
+    focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]
+    focus:border-[var(--color-primary-base)]
+    text-sm sm:text-base font-pr"
           value={comment}
           onChange={onChangeComment}
           onKeyDown={async (e) => {
