@@ -54,13 +54,11 @@ const ChangePW = () => {
     <div className="flex justify-center items-center min-h-screen px-4 py-8">
       <div className="flex flex-col md:flex-row w-full max-w-3xl bg-white overflow-hidden gap-8">
         {isDesktop && (
-          <div className="flex justify-center items-center w-full md:w-[50%] p-4">
-            <img
-              src={IMAGES.SEAL_CHANGE_PASSWORD}
-              alt="물개"
-              className="max-w-full h-auto object-contain"
-            />
-          </div>
+          <img
+            src={IMAGES.SEAL_CHANGE_PASSWORD}
+            alt="물개"
+            className="w-[40%] aspect-square flex justify-center items-center object-contain m-5 pr-13 pt-13"
+          />
         )}
         <div className="flex flex-col justify-center w-full md:w-[50%] p-6 gap-6">
           <h2 className="font-gumi text-center text-[24px] md:text-[32px] mb-4">
