@@ -9,61 +9,32 @@ import { useVote } from '@/hook/useVote';
 import { useCallback, useMemo } from 'react';
 
 const Vote = () => {
-  const userId = Number(localStorage.getItem('userId'));
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [pollData, setPollData] = useState<{ [pollId: number]: getCandidateLatestResponse[] }>({});
-  const [pollIds, setPollIds] = useState<number[]>([]);
-  const [pageIndex, setPageIndex] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCandidates, setSelectedCandidates] = useState<{ [pollId: number]: number | null }>(
-    {},
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+  const {
+    pollData,
+    pollIds,
+    pageIndex,
+    setPageIndex,
+    isSubmitting,
+    isModalOpen,
+    setIsModalOpen,
+    selectedCandidates,
+    handleSelect,
+    handleSubmit,
+  } = useVote();
+
+  const currentPollId = useMemo(() => pollIds[pageIndex], [pollIds, pageIndex]);
+
+  const currentCandidates = useMemo(() => pollData[currentPollId] || [], [pollData, currentPollId]);
+
+  const selectedCandidateId = useMemo(
+    () => selectedCandidates[currentPollId] ?? null,
+    [selectedCandidates, currentPollId],
   );
-  const navigate = useNavigate();
-  const isMobile = useIsMobile();
-  const { showToast } = useToast();
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getCandidateLatests();
-        const groupedData: { [pollId: number]: getCandidateLatestResponse[] } = {};
-
-        data.forEach((item) => {
-          if (!groupedData[item.pollId]) {
-            groupedData[item.pollId] = [];
-          }
-          groupedData[item.pollId].push(item);
-        });
-
-        const ids: number[] = Object.keys(groupedData)
-          .map(Number)
-          .sort((a, b) => a - b);
-
-        setPollData(groupedData);
-        setPollIds(ids);
-        setPageIndex(0);
-      } catch (error) {
-        navigate('/main');
-        if (error instanceof AxiosError) {
-          if (error.status === 404) {
-            showToast(error.message, 'warning');
-          } else {
-            const message =
-              typeof error.response?.data === 'string'
-                ? error.response.data
-                : JSON.stringify(error.response?.data);
-
-            showToast(message, 'warning');
-          }
-        } else {
-          showToast(String(error), 'warning');
-        }
-        console.error(error);
-      }
-    }
-
-    fetchData();
-  }, []);
+  const questionText = currentCandidates[0]?.questionText;
+  const icon = currentCandidates[0]?.icon;
+  const isCandidateSelected = selectedCandidateId !== null;
 
   const handlePrev = useCallback(() => setPageIndex((prev) => Math.max(prev - 1, 0)), []);
   const handleNext = useCallback(
@@ -102,7 +73,7 @@ const Vote = () => {
                   userName: c.userName,
                 }))}
                 selectedCandidateId={selectedCandidateId}
-                onSelect={(candidateId) => handleCandidateSelect(currentPollId, candidateId)}
+                onSelect={(candidateId) => handleSelect(currentPollId, candidateId)}
               />
             </div>
           </div>
