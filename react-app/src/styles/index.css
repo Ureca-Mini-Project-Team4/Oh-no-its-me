@@ -1,24 +1,6 @@
 @import 'tailwindcss';
 @import './fonts.css';
 
-:root {
-  /* Web (기본) */
-  --candidate-width: 217px;
-  --candidate-height: 270px;
-  --candidate-font-size: 20px;
-  --check-size: 24;
-}
-
-@media (max-width: 768px) {
-  :root {
-    /* Mobile용 값으로 덮어씀 */
-    --candidate-width: 115.3px;
-    --candidate-height: 148px;
-    --candidate-font-size: 14px;
-    --check-size: calc(var(--candidate-height) * 0.1);
-  }
-}
-
 @layer base {
   html {
     font-family: 'Pretendard-Regular', 'GumiRomanceTTF', sans-serif;

@@ -17,7 +17,7 @@ const Candidate = ({ name, isSelected, handleClick, id }: CandidateProps) => {
       >
         {isSelected && (
           <img
-            className="absolute top-3 right-3 w-[14.8px] h-[14.8px] sm:w-[24px] sm:h-[24px]"
+            className="absolute top-3 right-3 w-[14.8px] h-[14.8px] md:w-[24px] md:h-[24px]"
             src={ICONS.CHECK}
             alt="selected"
           />
@@ -25,9 +25,9 @@ const Candidate = ({ name, isSelected, handleClick, id }: CandidateProps) => {
         <img
           src={IMAGES.PEOPLE(name)}
           alt={name}
-          className="object-cover w-[100px] h-[100px] sm:w-[160px] sm:h-[160px]"
+          className="object-cover w-[100px] h-[100px] md:w-[160px] md:h-[160px]"
         />
-        <span className="font-ps text-[14px] sm:text-[20px]">{name}</span>
+        <span className="font-ps text-[14px] md:text-[20px]">{name}</span>
       </button>
     </div>
   );

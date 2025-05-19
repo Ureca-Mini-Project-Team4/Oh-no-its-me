@@ -1,94 +1,83 @@
 import { useCallback, useState } from 'react';
-import { useAuth } from '@/hook/useAuth';
+import { useLogin } from '@/hook/useLogin';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
+import Loading from '@/components/Loading/Loading';
 import { IMAGES } from '@/constants/imagePath';
 
 const Login = () => {
-  const navigation = useNavigate();
-  const { login } = useAuth();
+  const navigate = useNavigate();
+  const { login, isPending } = useLogin();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const isDesktop = useMediaQuery({ query: '(min-width: 768px)' });
 
-  const handleLogin = useCallback(() => {
+  const handleLogin = useCallback(async () => {
     try {
-      login({ username, password });
+      await login({ username, password });
     } catch (e) {
       setPassword('');
     }
   }, [login, username, password]);
 
   const handlePasswordChange = useCallback(() => {
-    navigation('/change-password');
-  }, [navigation]);
+    navigate('/change-password');
+  }, [navigate]);
 
   return (
-    <div
-      className={`flex justify-center items-center w-screen h-screen overflow-hidden ${
-        isDesktop ? 'text-[1.2vw]' : 'text-[2.5vw]'
-      }`}
-    >
-      <div className="flex justify-center items-center w-[70%] max-w-[900px] h-[80%] rounded-2xl overflow-hidden">
+    <div className="h-full flex flex-col items-center justify-center px-2 py-10 bg-white overflow-y-auto">
+      <div className="flex flex-col md:flex-row items-center w-full max-w-4xl overflow-hidden">
         {isDesktop && (
-          <img
-            src={IMAGES.ROCKET}
-            alt="로켓"
-            className="w-[40%] aspect-square flex justify-center items-center object-contain"
-          />
+          <div className="w-full md:w-1/2 flex justify-center items-center p-6">
+            <img src={IMAGES.ROCKET} alt="로켓" className="max-w-[80%] h-auto object-contain" />
+          </div>
         )}
-        <div
-          className={`flex flex-col justify-center ${isDesktop ? 'w-1/2 px-8' : 'w-full px-6 gap-[2vw]'}`}
-        >
-          <h2
-            className={`font-gumi font-bold text-center mb-8 ${
-              isDesktop ? 'text-[3vw]' : 'text-[6vw]'
-            }`}
-          >
+        <div className="w-full md:w-1/2 p-8">
+          <h2 className="font-gumi font-bold text-center text-2xl md:text-3xl mb-8">
             <span className="text-[var(--color-primary-base)]">너</span>로 정했다!
           </h2>
-
-          <div className={`mb-6 grid ${isDesktop ? 'grid-cols-7' : 'grid-cols-2 gap-4'}`}>
-            <label className="flex items-center col-span-2 font-pm text-gray-700 break-keep">
-              아이디
-            </label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="col-span-5 w-full px-3 py-2 border border-gray-300 rounded-lg placeholder:text-[80%] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
-              placeholder="아이디를 입력하세요"
-            />
-          </div>
-
-          <div className={`mb-6 grid ${isDesktop ? 'grid-cols-7' : 'grid-cols-2 gap-4'}`}>
-            <label className="flex items-center col-span-2 font-pm text-gray-700 break-keep">
-              비밀번호
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="col-span-5 w-full px-3 py-2 border border-gray-300 rounded-lg placeholder:text-[80%] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
-              placeholder="비밀번호를 입력하세요"
-            />
-          </div>
-
-          <div className="flex flex-col ">
-            <button
-              onClick={handleLogin}
-              className="w-full mt-2 py-2 bg-[var(--color-primary-base)] font-ps text-white rounded-lg hover:bg-[var(--color-primary-hover)] transition duration-200"
-            >
-              로그인
-            </button>
-            <button
-              onClick={handlePasswordChange}
-              className="w-full mt-2 py-2 font-ps text-gray-400 hover:text-gray-600 transition duration-200"
-            >
-              비밀번호 변경
-            </button>
-          </div>
+          {isPending ? (
+            <div className="flex justify-center items-center h-40">
+              <Loading />
+            </div>
+          ) : (
+            <>
+              <div className="mb-6">
+                <label className="block text-gray-700 font-pm mb-2">아이디</label>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
+                  placeholder="아이디를 입력하세요"
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-gray-700 font-pm mb-2">비밀번호</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
+                  placeholder="비밀번호를 입력하세요"
+                />
+              </div>
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={handleLogin}
+                  className="w-full py-2 bg-[var(--color-primary-base)] text-white font-ps rounded-lg hover:bg-[var(--color-primary-hover)] transition"
+                >
+                  로그인
+                </button>
+                <button
+                  onClick={handlePasswordChange}
+                  className="w-full py-2 text-gray-400 font-ps hover:text-gray-600 transition"
+                >
+                  비밀번호 변경
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
