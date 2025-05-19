@@ -4,7 +4,7 @@
 
 ### 👉 [서비스 바로가기](https://oh-no-its-me.vercel.app/)
 
-![main](public/readme/main.png)
+![main](public/readme/main.gif)
 
 ## 🚀 프로젝트 소개
 
