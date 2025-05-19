@@ -5,11 +5,11 @@ const Winner = ({ name, question }: WinnerProps) => {
   const imageSrc = `${IMAGES.WINNER_BASE}/${encodeURIComponent(name)}.png`;
 
   return (
-    <div className="relative flex flex-col items-center w-[160px] h-[95px] md:w-[360px] md:h-[200px] mt-4">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[25px] md:-translate-y-[50px] w-[95px] h-[95px] md:w-[160px] md:h-[160px] z-10">
+    <div className="relative flex flex-col items-center w-[200px] break-keep md:w-[280px] mt-4">
+      <div className="absolute top-[-50px] left-1/2 -translate-x-1/2 -translate-y-[25px] md:-translate-y-[50px] w-[100px] h-[100px] md:w-[140px] md:h-[140px] z-10">
         <img src={imageSrc} alt={`${name} 프사`} className="w-full h-full object-cover" />
       </div>
-      <div className="mt-[50px] md:mt-[80px] w-full h-24 md:h-36 bg-white rounded-xl shadow-xl flex flex-col items-center justify-center pt-[33px] md:pt-[35px] pb-4 md:pb-3 md:px-2">
+      <div className="w-full h-24 md:h-36 bg-white rounded-xl shadow-xl flex flex-col items-center justify-end pb-3 md:pb-5 md:px-2">
         <p className="text-center text-[10px] md:text-[16px] font-pm leading-tight whitespace-pre-wrap px-3">
           {question}
         </p>

@@ -148,14 +148,14 @@ const Vote = () => {
   const isCandidateSelected = selectedCandidateId !== null;
 
   return (
-    <div className="h-full overflow-hidden bg-white flex items-center flex-col justify-center p-5">
-      <div className="md:mt-10">
+    <div className="h-fit bg-white flex items-center flex-col justify-center p-5">
+      <div>
         <Process page={pageIndex + 1} />
       </div>
       {isMobile ? (
         <div>
           <div className="flex flex-col p-5">
-            <div className="flex flex-col items-center justify-center font-ps text-sm text-center p-2 min-w-[270px] min-h-[150px] max-h-[150px]">
+            <div className="flex flex-col items-center justify-center font-ps text-sm text-center p-2 max-h-[150px]">
               <p className="break-all">{questionText}</p>
               <img
                 src={ICONS.QUESTION_ICON(icon)}
@@ -163,7 +163,7 @@ const Vote = () => {
                 alt="question icon"
               />
             </div>
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center max-w-[300px] min-w-[150px]">
               <CandidateGroup
                 candidateArr={currentCandidates.map((c) => ({
                   id: c.candidateId,
@@ -194,11 +194,11 @@ const Vote = () => {
           </div>
         </div>
       ) : (
-        <div className="p-5 ">
-          <div className="flex flex-col items-center justify-center bg-gray-50 p-5 rounded-[30px] md:flex-row min-h-[400px] min-w-[1030px]">
-            <div className="flex flex-1 p-13 min-h-[400px] min-w-[500px] items-center justify-center">
+        <div className="pt-5 max-w-[850px]">
+          <div className="grid grid-cols-2 gap-5 items-center justify-center bg-gray-50 p-5 rounded-[30px]">
+            <div className="grid-cols-1 flex items-center justify-center">
               <div className="flex flex-col items-center justify-center gap-10 font-ps text-xl text-center ">
-                <p className="break-all">{questionText}</p>
+                <p className="break-keep">{questionText}</p>
                 <img
                   src={ICONS.QUESTION_ICON(icon)}
                   className="w-full max-w-[200px] h-full object-contain"
@@ -217,7 +217,7 @@ const Vote = () => {
               />
             </div>
           </div>
-          <div className="flex justify-between items-center w-full mt-5 mb-5">
+          <div className="flex justify-between items-center w-full mt-5">
             {pageIndex > 0 ? (
               <Button label="이전" onClick={handlePrev} type="outline" size="lg" />
             ) : (
