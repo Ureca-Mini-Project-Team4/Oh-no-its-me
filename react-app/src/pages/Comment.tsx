@@ -14,7 +14,7 @@ const CommentPage = () => {
   }, [error, navigate]);
 
   return (
-    <div className="relative w-full h-full min-h-screen flex justify-center items-center">
+    <div className="md:pt-0 pt-130 relative w-full h-full min-h-screen flex justify-center items-center">
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-white/70 z-50">
           <Loading />
