@@ -60,8 +60,10 @@ const ChangePW = () => {
             className="w-[40%] aspect-square flex justify-center items-center object-contain m-5 pr-13 pt-13"
           />
         )}
-        <div className="flex flex-col justify-center w-full md:w-[50%] p-6 gap-6">
-          <h2 className="font-gumi text-center text-[24px] md:text-[32px] mb-4">
+        <div
+          className={`flex flex-col justify-center ${isDesktop ? 'w-1/2 px-8' : 'w-full px-6 gap-[2vw]'}`}
+        >
+          <h2 className={`font-gumi text-center mb-8 ${isDesktop ? 'text-[3vw]' : 'text-[6vw]'}`}>
             <span className="text-[var(--color-primary-base)]">너</span>로 정했다!
           </h2>
 
