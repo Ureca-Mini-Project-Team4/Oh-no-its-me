@@ -42,14 +42,14 @@ const Result = () => {
   const hasResults = results && results.length > 0;
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-white">
+    <div className="relative w-full h-fit bg-white">
       <picture className="absolute bottom-0 left-0 w-full z-0 pointer-events-none">
         <source media="(max-width: 768px)" srcSet={IMAGES.BG_MOBILE} />
-        <img src={IMAGES.BG} alt="background" className="w-full h-auto" />
+        <img src={IMAGES.BG} alt="background" className="w-full h-full" />
       </picture>
 
-      <div className="relative z-10 w-full h-full flex items-center justify-center px-4">
-        <div className="flex flex-col items-center justify-end w-full max-w-[1280px] gap-10">
+      <div className="pt-5 pb-5 relative z-10 w-full h-screen md:h-full flex items-center justify-center">
+        <div className=" flex flex-col items-center justify-end w-full h-full max-w-[1280px]">
           {isLoading && !isTimedOut && <Loading />}
 
           {isLoading && isTimedOut && <p className="font-pm text-gray-400">아직 결과가 없어요!</p>}
@@ -59,47 +59,49 @@ const Result = () => {
           {hasResults && <Confetti />}
 
           {hasResults && (
-            <div className="relative w-full max-w-[1280px] h-[600px] md:h-[900px] flex flex-col items-center justify-center">
-              <div className="flex items-center justify-center pb-20 md:pb-10">
-                <img src={IMAGES.POPPER_LEFT} alt="popper" className="w-10 md:w-15" />
-                <h1 className="font-pb text-2xl text-black mx-4 whitespace-nowrap">너로 정했다!</h1>
-                <img src={IMAGES.POPPER_RIGHT} alt="popper" className="w-10 md:w-15" />
+            <div className="relative w-full h-full min-w-[800px] max-w-[1280px] flex flex-col items-center justify-center">
+              <div className="flex flex-col w-full items-center justify-center gap-15">
+                <div className="flex">
+                  <img src={IMAGES.POPPER_LEFT} alt="popper" className="w-10 md:w-15" />
+                  <h1 className="flex items-center font-pb text-2xl text-black mx-4 whitespace-nowrap">
+                    너로 정했다!
+                  </h1>
+                  <img src={IMAGES.POPPER_RIGHT} alt="popper" className="w-10 md:w-15" />
+                </div>
+                {isMobile ? (
+                  <div className="grid grid-cols-2 grid-rows-2 gap-10 pt-10">
+                    {results.slice(0, 4).map((data, index) => {
+                      const shift = index % 2 === 0 ? '-translate-y-8' : 'translate-y-8';
+                      return (
+                        <div
+                          key={data.pollId}
+                          className={`pt-10 w-full flex justify-center relative ${shift}`}
+                        >
+                          <div className="relative w-full max-w-[160px] flex justify-center">
+                            <Winner name={data.username} question={data.questionText} />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="relative grid grid-rows-3 grid-cols-2 w-full mt-10 justify-center items-center">
+                    {results.slice(0, 4).map((data, index) => {
+                      const positions = [
+                        'flex justify-center col-span-2',
+                        'flex justify-center col-span-1 pr-15',
+                        'flex justify-center col-span-1 pl-15',
+                        'flex justify-center col-span-2',
+                      ];
+                      return (
+                        <div key={data.pollId} className={`${positions[index]}`}>
+                          <Winner name={data.username} question={data.questionText} />
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-              {isMobile ? (
-                <div className="grid grid-cols-2 grid-rows-2 gap-8">
-                  {results.slice(0, 4).map((data, index) => {
-                    const shift = index % 2 === 0 ? '-translate-y-8' : 'translate-y-8';
-                    return (
-                      <div
-                        key={data.pollId}
-                        className={`w-full flex justify-center relative ${shift}`}
-                      >
-                        <div className="relative w-full max-w-[160px] flex justify-center">
-                          <Winner name={data.username} question={data.questionText} />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="relative w-full h-[480px] mt-4 flex items-center justify-center">
-                  {results.slice(0, 4).map((data, index) => {
-                    const positions = [
-                      'absolute top-0 left-1/2 -translate-x-1/2',
-                      'absolute top-1/2 left-[5%] -translate-y-1/2',
-                      'absolute bottom-0 left-1/2 -translate-x-1/2',
-                      'absolute top-1/2 right-[5%] -translate-y-1/2',
-                    ];
-                    return (
-                      <div key={data.pollId} className={`absolute ${positions[index]} w-auto`}>
-                        <div className="relative">
-                          <Winner name={data.username} question={data.questionText} />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
             </div>
           )}
         </div>
