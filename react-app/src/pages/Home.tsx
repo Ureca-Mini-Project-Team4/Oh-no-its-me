@@ -1,11 +1,11 @@
 import Button from '@/components/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import useIsMobile from '@/hook/useIsMobile';
+import { useMediaQuery } from 'react-responsive';
 import { IMAGES } from '@/constants/imagePath';
 
 const Home = () => {
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   const handleClickButton = () => {
     navigate('login');
