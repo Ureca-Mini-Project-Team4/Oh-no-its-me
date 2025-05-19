@@ -73,7 +73,7 @@ const Vote = () => {
                   userName: c.userName,
                 }))}
                 selectedCandidateId={selectedCandidateId}
-                onSelect={(candidateId) => handleCandidateSelect(currentPollId, candidateId)}
+                onSelect={(candidateId) => handleSelect(currentPollId, candidateId)}
               />
             </div>
           </div>
