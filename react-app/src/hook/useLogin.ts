@@ -1,6 +1,5 @@
-import { login } from '@/apis/user/login';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { login as loginApi } from '@/apis/user/login';
+import { useDispatch } from 'react-redux';
 import { setAuth, clearAuth } from '@/store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { UserInfoResponse } from '@/apis/user/getUserInfo';
@@ -8,19 +7,17 @@ import { useToast } from './useToast';
 import { AxiosError } from 'axios';
 import { useMutation } from '@tanstack/react-query';
 
-export function useAuth() {
+export function useLogin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { showToast } = useToast();
-
-  const user = useSelector((state: RootState) => state.auth.user);
 
   const getErrorMessage = (error: unknown): string => {
     if (error instanceof AxiosError) {
       const status = error.response?.status;
       const data = error.response?.data;
 
-      if (status === 404) return error.message;
+      if (status === 401) return '아이디 또는 비밀번호가 올바르지 않습니다.';
       if (typeof data === 'string') return data;
       if (typeof data?.message === 'string') return data.message;
       if (typeof data?.error === 'string') return data.error;
@@ -30,8 +27,8 @@ export function useAuth() {
     return String(error);
   };
 
-  const { mutate: loginMutate } = useMutation({
-    mutationFn: login,
+  const { mutateAsync: login } = useMutation({
+    mutationFn: loginApi,
     onSuccess: ({ user, accessToken, refreshToken }) => {
       if (user && accessToken && refreshToken) {
         dispatch(setAuth({ user: user as UserInfoResponse }));
@@ -41,13 +38,12 @@ export function useAuth() {
         localStorage.setItem('voted', String(user.voted));
         navigate('/main');
       } else {
-        throw new Error('로그인 정보가 올바르지 않습니다.');
+        showToast('로그인 정보가 올바르지 않습니다.', 'warning');
       }
     },
     onError: (error) => {
       const message = getErrorMessage(error);
       showToast(message, 'warning');
-      throw error;
     },
   });
 
@@ -56,7 +52,5 @@ export function useAuth() {
     localStorage.clear();
   };
 
-  const isLoggedIn = Boolean(user);
-
-  return { user, isLoggedIn, login: loginMutate, logout };
+  return { login, logout };
 }
