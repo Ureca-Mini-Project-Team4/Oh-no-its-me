@@ -1,6 +1,8 @@
-# 너로 정했다!👊 (On no, It's me!)
+# 👊 너로 정했다! (Oh no, It's me!)
 
-### 익명 투표 기반 밸런스 게임 & 커뮤니티 플랫폼, 너로 정했다!
+> 익명 투표로 즐기는 밸런스 게임 & 커뮤니티 플랫폼
+
+### 👉 [서비스 바로가기](https://oh-no-its-me.vercel.app/)
 
 ![main](public/readme/main.png)
 
@@ -47,59 +49,6 @@
 
 [🔗 Notion API 명세서 확인하기](https://lowly-brian-a99.notion.site/1af64f2ada64805da616db17bceb4efe?v=1af64f2ada64813ba8ac000c12b30f1f)
 
-## 📂 Folder Architecture
+## 📂 System Architecture
 
-```plaintext
-📦springboot-app
-┣ 📂.gradle
-┃ ┣ 📂8.13
-┣ 📂gradle
-┃ ┗ 📂wrapper
-┣ 📂src
-┃ ┣ 📂main
-┃ ┃ ┣ 📂java
-┃ ┃ ┃ ┗ 📂com
-┃ ┃ ┃ ┃ ┗ 📂uplus
-┃ ┃ ┃ ┃ ┃ ┗ 📂eureka
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂candidate
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂comment
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂poll
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂user
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂vote
-┃ ┃ ┣ 📂resources
-┃ ┃ ┃ ┣ 📂mapper
-┃ ┃ ┃ ┃ ┣ 📜candidates.xml
-┃ ┃ ┃ ┃ ┣ 📜comments.xml
-┃ ┃ ┃ ┃ ┣ 📜poll.xml
-┃ ┃ ┃ ┃ ┣ 📜users.xml
-┃ ┃ ┃ ┃ ┗ 📜vote.xml
-┃ ┃ ┃ ┣ 📂static
-┃ ┃ ┃ ┃ ┣ 📂assets
-┃ ┃ ┃ ┃ ┃ ┗ 📂img
-┃ ┃ ┃ ┃ ┣ 📜eureka_logo.png
-┃ ┃ ┃ ┃ ┗ 📜index.html
-┃ ┃ ┃ ┗ 📜application.properties
-┣ 📂target
-┣ 📜.gitignore
-┣ 📜README.md
-┣ 📜build.gradle
-┣ 📜application.properties
-┗ 📜settings.gradle
-```
-
-## 프로젝트 실행 방법
-
-> 본 프로젝트는 **Springboot**로 개발되었으므로 `springboot-app/src/main/resources/application.properties` 파일을 수정해야합니다.
-
-```yml
-spring.datasource.hikari.jdbc-url=jdbc:mysql://localhost:3306/mini4?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8 # Database
-spring.datasource.hikari.username=username # username
-spring.datasource.hikari.password=password # password
-```
-
-> 본 프로젝트는 **gradle 기반**이므로 다음 명령어를 사용해 빌드 및 실행할 수 있습니다.
-
-```sh
-cd springboot-app/
-./gradlew bootRun
-```
+![시스템 아키텍처](public/readme/structure.png)
