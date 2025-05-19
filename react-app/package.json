@@ -15,7 +15,6 @@
     "@tanstack/react-query": "^5.74.11",
     "axios": "^1.8.4",
     "dayjs": "^1.11.13",
-    "framer-motion": "^12.12.1",
     "react": "^18.2.0",
     "react-canvas-confetti": "^2.0.7",
     "react-card-flip": "^1.2.3",
