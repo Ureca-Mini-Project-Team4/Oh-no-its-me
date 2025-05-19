@@ -22,7 +22,11 @@ const Candidate = ({ name, isSelected, handleClick, id }: CandidateProps) => {
             alt="selected"
           />
         )}
-        <img src={IMAGES.PEOPLE(name)} alt={name} className="aspect-square object-cover w-full" />
+        <img
+          src={IMAGES.PEOPLE(name)}
+          alt={name}
+          className="aspect-square object-cover w-[110px] md:w-full "
+        />
         <span className="font-ps text-[14px] md:text-[20px]">{name}</span>
       </button>
     </div>
