@@ -2,22 +2,14 @@ import Button from '@/components/Button/Button';
 import FloatingBackground from '@/components/FloatingBackground/FloatingBackground';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { formatMillisecondsToHMS, getTodayAtHour } from '@/utils/time';
 
 const Main = () => {
   const [restTime, setRestTime] = useState(10);
   const isVoted = localStorage.getItem('voted') === 'true';
 
-  const changeDateTime = useCallback((diff: number) => {
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-  }, []);
-
   useEffect(() => {
-    const todayAtFour = new Date();
-    todayAtFour.setHours(16, 0, 0, 0); // 16시
+    const todayAtFour = getTodayAtHour(16); // 16시
 
     const updateTimer = () => {
       const now = new Date().getTime();
@@ -56,7 +48,7 @@ const Main = () => {
               : 'bg-gradient-to-r from-red-500 to-lime-300 bg-clip-text text-transparent'
           } text-3xl sm:text-4xl md:text-5xl font-pb`}
         >
-          {restTime > 0 ? changeDateTime(restTime) : '결과 발표'}
+          {restTime > 0 ? formatMillisecondsToHMS(restTime) : '결과 발표'}
         </p>
         <p className="mt-4 text-3xl sm:text-5xl md:text-6xl font-pb leading-none">
           <span className="bg-[var(--color-primary-base)] px-2">너로</span> 정했다!
