@@ -7,7 +7,8 @@ export const IMAGES = {
   WINNER_BASE: '/assets/images/people',
   DEFAULT_PROFILE: '/assets/images/default-profile.png',
   MEDAL: '/assets/images/medal.png',
-  SEAL_CHANGE_PASSWORD: '/assets/images/seal-change-password.png',
+  SEAL_CHANGE_PASSWORD: '/assets/images/seal-change-password.svg',
+  SEAL_CHAT_BIG: '/assets/images/seal-chat-big.svg',
   ARROW_LEFT: '/assets/images/vector.png',
   MOCKUP: '/assets/images/mockup.png',
   MAIN: [

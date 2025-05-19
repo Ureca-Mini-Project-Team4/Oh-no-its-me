@@ -34,7 +34,7 @@ axiosInstance.interceptors.response.use(
         if (!refreshToken) throw error;
 
         const res = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/api/token/refresh`,
+          `${import.meta.env.VITE_API_BASE_URL}/token/refresh`,
           {},
           {
             headers: {
