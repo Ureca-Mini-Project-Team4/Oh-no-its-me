@@ -24,7 +24,7 @@ const Login = () => {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-2 py-10 bg-white overflow-y-auto">
+    <div className="h-full flex flex-col items-center justify-center px-2 py-10 bg-white overflow-y-auto">
       <div className="flex flex-col md:flex-row items-center w-full max-w-4xl overflow-hidden">
         {isDesktop && (
           <div className="w-full md:w-1/2 flex justify-center items-center p-6">
