@@ -4,7 +4,7 @@
 
 ### 👉 [서비스 바로가기](https://oh-no-its-me.vercel.app/)
 
-![vote](https://github.com/user-attachments/assets/414301f1-9fd1-4b71-aaab-390a2b7690fe)
+![vote](https://github.com/user-attachments/assets/72d7d0f4-a221-470d-bfef-c4dc2e5a047d)
 
 ![main](public/readme/main.gif)
 
