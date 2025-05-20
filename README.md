@@ -3,7 +3,8 @@
 > 익명 투표로 즐기는 밸런스 게임 & 커뮤니티 플랫폼
 
 ### 👉 [서비스 바로가기](https://oh-no-its-me.vercel.app/)
-![Uploading vote.gif…]()
+
+![vote](https://github.com/user-attachments/assets/f0f9dd3a-958e-43f2-922f-a5b945f37853)
 
 ![main](public/readme/main.gif)
 
