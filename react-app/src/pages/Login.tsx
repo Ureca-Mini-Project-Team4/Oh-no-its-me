@@ -43,13 +43,13 @@ const Login = () => {
           ) : (
             <>
               <div className="mb-6">
-                <label className="block text-gray-700 font-pm mb-2">아이디</label>
+                <label className="block text-gray-700 font-pm mb-2">이름</label>
                 <input
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="font-pr w-full px-4 py-2 border border-gray-300 rounded-lg placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
-                  placeholder="아이디를 입력하세요"
+                  placeholder="이름을 입력하세요"
                 />
               </div>
               <div className="mb-6">

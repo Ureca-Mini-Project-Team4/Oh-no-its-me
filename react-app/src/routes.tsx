@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         element: <Comment />,
       },
       {
-        path: '*',
+        path: '/*',
         element: <NotFound />,
       },
     ],
