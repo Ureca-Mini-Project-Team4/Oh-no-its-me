@@ -7,8 +7,10 @@ import { useMediaQuery } from 'react-responsive';
 import { ICONS } from '@/constants/iconPath';
 import { useVote } from '@/hooks/useVote';
 import { useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Vote = () => {
+  const navigate = useNavigate();
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   const {
     pollData,
@@ -36,6 +38,9 @@ const Vote = () => {
   const icon = currentCandidates[0]?.icon;
   const isCandidateSelected = selectedCandidateId !== null;
 
+  const handleMain = () => {
+    navigate('/main');
+  };
   const handlePrev = useCallback(() => setPageIndex((prev) => Math.max(prev - 1, 0)), []);
   const handleNext = useCallback(
     () => setPageIndex((prev) => Math.min(prev + 1, pollIds.length - 1)),
@@ -81,7 +86,7 @@ const Vote = () => {
             {pageIndex > 0 ? (
               <Button label="이전" onClick={handlePrev} type="outline" size="sm" />
             ) : (
-              <Button label="이전" onClick={() => setPageIndex(0)} type="outline" size="sm" />
+              <Button label="이전" onClick={handleMain} type="outline" size="sm" />
             )}
 
             {pageIndex < pollIds.length - 1 ? (
@@ -124,7 +129,7 @@ const Vote = () => {
             {pageIndex > 0 ? (
               <Button label="이전" onClick={handlePrev} type="outline" size="lg" />
             ) : (
-              <Button label="이전" onClick={() => setPageIndex(0)} type="outline" size="lg" />
+              <Button label="이전" onClick={handleMain} type="outline" size="lg" />
             )}
 
             {pageIndex < pollIds.length - 1 ? (

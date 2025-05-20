@@ -69,13 +69,13 @@ const ChangePW = () => {
 
           <div className="space-y-4">
             <div className="flex flex-col">
-              <label className="font-pm text-gray-700 mb-1">아이디</label>
+              <label className="font-pm text-gray-700 mb-1">이름</label>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
-                placeholder="아이디를 입력하세요"
+                className="font-pr w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
+                placeholder="이름을 입력하세요"
               />
             </div>
 
@@ -85,7 +85,7 @@ const ChangePW = () => {
                 type="password"
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
+                className="font-pr w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
                 placeholder="기존 비밀번호를 입력하세요"
               />
             </div>
@@ -96,7 +96,7 @@ const ChangePW = () => {
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
+                className="font-pr w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-base)]/70"
                 placeholder="새 비밀번호를 입력하세요"
               />
             </div>
