@@ -82,7 +82,7 @@ const Main = () => {
           <Button
             onClick={handleMoveToResult}
             label="결과 확인"
-            disabled={nowTime.current - eightTime.getTime() > 0 ? true : false}
+            disabled={nowTime.current - eightTime.getTime() < 0 ? true : false}
           />
         )}
       </div>
