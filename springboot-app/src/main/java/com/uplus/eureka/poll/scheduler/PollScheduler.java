@@ -13,7 +13,7 @@ public class PollScheduler {
         this.pollController = pollController;
     }
 
-    @Scheduled(cron = "0 00 14 * * ?", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 58 07 * * ?", zone = "Asia/Seoul")
     public void runPutQuestions() {
         pollController.getRandomQuestions();
     }
