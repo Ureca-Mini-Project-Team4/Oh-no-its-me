@@ -13,7 +13,7 @@ public class CandidateScheduler {
         this.candidateController = candidateController;
     }
 
-    @Scheduled(cron = "0 01 14 * * ?", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 59 07 * * ?", zone = "Asia/Seoul")
     public void runCreateCandidates() {
     	candidateController.createCandidates();
     }
